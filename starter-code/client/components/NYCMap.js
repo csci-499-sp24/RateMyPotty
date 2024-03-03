@@ -7,6 +7,7 @@ import {
     InfoWindow,
 } from "@vis.gl/react-google-maps";
 
+
 const mapStyles = 
 [
     {
@@ -146,6 +147,7 @@ const mapStyles =
     }
 ]
 
+
 export default function NYCMap() {
     const position = { lat: 40.712775, lng: -74.005973 };
 
@@ -166,18 +168,3 @@ export default function NYCMap() {
     )
 }
 
-
-
-/*
-export default function NYCMap() {
-    const position = { lat: 40.7128, lng: -74.0060 };
-
-    return(
-        <APIProvider apiKey="AIzaSyBMpZf4jDALGdvq2QYbNUl3ZuquMaK7I_k">
-            <div style={{ height: "100vh"}}>
-                <Map zoom={13} center={position}></Map>
-            </div>
-        </APIProvider>
-    )
-}
-*/
