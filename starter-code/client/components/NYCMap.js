@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
     APIProvider,
     Map,
@@ -148,21 +148,22 @@ const mapStyles =
 ]
 
 
+
 export default function NYCMap() {
     const position = { lat: 40.712775, lng: -74.005973 };
 
     return(
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
-            <div style={{ height: "90vh"}}>
+            <div style={{ height: "100vh" }}>
             <Map 
-                zoom={13} 
-                center={position} 
-                options={{
-                styles: mapStyles, 
-                draggable: true, 
-                zoomControl: true
-                }}
-            />
+            streetViewControl={true}  
+            zoomControl ={true} 
+            mapTypeControl = {false} 
+            gestureHandling = {true}
+            defaultCenter = {position}
+            defaultZoom={13} 
+            styles ={mapStyles}>
+            </Map>
             </div>
         </APIProvider>
     )
