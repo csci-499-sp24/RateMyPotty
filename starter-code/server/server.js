@@ -36,15 +36,51 @@ async function connectSequelize(){
 
 connectSequelize();
 
-const User = sequelize.define('User', {
-    username: {
+const Bathroom = sequelize.define('Bathroom', {
+    BathroomID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    Name: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    Address_number: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    Street_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    City_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    State_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    Longitude: {
+        type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    Latitude: {
+        type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    Rating: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
     }
+
+
 });
 
 async function sync(){
-    await User.sync();
+    await Bathroom.sync();
 }
 
 sync();
