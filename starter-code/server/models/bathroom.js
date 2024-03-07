@@ -61,7 +61,3 @@ class BathroomModel{
 
 module.exports = { BathroomModel }
 
-
-
-//install node.js: https://www.c-sharpcorner.com/blogs/how-to-create-packagejson-reactjs
-//use command node bathroom.js to run this while in correct folder
