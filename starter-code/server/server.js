@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require('cors')
 const app = express();
 const { Sequelize, DataTypes } = require('sequelize');
+const { BathroomModel } = require('./models/bathroom');
 require('dotenv').config();
-
 
 app.use(cors());
 
@@ -11,18 +11,18 @@ app.get("/api/home", (req, res) => {
     res.json({message: "Hello World!"});
 });
 
-
-
-
-
-
-
-
+if(process.env.USERNAME && process.env.PASSWORD && process.env.HOST){
+    BathroomModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
+} else {
+    console.log('Could not find the username/password/host info.');
+}
+BathroomModel.defineBathroomModel();
 
 app.get("/api/bathrooms", async (req, res) => {
     // Get the bathroom data from the database
      //SELECT * FROM Bathrooms;
-     const bathrooms = await Bathroom.findAll();
+     
+     const bathrooms = await BathroomModel.bathroom.findAll();
      console.log('bathrooms?', bathrooms);
      // Respond back to the client with this data
      res.json({data: bathrooms})
@@ -55,45 +55,3 @@ async function connectSequelize(){
 
 connectSequelize();
 
-const User = sequelize.define('User', {
-    username: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
-});
-
-const Bathroom = sequelize.define('Bathroom', {
-    BathroomID: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    Name: {
-        type: Sequelize.STRING,
-        require: true
-    },
-    Address: {
-        type: Sequelize.STRING,
-        require: true
-    },
-    Latitude: {
-        type: Sequelize.FLOAT,
-        require: true
-    },
-    Longitude: {
-        type: Sequelize.FLOAT,
-        require: true
-    },
-    Rating: {
-        type: Sequelize.FLOAT,
-        require: false,
-        allowNull: true
-    }
-})
-
-async function sync(){
-    await User.sync();
-    await Bathroom.sync();
-}
-
-sync();
