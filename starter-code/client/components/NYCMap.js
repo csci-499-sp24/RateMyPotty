@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+
 import {
     APIProvider,
     Map,
@@ -173,7 +174,7 @@ export default function NYCMap() {
             defaultZoom={13} 
             styles ={mapStyles}>
                 {bathrooms.map(bathroom => (
-                        <Marker
+                        <Marker key = {bathroom.BathroomID}
                         position={{lat: bathroom.Latitude, lng: bathroom.Longitude}}
                         clickable={true}
                         onClick={() => alert('marker was clicked!')}
