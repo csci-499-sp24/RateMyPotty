@@ -18,6 +18,11 @@ if(process.env.USERNAME && process.env.PASSWORD && process.env.HOST){
 }
 BathroomModel.defineBathroomModel();
 
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
+});
+
 app.get("/api/bathrooms", async (req, res) => {
     // Get the bathroom data from the database
      //SELECT * FROM Bathrooms;
@@ -29,10 +34,6 @@ app.get("/api/bathrooms", async (req, res) => {
 
 });
 
-const port = process.env.PORT || 8080;
-app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
-});
 
 // Server trying to connect to the database using sequelize
 let sequelize;
