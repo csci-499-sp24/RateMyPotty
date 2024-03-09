@@ -1,5 +1,5 @@
-
 import {useEffect, useRef, useState} from 'react';
+
 import {
     APIProvider,
     Map,
@@ -149,14 +149,9 @@ const mapStyles =
     }
 ]
 
-export default function NYCMap() {
-    //Asking for user's location
-    React.useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position)
-        })
-    }, [])
 
+
+export default function NYCMap() {
     const position = { lat: 40.712775, lng: -74.005973 };
     const [bathrooms, setBathrooms] = useState([]);
     // Make a request to the server inorder to grab bathroom data
