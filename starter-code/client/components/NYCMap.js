@@ -1,10 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
+
+import {useEffect, useRef, useState} from 'react';
 import {
     APIProvider,
     Map,
     AdvancedMarker,
     Pin,
     InfoWindow,
+    Marker
 } from "@vis.gl/react-google-maps";
 
 
@@ -156,7 +158,15 @@ export default function NYCMap() {
     }, [])
 
     const position = { lat: 40.712775, lng: -74.005973 };
+    const [bathrooms, setBathrooms] = useState([]);
+    // Make a request to the server inorder to grab bathroom data
+    useEffect(() => {
+        fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
+            .then((res) => res.json())
+            .then(data => setBathrooms(data.data));
+    }, [])
 
+    console.log('bathrooms', bathrooms);    
     return(
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
             <div style={{ height: "100vh" }}>
@@ -168,6 +178,14 @@ export default function NYCMap() {
             defaultCenter = {position}
             defaultZoom={13} 
             styles ={mapStyles}>
+                {bathrooms.map(bathroom => (
+                        <Marker key = {bathroom.BathroomID}
+                        position={{lat: bathroom.Latitude, lng: bathroom.Longitude}}
+                        clickable={true}
+                        onClick={() => alert('marker was clicked!')}
+                        title={bathroom.Name}
+                      />
+                ))}
             </Map>
             </div>
         </APIProvider>
