@@ -1,5 +1,4 @@
-
-import {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     APIProvider,
     Map,
@@ -149,19 +148,14 @@ const mapStyles =
     }
 ]
 
-export default function NYCMap() {
-    //Asking for user's location
-    React.useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position)
-        })
-    }, [])
 
+
+export default function NYCMap() {
     const position = { lat: 40.712775, lng: -74.005973 };
     const [bathrooms, setBathrooms] = useState([]);
     // Make a request to the server inorder to grab bathroom data
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
+        fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/bathrooms')
             .then((res) => res.json())
             .then(data => setBathrooms(data.data));
     }, [])
@@ -179,7 +173,7 @@ export default function NYCMap() {
             defaultZoom={13} 
             styles ={mapStyles}>
                 {bathrooms.map(bathroom => (
-                        <Marker key = {bathroom.BathroomID}
+                        <Marker
                         position={{lat: bathroom.Latitude, lng: bathroom.Longitude}}
                         clickable={true}
                         onClick={() => alert('marker was clicked!')}
