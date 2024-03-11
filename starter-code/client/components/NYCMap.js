@@ -151,6 +151,13 @@ const mapStyles =
 
 
 export default function NYCMap() {
+    //Asks for the user's location
+    React.useEffect(() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position)
+        })
+    }, [])
+
     const position = { lat: 40.712775, lng: -74.005973 };
     const [bathrooms, setBathrooms] = useState([]);
     // Make a request to the server inorder to grab bathroom data
