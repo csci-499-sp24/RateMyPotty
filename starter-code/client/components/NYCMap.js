@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+import styles from './Popup.module.css'
 
 import {
     APIProvider,
@@ -154,9 +155,10 @@ const mapStyles =
 export default function NYCMap() {
     const position = { lat: 40.712775, lng: -74.005973 };
     const [bathrooms, setBathrooms] = useState([]);
+    const [popupWindow, setPopupWindow] = useState(null);
     // Make a request to the server inorder to grab bathroom data
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
+        fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/bathrooms')
             .then((res) => res.json())
             .then(data => setBathrooms(data.data));
     }, [])
@@ -164,7 +166,7 @@ export default function NYCMap() {
     console.log('bathrooms', bathrooms);    
     return(
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
-            <div style={{ height: "100vh" }}>
+            <div style={{ height: "70vh", width: "70vw" }}>
             <Map 
             streetViewControl={true}  
             zoomControl ={true} 
@@ -177,10 +179,25 @@ export default function NYCMap() {
                         <Marker key = {bathroom.BathroomID}
                         position={{lat: bathroom.Latitude, lng: bathroom.Longitude}}
                         clickable={true}
-                        onClick={() => alert('marker was clicked!')}
+                        onClick={() => {
+                            setPopupWindow(bathroom);
+                        }}
                         title={bathroom.Name}
                       />
                 ))}
+                {popupWindow &&
+                <InfoWindow 
+                    onCloseClick={() => setPopupWindow(null)}
+                    position = {{lat: popupWindow.Latitude, lng: popupWindow.Longitude}}
+                >
+                    <div  className={styles.popup}>
+                        <h2>{popupWindow.Name}</h2>
+                        <p>{popupWindow.Address}</p>
+                        <button>Review</button>
+                        <button>Favorite</button>
+                    </div>
+                </InfoWindow>
+                }
             </Map>
             </div>
         </APIProvider>
