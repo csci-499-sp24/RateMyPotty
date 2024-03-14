@@ -193,7 +193,7 @@ export default function NYCMap() {
                     onCloseClick={() => setPopupWindow(null)}
                     position = {{lat: popupWindow.Latitude, lng: popupWindow.Longitude}}
                 >
-                    <div className={styles.popup}>
+                    <div className = {styles.popup}>
                         <div id = {styles.name}>
                             <h2>{popupWindow.Name}</h2>
                         </div>
@@ -201,8 +201,8 @@ export default function NYCMap() {
                             <FontAwesomeIcon icon = {faPencil} className = "fa-2x" id = {styles.reviewButton}/>
                             <FontAwesomeIcon icon = {faHeart} className = "fa-2x" id = {styles.favoriteButton}/>
                         </div>
-                        <p>Star Rating Goes Here</p>
-                        <p>{popupWindow.Address}</p>
+                        <p className = {styles.paragraph}>Star Rating Goes Here</p>
+                        <p className = {styles.paragraph}>{popupWindow.Address}</p>
                     </div>
                 </InfoWindow>
                 }

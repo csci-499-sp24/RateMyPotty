@@ -3,6 +3,10 @@
     width: 280px;
 }
 
+.paragraph{
+    font-size: 15px;
+}
+
 #name{
     display: inline-block;
     width: 150px;
@@ -15,9 +19,20 @@
 }
 
 #favoriteButton{
+    display: inline-block;
     padding-left: 30px;
+    
+}
+
+#favoriteButton:hover{
+    color: red;
 }
 
 #reviewButton{
+    display: inline-block;
     padding-left: 30px;
+}
+
+#reviewButton:hover{
+    color: orange;
 }
