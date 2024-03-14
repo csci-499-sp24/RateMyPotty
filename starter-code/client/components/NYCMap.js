@@ -1,5 +1,8 @@
 import {useEffect, useRef, useState} from 'react';
 import styles from './Popup.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faPencil, faHeart} from '@fortawesome/free-solid-svg-icons'
+
 
 import {
     APIProvider,
@@ -90,7 +93,7 @@ const mapStyles =
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "off"
+                "visibility": "on"
             }
         ]
     },
@@ -190,11 +193,16 @@ export default function NYCMap() {
                     onCloseClick={() => setPopupWindow(null)}
                     position = {{lat: popupWindow.Latitude, lng: popupWindow.Longitude}}
                 >
-                    <div  className={styles.popup}>
-                        <h2>{popupWindow.Name}</h2>
+                    <div className={styles.popup}>
+                        <div id = {styles.name}>
+                            <h2>{popupWindow.Name}</h2>
+                        </div>
+                        <div id = {styles.buttons}>
+                            <FontAwesomeIcon icon = {faPencil} className = "fa-2x" id = {styles.reviewButton}/>
+                            <FontAwesomeIcon icon = {faHeart} className = "fa-2x" id = {styles.favoriteButton}/>
+                        </div>
+                        <p>Star Rating Goes Here</p>
                         <p>{popupWindow.Address}</p>
-                        <button>Review</button>
-                        <button>Favorite</button>
                     </div>
                 </InfoWindow>
                 }

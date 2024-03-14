@@ -1,4 +1,23 @@
 .popup{
+    height: 180px;
+    width: 280px;
+}
+
+#name{
+    display: inline-block;
+    width: 150px;
+}
+
+#buttons{
+    display: inline-block;
+    padding-right: -100px;
     
 }
 
+#favoriteButton{
+    padding-left: 30px;
+}
+
+#reviewButton{
+    padding-left: 30px;
+}
