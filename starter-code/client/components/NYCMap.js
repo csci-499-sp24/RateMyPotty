@@ -162,7 +162,7 @@ export default function NYCMap() {
     const [bathrooms, setBathrooms] = useState([]);
     // Make a request to the server inorder to grab bathroom data
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
+        fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/bathrooms')
             .then((res) => res.json())
             .then(data => setBathrooms(data.data));
     }, [])
@@ -185,6 +185,10 @@ export default function NYCMap() {
                         clickable={true}
                         onClick={() => alert('marker was clicked!')}
                         title={bathroom.Name}
+                        icon={{
+                            url: "/toilet.png",
+                            scaledSize: { width: 50, height: 50 }, // size of the icon
+                          }}
                       />
                 ))}
             </Map>
