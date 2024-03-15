@@ -1,4 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
+import styles from './Popup.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faPencil, faHeart} from '@fortawesome/free-solid-svg-icons'
+
 import {
     APIProvider,
     Map,
@@ -88,7 +92,7 @@ const mapStyles =
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "off"
+                "visibility": "on"
             }
         ]
     },
@@ -160,6 +164,7 @@ export default function NYCMap() {
 
     const position = { lat: 40.712775, lng: -74.005973 };
     const [bathrooms, setBathrooms] = useState([]);
+    const [popupWindow, setPopupWindow] = useState(null);
     // Make a request to the server inorder to grab bathroom data
     useEffect(() => {
         fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
@@ -170,7 +175,7 @@ export default function NYCMap() {
     console.log('bathrooms', bathrooms);    
     return(
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
-            <div style={{ height: "100vh" }}>
+            <div style={{ height: "70vh", width: "70vw" }}>
             <Map 
             streetViewControl={true}  
             zoomControl ={true} 
@@ -183,7 +188,9 @@ export default function NYCMap() {
                         <Marker key = {bathroom.BathroomID}
                         position={{lat: bathroom.Latitude, lng: bathroom.Longitude}}
                         clickable={true}
-                        onClick={() => alert('marker was clicked!')}
+                        onClick={() => {
+                            setPopupWindow(bathroom);
+                        }}
                         title={bathroom.Name}
                         icon={{
                             url: "/toilet.png",
@@ -191,6 +198,24 @@ export default function NYCMap() {
                           }}
                       />
                 ))}
+                {popupWindow &&
+                <InfoWindow 
+                    onCloseClick={() => setPopupWindow(null)}
+                    position = {{lat: popupWindow.Latitude, lng: popupWindow.Longitude}}
+                >
+                    <div className = {styles.popup}>
+                        <div id = {styles.name}>
+                            <h2>{popupWindow.Name}</h2>
+                        </div>
+                        <div id = {styles.buttons}>
+                            <FontAwesomeIcon icon = {faPencil} className = "fa-2x" id = {styles.reviewButton}/>
+                            <FontAwesomeIcon icon = {faHeart} className = "fa-2x" id = {styles.favoriteButton}/>
+                        </div>
+                        <p className = {styles.paragraph}>Star Rating Goes Here</p>
+                        <p className = {styles.paragraph}>{popupWindow.Address}</p>
+                    </div>
+                </InfoWindow>
+                }
             </Map>
             </div>
         </APIProvider>
