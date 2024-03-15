@@ -1,8 +1,7 @@
-import {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styles from './Popup.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faPencil, faHeart} from '@fortawesome/free-solid-svg-icons'
-
 
 import {
     APIProvider,
@@ -156,6 +155,13 @@ const mapStyles =
 
 
 export default function NYCMap() {
+    //Asks for the user's location
+    React.useEffect(() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position)
+        })
+    }, [])
+
     const position = { lat: 40.712775, lng: -74.005973 };
     const [bathrooms, setBathrooms] = useState([]);
     const [popupWindow, setPopupWindow] = useState(null);
@@ -186,6 +192,10 @@ export default function NYCMap() {
                             setPopupWindow(bathroom);
                         }}
                         title={bathroom.Name}
+                        icon={{
+                            url: "/toilet.png",
+                            scaledSize: { width: 50, height: 50 }, // size of the icon
+                          }}
                       />
                 ))}
                 {popupWindow &&
