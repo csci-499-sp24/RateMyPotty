@@ -185,6 +185,10 @@ export default function NYCMap() {
                         clickable={true}
                         onClick={() => alert('marker was clicked!')}
                         title={bathroom.Name}
+                        icon={{
+                            url: "/toilet.png",
+                            scaledSize: { width: 50, height: 50 }, // size of the icon
+                          }}
                       />
                 ))}
             </Map>
