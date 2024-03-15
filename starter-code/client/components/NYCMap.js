@@ -161,7 +161,7 @@ export default function NYCMap() {
     const [popupWindow, setPopupWindow] = useState(null);
     // Make a request to the server inorder to grab bathroom data
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/bathrooms')
+        fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
             .then((res) => res.json())
             .then(data => setBathrooms(data.data));
     }, [])
