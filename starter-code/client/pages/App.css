@@ -1,0 +1,107 @@
+/* App.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+    background-color: #282c34; /* Dark gray background for the entire page */
+    color: #ffffff; /* White text color */
+    font-family: 'Arial', sans-serif; /* Set default font family */
+}
+
+.container-fluid {
+    padding: 20px; /* Add some padding to the container */
+}
+
+.main-content {
+    background-color: #495057; /* Dark gray background for the main content */
+    padding: 20px;
+    border-radius: 10px; /* Add rounded corners */
+}
+
+/* Style for the sidebar */
+.sidebar {
+    background-color: #343a40; /* Slightly darker gray sidebar background */
+    padding: 20px;
+    border-radius: 10px; /* Add rounded corners */
+}
+
+/* Style for sidebar links */
+.sidebar a {
+    color: #ffffff; /* White link color */
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    color: #adb5bd; /* Lighter gray on hover */
+}
+
+.logo-img {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.rate-my-potty {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.App {
+    /* Your light theme styles */
+    background-color: white;
+    color: black;
+  }
+  
+  .App.dark-mode {
+    /* Your dark theme styles */
+    background-color: black;
+    color: white;
+  }
+
+  /* App.css */
+
+.rate-my-potty {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.App {
+    /* Your light theme styles */
+    background-color: white;
+    color: black;
+}
+  
+.App.dark-mode {
+    /* Your dark theme styles */
+    background-color: black;
+    color: white;
+}
+
+.App .rate-my-potty {
+    background-color: inherit;
+}
+
+.App.dark-mode .rate-my-potty {
+    background-color: inherit;
+}
+
+.header h1 {
+    font-family: 'Roboto', sans-serif; /* Change the font */
+    color: #add8e6; /* Change the color to light blue */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a text shadow */
+    transition: color 0.3s ease; /* Add a transition for smooth color change */
+}
+  
+  .App.dark-mode .header h1 {
+    color: #add8e6; /* Keep the color in dark mode */
+}
+
+
+  
+  
