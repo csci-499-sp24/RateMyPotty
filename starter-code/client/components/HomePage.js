@@ -10,7 +10,7 @@ import NYCMap from './NYCMap';
 function HomePage({ darkMode, toggleDarkMode }) {
   // Function to handle emergency button click
   const handleEmergencyButtonClick = () => {
-    // Implement your logic here
+    // Implement logic here
     console.log('Emergency button clicked!');
   };
 
@@ -28,7 +28,7 @@ function HomePage({ darkMode, toggleDarkMode }) {
           </div>
         </div>
       </div>
-      <Button onClick={handleEmergencyButtonClick}>Emergency</Button> {/* Include the Button component here */}
+      <Button onClick={handleEmergencyButtonClick}>Emergency</Button> {/* Button component here */}
       <Footer />
     </div>
   );

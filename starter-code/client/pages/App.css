@@ -51,13 +51,13 @@ body {
 }
 
 .App {
-    /* Your light theme styles */
+    /* light theme styles */
     background-color: white;
     color: black;
   }
   
   .App.dark-mode {
-    /* Your dark theme styles */
+    /* dark theme styles */
     background-color: black;
     color: white;
   }
@@ -72,13 +72,13 @@ body {
 }
 
 .App {
-    /* Your light theme styles */
+    /*  light theme styles */
     background-color: white;
     color: black;
 }
   
 .App.dark-mode {
-    /* Your dark theme styles */
+    /* dark theme styles */
     background-color: black;
     color: white;
 }
