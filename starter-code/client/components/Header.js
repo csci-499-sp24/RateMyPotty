@@ -11,9 +11,8 @@ function Header({ darkMode, toggleDarkMode }) {
       <div className="container">
         <div className="d-flex align-items-center justify-content-between">
           <div className="logo d-flex align-items-center">
-            <img src="/basic.png" alt="Rate My Potty Logo" className="logo-img mr-2" />
           </div>
-          <h1 className="m-0">Rate My Potty</h1>
+          <h1 className="m-0"></h1>
           <div className="header-icons d-flex align-items-center">
             <button className="toggle-button" onClick={toggleDarkMode}>
               {darkMode ? "🌞" : "🌙"}

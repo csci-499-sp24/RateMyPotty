@@ -2,9 +2,9 @@ import React from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Hero from './Hero';
-import Footer from './Footer';
-import Button from './Button'; // Import the Button component
+import Footer from './Footer'; // Import the Button component
 import NYCMap from './NYCMap';
+import Navbar from './Navbar';
 
 
 function HomePage({ darkMode, toggleDarkMode }) {
@@ -16,21 +16,23 @@ function HomePage({ darkMode, toggleDarkMode }) {
 
   return (
     <div className="container-fluid">
-      <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-      <div className="row">
-        <div className="col-md-3">
-          <Sidebar />
-        </div>
-        <div className="col-md-9">
-          <div className="main-content">
-            <Hero />
-            <NYCMap />
-          </div>
+  <Navbar />
+  <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+  <div className="row">
+    <div className="col-md-3">
+
+    </div>
+    <div className="col-md-9">
+      <div className="main-content">
+        <Hero />
+        <div className="map-container">
+          <NYCMap />
         </div>
       </div>
-      <Button onClick={handleEmergencyButtonClick}>Emergency</Button> {/* Button component here */}
-      <Footer />
     </div>
+  </div>
+  <Footer />
+</div>
   );
 }
 

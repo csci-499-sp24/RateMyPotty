@@ -144,10 +144,11 @@ body {
     text-align: center;
   }
   
-  
+  .header {
+    padding: 10px 0; /* Adjust the padding as needed */
+}
 
-
-
-
-  
-  
+.map-container {
+    display: flex;
+    justify-content: center;
+  }
