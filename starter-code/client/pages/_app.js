@@ -3,6 +3,8 @@ import HomePage from '@/components/HomePage';
 import './App.css'
 import './index.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
