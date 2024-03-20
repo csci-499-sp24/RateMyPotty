@@ -2,7 +2,8 @@ import Image from "next/image";
 import Container from "./Container";
 import heroImg from "./samplehero2.png";
 
-const Hero = () => {
+const Hero = (props) => {
+  
   return (
     <>
       <Container className="flex flex-wrap ">
@@ -17,13 +18,11 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
-            <a
-  href="https://www.google.com/maps"
-  target="_blank"
-  rel="noopener"
+            <button
+  onClick={props.handleEmergencyButtonClick}
   className="px-8 py-4 text-lg font-medium text-center text-white bg-red-600 rounded-md ">
   Emergency
-</a>
+</button>
               <a
                 href="https://github.com/csci-499-sp24/RateMyPotty"
                 target="_blank"

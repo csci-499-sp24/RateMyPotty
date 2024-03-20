@@ -12,6 +12,9 @@ import Testimonials from "../components/testimonials";
 import Cta from "../components/cta";
 import Faq from "../components/faq";
 import PopupWidget from "../components/popupWidget";
+import {
+  APIProvider
+} from "@vis.gl/react-google-maps";
 
 
 const theme = {
@@ -23,7 +26,9 @@ const theme = {
 function App({ Component, pageProps }) {
   return (
     <ThemeProvider attribute="class">
-      <HomePage {...pageProps} />
+      <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
+        <HomePage {...pageProps} />
+      </APIProvider>
     </ThemeProvider>
   );
 }

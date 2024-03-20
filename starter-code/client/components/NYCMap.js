@@ -4,10 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faPencil, faHeart} from '@fortawesome/free-solid-svg-icons'
 
 import {
-    APIProvider,
     Map,
-    AdvancedMarker,
-    Pin,
     InfoWindow,
     Marker
 } from "@vis.gl/react-google-maps";
@@ -152,44 +149,32 @@ const mapStyles =
     }
 ]
 
-export default function NYCMap() {
+export default function NYCMap(props) {
+    
 
     const [showTextbox, setShowTextbox] = useState(false);
 
-    React.useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position)
-        })
-    }, [])
-
-    const position = { lat: 40.712775, lng: -74.005973 };
-    const [bathrooms, setBathrooms] = useState([]);
-    const [popupWindow, setPopupWindow] = useState(null);
-    // Make a request to the server inorder to grab bathroom data
-    useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
-            .then((res) => res.json())
-            .then(data => setBathrooms(data.data));
-    }, [])
-
-    console.log('bathrooms', bathrooms);    
+    const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+   
     return(
-        <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
+       
             <div style={{ height: "80vh", width: "80vw" }}>
             <Map 
             streetViewControl={true}  
             zoomControl ={true} 
             mapTypeControl = {false} 
             gestureHandling = {true}
-            defaultCenter = {position}
+           
+            defaultCenter = {defaultPosition}
+            
             defaultZoom={13} 
             styles ={mapStyles}>
-                {bathrooms.map(bathroom => (
+                {props.bathrooms.map(bathroom => (
                         <Marker key = {bathroom.BathroomID}
                         position={{lat: bathroom.Latitude, lng: bathroom.Longitude}}
                         clickable={true}
                         onClick={() => {
-                            setPopupWindow(bathroom);
+                            props.setPopupWindow(bathroom);
                         }}
                         title={bathroom.Name}
                         icon={{
@@ -198,17 +183,17 @@ export default function NYCMap() {
                           }}
                       />
                 ))}
-                {popupWindow &&
+                {props.popupWindow &&
                 <InfoWindow 
                     onCloseClick={() => {
-                    setPopupWindow(null);
+                    props.setPopupWindow(null);
                     setShowTextbox(false); // Hide the textbox when the InfoWindow is closed
                     }}
-                    position = {{lat: popupWindow.Latitude, lng: popupWindow.Longitude}}
+                    position = {{lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude}}
                 >
                     <div className = {styles.popup}>
                         <div id = {styles.name}>
-                            <h2>{popupWindow.Name}</h2>
+                            <h2>{props.popupWindow.Name}</h2>
                         </div>
                         <div id = {styles.buttons}>
                             <FontAwesomeIcon icon = {faPencil} className = "fa-2x" id = {styles.reviewButton} 
@@ -218,12 +203,12 @@ export default function NYCMap() {
                         </div>
                             {showTextbox && <textarea />}
                             <p className = {styles.paragraph}>Star Rating Goes Here</p>
-                            <p className = {styles.paragraph}>{popupWindow.Address}</p>
+                            <p className = {styles.paragraph}>{props.popupWindow.Address}</p>
                         </div>
                 </InfoWindow>
                 }
             </Map>
             </div>
-        </APIProvider>
+      
     )
 }
