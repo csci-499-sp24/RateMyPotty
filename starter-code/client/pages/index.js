@@ -35,6 +35,7 @@ function Index({ darkMode, toggleDarkMode }) {
   <Testimonials />
   <Footer />
 </div>
+
   );
 }
 
