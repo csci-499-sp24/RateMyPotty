@@ -1,10 +1,11 @@
 import React from 'react';
-import Header from './Header';
 import Sidebar from './Sidebar';
 import Hero from './Hero';
 import Footer from './Footer'; // Import the Button component
 import NYCMap from './NYCMap';
 import Navbar from './Navbar';
+import Testimonials from './testimonials';
+import Faq from './faq';
 
 
 function HomePage({ darkMode, toggleDarkMode }) {
@@ -17,7 +18,7 @@ function HomePage({ darkMode, toggleDarkMode }) {
   return (
     <div className="container-fluid">
   <Navbar />
-  <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+
   <div className="row">
     <div className="col-md-3">
 
@@ -26,11 +27,13 @@ function HomePage({ darkMode, toggleDarkMode }) {
       <div className="main-content">
         <Hero />
         <div className="map-container">
-          <NYCMap />
-        </div>
+      <NYCMap className="my-map" />
+      </div>
       </div>
     </div>
   </div>
+  <Faq />
+  <Testimonials />
   <Footer />
 </div>
   );

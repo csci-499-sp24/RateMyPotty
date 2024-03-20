@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import Link from "next/link"; //added this from temp
 
 export default function Document() {
   return (
