@@ -3,7 +3,7 @@ import React from "react";
 import Container from "./Container";
 
 import userOneImg from "../public/maxgoofy.jpeg";
-import userTwoImg from "../public/ray.jpeg";
+import userTwoImg from "../public/betterray.webp";
 import userThreeImg from "../public/tomandjerry.jpeg";
 //import images to replace these
 
@@ -35,14 +35,14 @@ const Testimonials  = () => {
             <Avatar
               image={userTwoImg}
               name="Ray"
-              title="Leader of the Lightbugs"
+              title="Leader of the Cajun Fireflys"
             />
           </div>
         </div>
         <div className="">
           <div className="flex flex-col justify-between w-full h-full bg-gray-100 px-14 rounded-2xl py-14 dark:bg-trueGray-800">
             <p className="text-2xl leading-normal ">
-              This app is so <Mark>awesome</Mark> as a commuter around the city
+              This app is so <Mark>awesome</Mark> for all!
             </p>
 
             <Avatar

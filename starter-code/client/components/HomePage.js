@@ -1,5 +1,4 @@
 import React from 'react';
-import Sidebar from './Sidebar';
 import Hero from './Hero';
 import Footer from './Footer'; // Import the Button component
 import NYCMap from './NYCMap';

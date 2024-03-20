@@ -1,27 +1,41 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react';
+import Hero from '../components/Hero';
+import Footer from '../components/Footer';
+import NYCMap from '../components/NYCMap';
+import Navbar from '../components/Navbar';
+import Testimonials from '../components/testimonials';
+import Faq from '../components/faq';
 
-function Index() {
-  
-  const [message, setMessage] = useState("Loading")
 
-  console.log(process.env.NEXT_PUBLIC_SERVER_URL + "/api/home")
-  useEffect(() => {
-    fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/home").then(
-      response => response.json()
-    ).then(
-      data => {
-        console.log(data)
-        setMessage(data.message)
-      }
-    )
-  }, [])
+function Index({ darkMode, toggleDarkMode }) {
+  // Function to handle emergency button click
+  const handleEmergencyButtonClick = () => {
+    // Implement logic here
+    console.log('Emergency button clicked!');
+  };
 
   return (
-    <div>
-      <div>Return message from server</div>
-      <div>{message}</div>
+    <div className="container-fluid">
+  <Navbar />
+
+  <div className="row">
+    <div className="col-md-3">
+
     </div>
-  )
+    <div className="col-md-9">
+      <div className="main-content">
+        <Hero />
+        <div id = "map" className="map-container">
+      <NYCMap className="my-map" />
+      </div>
+      </div>
+    </div>
+  </div>
+  <Faq />
+  <Testimonials />
+  <Footer />
+</div>
+  );
 }
 
-export default Index
+export default Index;

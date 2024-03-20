@@ -21,7 +21,7 @@ export default function Footer() {
               {" "}
               <Link href="/" className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100">
                     <Image
-                      src=""
+                      src="/samplepiclogo.jpg"
                       alt="N"
                       width="32"
                       height="32"
@@ -45,7 +45,7 @@ export default function Footer() {
                 <Image
                   src=""
                   alt="Powered by Capstone"
-                  width="212"
+                  width="100"
                   height="44"
                 />
               </a>

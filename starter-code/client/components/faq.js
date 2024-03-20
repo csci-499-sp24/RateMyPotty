@@ -40,7 +40,7 @@ const faqdata = [
   },
   {
     question: "Can I rate my bathroom visits?",
-    answer: "Yes! In face we highly encourage it.",
+    answer: "Yes! In fact we highly encourage it.",
   },
   {
     question: "Do I need to make an account? ",
