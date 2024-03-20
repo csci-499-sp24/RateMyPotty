@@ -1,13 +1,13 @@
 import React from 'react';
-import Hero from '../components/Hero';
-import Footer from '../components/Footer';
-import NYCMap from '../components/NYCMap';
-import Navbar from '../components/Navbar';
-import Testimonials from '../components/testimonials';
-import Faq from '../components/faq';
+import Hero from './Hero';
+import Footer from './Footer'; // Import the Button component
+import NYCMap from './NYCMap';
+import Navbar from './Navbar';
+import Testimonials from './testimonials';
+import Faq from './faq';
 
 
-function Index({ darkMode, toggleDarkMode }) {
+function HomePage({ darkMode, toggleDarkMode }) {
   // Function to handle emergency button click
   const handleEmergencyButtonClick = () => {
     // Implement logic here
@@ -35,8 +35,7 @@ function Index({ darkMode, toggleDarkMode }) {
   <Testimonials />
   <Footer />
 </div>
-
   );
 }
 
-export default Index;
+export default HomePage;
