@@ -9,7 +9,7 @@ const Navbar = () => {
     "About",
     "Favorite List",
     "Sign Up",
-    <Link href="#map">Map</Link>
+    "Map",
   ];
 
   return (
