@@ -6,6 +6,7 @@
 
 .heading{
     font-family: 'Roboto';
+    font-size: 25px;
 }
 
 .input{
@@ -14,6 +15,7 @@
     width: 97%;
     height: 23px;
     border: black;
+    border: solid;
     
 }
 

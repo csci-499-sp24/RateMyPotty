@@ -6,7 +6,7 @@ function Signup(){
         <div>
             <form className={styles.form}>
                 <div>
-                    <h2 className={styles.heading}>Welcome to RateMyPotty</h2>
+                    <h1 className={styles.heading}>Welcome to RateMyPotty</h1>
                     <div>
                         <label className={styles.label} htmlFor="email">Email</label>
                         <input className={styles.input} type="text" id="email" name="email"></input>
