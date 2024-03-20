@@ -26,7 +26,7 @@ function HomePage({ darkMode, toggleDarkMode }) {
     <div className="col-md-9">
       <div className="main-content">
         <Hero />
-        <div className="map-container">
+        <div id = "map" className="map-container">
       <NYCMap className="my-map" />
       </div>
       </div>
