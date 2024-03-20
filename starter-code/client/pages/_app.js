@@ -1,14 +1,5 @@
-import {useState} from 'react';
-import NYCMap from '../components/NYCMap.js'; 
+import "@/styles/globals.css";
 
-
-function App() {
-  return (
-    <div className="App">
-      <NYCMap />
-
-    </div>
-  );
+export default function App({ Component, pageProps }) {
+  return <Component {...pageProps} />;
 }
-
-export default App;
