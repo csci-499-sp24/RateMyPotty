@@ -21,7 +21,7 @@ export default function Footer() {
               {" "}
               <Link href="/" className="flex items-center space-x-2 text-2xl font-medium text-indigo-500 dark:text-gray-100">
                     <Image
-                      src="/img/logo.svg"
+                      src=""
                       alt="N"
                       width="32"
                       height="32"
@@ -38,12 +38,12 @@ export default function Footer() {
 
             <div className="mt-5">
               <a
-                href="https://vercel.com/?utm_source=web3templates&utm_campaign=oss"
+                href="https://github.com/csci-499-sp24/RateMyPotty"
                 target="_blank"
                 rel="noopener"
                 className="relative block w-44">
                 <Image
-                  src="/img/vercel.svg"
+                  src=""
                   alt="Powered by Capstone"
                   width="212"
                   height="44"
@@ -74,21 +74,21 @@ export default function Footer() {
             <div>Follow us</div>
             <div className="flex mt-5 space-x-5 text-gray-400 dark:text-gray-500">
               <a
-                href="https://twitter.com/web3templates"
+                href="https://twitter.com"
                 target="_blank"
                 rel="noopener">
                 <span className="sr-only">Twitter</span>
                 <Twitter />
               </a>
               <a
-                href="https://facebook.com/web3templates"
+                href="https://facebook.com"
                 target="_blank"
                 rel="noopener">
                 <span className="sr-only">Facebook</span>
                 <Facebook />
               </a>
               <a
-                href="https://instagram.com/web3templates"
+                href="https://instagram.com"
                 target="_blank"
                 rel="noopener">
                 <span className="sr-only">Instagram</span>
@@ -108,14 +108,14 @@ export default function Footer() {
         <div className="my-10 text-sm text-center text-gray-600 dark:text-gray-400">
           Copyright © {new Date().getFullYear()}. Made with ♥ by{" "}
           <a
-            href="https://web3templates.com/"
+            href="https://google.com/"
             target="_blank"
             rel="noopener">
             2Bit.
           </a>{" "}
           Illustrations from{" "}
           <a
-            href="https://www.glazestock.com/"
+            href="https://www.google.com/"
             target="_blank"
             rel="noopener ">
             2Bit
@@ -130,7 +130,7 @@ export default function Footer() {
 
 const Twitter = ({ size = 24 }) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
+    xmlns="http:twitter.com"
     width={size}
     height={size}
     viewBox="0 0 24 24"
@@ -141,7 +141,7 @@ const Twitter = ({ size = 24 }) => (
 
 const Facebook = ({ size = 24 }) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
+    xmlns="http://facebook.com"
     width={size}
     height={size}
     viewBox="0 0 24 24"
@@ -151,7 +151,7 @@ const Facebook = ({ size = 24 }) => (
 );
 const Instagram = ({ size = 24 }) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
+    xmlns="http://www.instagram.com"
     width={size}
     height={size}
     viewBox="0 0 24 24"
@@ -162,7 +162,7 @@ const Instagram = ({ size = 24 }) => (
 
 const Linkedin = ({ size = 24 }) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
+    xmlns="http://linkedin.com"
     width={size}
     height={size}
     viewBox="0 0 24 24"
@@ -174,28 +174,28 @@ const Linkedin = ({ size = 24 }) => (
 const Backlink = () => {
   return (
     <a
-      href="https://web3templates.com"
+      href="https://github.com/csci-499-sp24/RateMyPotty"
       target="_blank"
       rel="noopener"
       className="absolute flex px-3 py-1 space-x-2 text-sm font-semibold text-gray-900 bg-white border border-gray-300 rounded shadow-sm place-items-center left-5 bottom-5 dark:bg-trueGray-900 dark:border-trueGray-700 dark:text-trueGray-300">
       <svg
-        width="20"
-        height="20"
-        viewBox="0 0 30 30"
-        fill="none"
-        className="w-4 h-4"
-        xmlns="http://www.w3.org/2000/svg">
-        <rect
-          width="30"
-          height="29.5385"
-          rx="2.76923"
-          fill="#362F78"
-        />
-        <path
-          d="M10.14 21.94H12.24L15.44 12.18L18.64 21.94H20.74L24.88 8H22.64L19.58 18.68L16.36 8.78H14.52L11.32 18.68L8.24 8H6L10.14 21.94Z"
-          fill="#F7FAFC"
-        />
-      </svg>
+  xmlns="http://www.w3.org/2000/svg"
+  width="20"
+  height="20"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  strokeWidth="2"
+  strokeLinecap="round"
+  strokeLinejoin="round"
+  className="w-4 h-4"
+>
+  <path d="M7 14V10a5 5 0 0 1 10 0v4"></path>
+  <path d="M16 16V21"></path>
+  <path d="M8 16V21"></path>
+  <path d="M4 4h16"></path>
+  <path d="M5 9h14"></path>
+</svg>
 
       <span>RateMyPotty</span>
     </a>
