@@ -175,7 +175,7 @@ export default function NYCMap() {
     console.log('bathrooms', bathrooms);    
     return(
         <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
-            <div style={{ height: "70vh", width: "70vw" }}>
+            <div style={{ height: "80vh", width: "80vw" }}>
             <Map 
             streetViewControl={true}  
             zoomControl ={true} 

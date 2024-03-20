@@ -43,13 +43,6 @@ class BathroomModel{
                 allowNull: false
 
             },
-            /*
-            Rating: {
-                type: DataTypes.FLOAT,
-                allowNull: true,
-
-            }
-            */
         });
     }
 
