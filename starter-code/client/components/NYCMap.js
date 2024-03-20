@@ -152,10 +152,10 @@ const mapStyles =
     }
 ]
 
-
-
 export default function NYCMap() {
-    //Asks for the user's location
+
+    const [showTextbox, setShowTextbox] = useState(false);
+
     React.useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             console.log(position)
@@ -200,7 +200,10 @@ export default function NYCMap() {
                 ))}
                 {popupWindow &&
                 <InfoWindow 
-                    onCloseClick={() => setPopupWindow(null)}
+                    onCloseClick={() => {
+                    setPopupWindow(null);
+                    setShowTextbox(false); // Hide the textbox when the InfoWindow is closed
+                    }}
                     position = {{lat: popupWindow.Latitude, lng: popupWindow.Longitude}}
                 >
                     <div className = {styles.popup}>
@@ -208,12 +211,15 @@ export default function NYCMap() {
                             <h2>{popupWindow.Name}</h2>
                         </div>
                         <div id = {styles.buttons}>
-                            <FontAwesomeIcon icon = {faPencil} className = "fa-2x" id = {styles.reviewButton}/>
+                            <FontAwesomeIcon icon = {faPencil} className = "fa-2x" id = {styles.reviewButton} 
+                                onClick={() => setShowTextbox(true)}
+                            />
                             <FontAwesomeIcon icon = {faHeart} className = "fa-2x" id = {styles.favoriteButton}/>
                         </div>
-                        <p className = {styles.paragraph}>Star Rating Goes Here</p>
-                        <p className = {styles.paragraph}>{popupWindow.Address}</p>
-                    </div>
+                            {showTextbox && <textarea />}
+                            <p className = {styles.paragraph}>Star Rating Goes Here</p>
+                            <p className = {styles.paragraph}>{popupWindow.Address}</p>
+                        </div>
                 </InfoWindow>
                 }
             </Map>
