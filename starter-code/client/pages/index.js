@@ -1,27 +1,12 @@
 import React, {useEffect, useState} from 'react'
+import NYCMap from '../components/NYCMap'
 
-function Index() {
-  
-  const [message, setMessage] = useState("Loading")
-
-  console.log(process.env.NEXT_PUBLIC_SERVER_URL + "/api/home")
-  useEffect(() => {
-    fetch(process.env.NEXT_PUBLIC_SERVER_URL + "/api/home").then(
-      response => response.json()
-    ).then(
-      data => {
-        console.log(data)
-        setMessage(data.message)
-      }
-    )
-  }, [])
-
+function Index(){
   return (
-    <div>
-      <div>Return message from server</div>
-      <div>{message}</div>
+    <div className="App">
+      <NYCMap />
     </div>
-  )
+  );
 }
 
 export default Index

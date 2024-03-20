@@ -1,15 +1,5 @@
-import {useState} from 'react';
-import NYCMap from '../components/NYCMap.js'; 
-import Signup from './signup.js';
+import "@/styles/globals.css";
 
-
-function App() {
-  return (
-    <div className="App">
-      <Signup/>
-      <NYCMap />
-    </div>
-  );
+export default function App({ Component, pageProps }) {
+  return <Component {...pageProps} />;
 }
-
-export default App;
