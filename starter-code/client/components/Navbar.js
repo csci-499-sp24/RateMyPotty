@@ -66,7 +66,7 @@ const Navbar = () => {
                       </Link>
                     ))}
                     <Link href="/signup" className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5">         
-                        Log in/Sign up
+                        Get Started
                     </Link>
                   </>
                 </Disclosure.Panel>
