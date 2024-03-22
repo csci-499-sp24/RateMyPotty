@@ -12,10 +12,10 @@
 .input{
     display: block;
     margin-top: 1%;
-    width: 97%;
+    width: 99%;
     height: 23px;
-    border: black;
-    border: solid;
+    border: black 1px solid;
+    border-radius: 2px;
     
 }
 
@@ -39,4 +39,12 @@
     border: 1px solid #ccc;
     box-shadow:  rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     margin-bottom: 5%;
+    margin-top: 5%
+}
+
+.formDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
