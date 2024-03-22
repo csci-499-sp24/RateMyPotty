@@ -17,6 +17,7 @@ const Signup = () => (
     <div>
         <div>
             <Navbar/>
+
         </div>
         
         <Auth

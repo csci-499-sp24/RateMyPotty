@@ -168,6 +168,7 @@ export default function NYCMap() {
     const [popupWindow, setPopupWindow] = useState(null);
     // Make a request to the server inorder to grab bathroom data
     useEffect(() => {
+        //Make sure to change it to 'api/bathrooms' before committing
         fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
             .then((res) => res.json())
             .then(data => setBathrooms(data.data));
@@ -232,3 +233,25 @@ export default function NYCMap() {
         </APIProvider>
     )
 }
+
+/*
+<MarkerClusterer>
+  {(clusterer) =>
+    bathrooms.map((bathroom) => (
+      <Marker 
+        key={bathroom.BathroomID}
+        position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
+        clickable={true}
+        onClick={() => {
+          setPopupWindow(bathroom);
+        }}
+        title={bathroom.Name}
+        icon={{
+                url: "/toilet.png",
+                 scaledSize: { width: 50, height: 50 }, // size of the icon
+        }}
+      />
+    ))
+  }
+</MarkerClusterer>
+*/
