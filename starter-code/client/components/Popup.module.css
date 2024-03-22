@@ -5,11 +5,15 @@
 
 .paragraph{
     font-size: 15px;
+    margin-top: 8%
 }
 
+
 #name{
+    font-size: 20px;
     display: inline-block;
     width: 150px;
+    font-weight: bold;
 }
 
 #buttons{

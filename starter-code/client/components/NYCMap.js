@@ -168,7 +168,7 @@ export default function NYCMap() {
     const [popupWindow, setPopupWindow] = useState(null);
     // Make a request to the server inorder to grab bathroom data
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
+        fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/bathrooms')
             .then((res) => res.json())
             .then(data => setBathrooms(data.data));
     }, [])
@@ -209,7 +209,7 @@ export default function NYCMap() {
                 >
                     <div className = {styles.popup}>
                         <div id = {styles.name}>
-                            <h2>{popupWindow.Name}</h2>
+                            <h1>{popupWindow.Name}</h1>
                         </div>
                         <div id = {styles.buttons}>
                             <FontAwesomeIcon icon = {faPencil} className = "fa-2x" id = {styles.reviewButton} 
@@ -218,8 +218,12 @@ export default function NYCMap() {
                             <FontAwesomeIcon icon = {faHeart} className = "fa-2x" id = {styles.favoriteButton}/>
                         </div>
                             {showTextbox && <textarea />}
-                            <p className = {styles.paragraph}>Star Rating Goes Here</p>
-                            <p className = {styles.paragraph}>{popupWindow.Address}</p>
+                            <div className = {styles.paragraph}>
+                                <p>Star Rating Goes Here</p>
+                            </div>
+                            <div className = {styles.paragraph}>
+                                <p className>{popupWindow.Address}</p>
+                            </div>
                         </div>
                 </InfoWindow>
                 }
