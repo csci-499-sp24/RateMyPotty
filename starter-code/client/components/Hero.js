@@ -12,7 +12,7 @@ const Hero = () => {
               NYC , we have your back
             </h1>
             <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-300">
-              Rate My Potty is an app made to make your commmute and restroom trips as seamless as possible. Having an
+              RateMyPotty is an app made to make your commmute and restroom trips as seamless as possible. Having an
               emergency? Click the button for the nearest restroom.
             </p>
 

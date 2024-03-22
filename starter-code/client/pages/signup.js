@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../styles/Signup.module.css'
 import Navbar from '../components/Navbar';
+import Link from "next/link";
 
 
 function Signup(){
@@ -22,7 +23,9 @@ function Signup(){
                             <input className={styles.input} type="password" id="password" name="password"></input>
                         </div>
                         <div>
-                            <button className={styles.signupButton} type="button">Sign Up</button>
+                            <Link href = "/">
+                                <button className={styles.signupButton} type="button">Sign Up</button>
+                            </Link>
                         </div>
                     </div>
                 </form>
