@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react'; //added useRef for scroll
 import {
   useMapsLibrary,
   useMap
@@ -12,6 +12,8 @@ import Faq from '../components/faq';
 
 
 function Index({ darkMode, toggleDarkMode }) {
+
+  const mapRef = useRef(null); //for scrolling reference in hero and NYCMap
 
   //const defaultPosition = { lat: null, lng: null };
   const geometryLibrary = useMapsLibrary('geometry');
@@ -92,8 +94,8 @@ function Index({ darkMode, toggleDarkMode }) {
         </div>
         <div className="col-md-9">
           <div className="main-content">
-          <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} />
-            <div id="map" className="map-container">
+          <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} /> 
+            <div id="map" className="map-container" ref={mapRef}>
             <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
             </div>
           </div>

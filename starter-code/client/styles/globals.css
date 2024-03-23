@@ -24,3 +24,20 @@
     color: white; /* Color for dark mode */
   }
   
+  @layer components {
+    .dark input {
+      @apply text-white;
+    }
+  }
+
+  @layer components {
+    .dark [class^="Popup_"] {
+      @apply text-black;
+    }
+  }
+
+  @layer components {
+    .dark textarea {
+      @apply bg-white;
+    }
+  }
