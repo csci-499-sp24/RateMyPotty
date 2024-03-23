@@ -1,38 +1,35 @@
 import React from 'react';
-import styles from '../styles/Signup.module.css'
 import Navbar from '../components/Navbar';
-import Link from "next/link";
+import Footer from '../components/Footer';
+import {useState} from 'react';
+import{ createClient } from '@supabase/supabase-js'
+import { Auth } from '@supabase/auth-ui-react'
+import { ThemeSupa} from '@supabase/auth-ui-shared'
+  
+require('dotenv').config();
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-function Signup(){
-    return(
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  
+const Signup = () => (
+    <div>
         <div>
-            <div>
-            <Navbar></Navbar>
-            </div>
-            <div className={styles.formDiv}>
-                <form className={styles.form}>
-                    <div>
-                        <h1 className={styles.heading}>Welcome to RateMyPotty</h1>
-                        <div>
-                            <label className={styles.label} htmlFor="email">Email</label>
-                            <input className={styles.input} type="text" id="email" name="email"></input>
-                        </div>
-                        <div>
-                            <label className={styles.label} htmlFor="password">Password</label>
-                            <input className={styles.input} type="password" id="password" name="password"></input>
-                        </div>
-                        <div>
-                            <Link href = "/">
-                                <button className={styles.signupButton} type="button">Sign Up</button>
-                            </Link>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            
+            <Navbar/>
+
         </div>
-    );
-}
+        
+        <Auth
+            supabaseClient={supabase}
+            appearance={{ theme: ThemeSupa }}
+            providers={['google', 'facebook', 'twitter', 'github']}
+        />
+        
+        <div>
+            <Footer/>
+        </div>
+    </div>
+)
 
 export default Signup;
