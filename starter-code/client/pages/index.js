@@ -14,8 +14,15 @@ import Faq from '../components/faq';
 
 
 function Index({ darkMode, toggleDarkMode }) {
+<<<<<<< HEAD
   const mapRef = useRef(null); //for scrolling reference in hero and NYCMap
   //const defaultPosition = { lat: null, lng: null };
+=======
+
+  const mapRef = useRef(null); //for scrolling reference in hero and NYCMap
+
+  const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+>>>>>>> 9f5cc43 (fixed marker text)
   const geometryLibrary = useMapsLibrary('geometry');
   const placesLibrary = useMapsLibrary('places');
 
