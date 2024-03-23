@@ -42,12 +42,6 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener"
                 className="relative block w-44">
-                <Image
-                  src=""
-                  alt="Powered by Capstone"
-                  width="100"
-                  height="44"
-                />
               </a>
             </div>
           </div>
