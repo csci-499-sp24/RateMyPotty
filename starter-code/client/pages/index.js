@@ -37,12 +37,12 @@ function Index({ darkMode, toggleDarkMode }) {
   }, [])
 
   // Once we have the user's location, set the map's center to it
-  useEffect(() => {
-    if (userPosition.lng && userPosition.lat) {
-      map.setCenter(userPosition)
-    }
-
-  }, [userPosition])
+  //added a null check 
+useEffect(() => {
+  if (userPosition.lng && userPosition.lat && map) {
+    map.setCenter(userPosition)
+  }
+}, [userPosition, map])
 
   // Moved the bathrooms state and api call to homepage because we need that data here to find the nearest bathroom
   useEffect(() => {
@@ -95,7 +95,7 @@ function Index({ darkMode, toggleDarkMode }) {
           <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} /> 
             <div id="map" className="map-container" ref={mapRef}>
             <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
-            </div>
+            </div> 
           </div>
         </div>
       </div>
