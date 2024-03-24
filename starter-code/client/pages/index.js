@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react'; //added useRef for scroll
 import {
   useMapsLibrary,
   useMap
@@ -12,6 +12,8 @@ import Faq from '../components/faq';
 
 
 function Index({ darkMode, toggleDarkMode }) {
+
+  const mapRef = useRef(null); //for scrolling reference in hero and NYCMap
 
   const defaultPosition = { lat: 40.712775, lng: -74.005973 };
   const geometryLibrary = useMapsLibrary('geometry');
@@ -35,12 +37,12 @@ function Index({ darkMode, toggleDarkMode }) {
   }, [])
 
   // Once we have the user's location, set the map's center to it
-  useEffect(() => {
-    if (userPosition.lng && userPosition.lat) {
-      map.setCenter(userPosition)
-    }
-
-  }, [userPosition])
+  //added a null check 
+useEffect(() => {
+  if (userPosition.lng && userPosition.lat && map) {
+    map.setCenter(userPosition)
+  }
+}, [userPosition, map])
 
   // Moved the bathrooms state and api call to homepage because we need that data here to find the nearest bathroom
   useEffect(() => {
@@ -90,10 +92,10 @@ function Index({ darkMode, toggleDarkMode }) {
         </div>
         <div className="col-md-9">
           <div className="main-content">
-          <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} />
-            <div id="map" className="map-container">
+          <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} /> 
+            <div id="map" className="map-container" ref={mapRef}>
             <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
-            </div>
+            </div> 
           </div>
         </div>
       </div>
