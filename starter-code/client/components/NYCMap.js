@@ -182,7 +182,7 @@ export default function NYCMap(props) {
                 defaultZoom={13}
                 styles={mapStyles}>
                 {props.bathrooms.map(bathroom => (
-                <Marker
+                <Marker key={bathroom.BathroomID}
                     position={userLocation}
                     icon={{
                       path: google.maps.SymbolPath.CIRCLE,
