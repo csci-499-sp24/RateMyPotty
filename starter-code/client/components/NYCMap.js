@@ -180,19 +180,18 @@ export default function NYCMap(props) {
                 defaultCenter={defaultPosition}
                 defaultZoom={13}
                 styles={mapStyles}>
-                {props.bathrooms.map(bathroom => (
-                <Marker key={bathroom.BathroomID}
+                <Marker
+                    key="userLocation"
                     position={userLocation}
                     icon={{
-                      path: google.maps.SymbolPath.CIRCLE,
-                      fillColor: '#4285F4',
-                      fillOpacity: 1,
-                      scale: 8,
-                      strokeColor: 'rgb(255,255,255)',
-                      strokeWeight: 2,
+                        path: typeof window !== 'undefined' && window.google && window.google.maps && window.google.maps.SymbolPath ? window.google.maps.SymbolPath.CIRCLE : '',
+                        fillColor: '#4285F4',
+                        fillOpacity: 1,
+                        scale: 8,
+                        strokeColor: 'rgb(255,255,255)',
+                        strokeWeight: 2,
                     }}
                 />
-                ))}
                 {props.bathrooms.map(bathroom => (
                     <Marker key={bathroom.BathroomID}
                         position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
