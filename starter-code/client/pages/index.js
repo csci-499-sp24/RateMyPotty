@@ -13,7 +13,7 @@ import Faq from '../components/faq';
 
 function Index({ darkMode, toggleDarkMode }) {
 
-  const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+  //const defaultPosition = { lat: null, lng: null };
   const geometryLibrary = useMapsLibrary('geometry');
   const map = useMap();
   const [userPosition, setUserPosition] = useState({});
@@ -29,6 +29,8 @@ function Index({ darkMode, toggleDarkMode }) {
       // Store' user's position in state
       // Updating state tells react to update the map and set the center to the user's location
       setUserPosition({ lat: lat, lng: lng })
+      //Hunter coords as location for testing
+      //setUserPosition({ lat: 40.7678, lng: -73.9645 })
     }, (err) => {
       console.log('user did not allow us to access location')
     })
