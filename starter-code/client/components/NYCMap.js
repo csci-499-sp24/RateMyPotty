@@ -153,8 +153,6 @@ const mapStyles =
 export default function NYCMap(props) {
     //places the user's location on the map
     const [userLocation, setUserLocation] = useState(null);
-    //places the user's location on the map
-    const [userLocation, setUserLocation] = useState(null);
     const [showTextbox, setShowTextbox] = useState(false);
     const defaultPosition = { lat: 40.712775, lng: -74.005973 };
     // Get user's location; this must be used so that user coords can be used in this function
@@ -172,7 +170,6 @@ export default function NYCMap(props) {
         }
       }, []);
     return (
-        //Markers for the user's location and the bathrooms
         //Markers for the user's location and the bathrooms
         <div style={{ height: "70vh", width: "70vw" }}>
             <Map

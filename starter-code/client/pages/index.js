@@ -12,9 +12,7 @@ import Faq from '../components/faq';
 
 
 function Index({ darkMode, toggleDarkMode }) {
-
   const mapRef = useRef(null); //for scrolling reference in hero and NYCMap
-
   //const defaultPosition = { lat: null, lng: null };
   const geometryLibrary = useMapsLibrary('geometry');
   const map = useMap();
