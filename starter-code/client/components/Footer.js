@@ -9,7 +9,6 @@ export default function Footer() {
     "Features",
     "Members",
     "About us",
-    "Blog",
   ];
   const legal = ["Terms", "Privacy", "Legal"];
   return (
