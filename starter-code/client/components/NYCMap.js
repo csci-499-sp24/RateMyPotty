@@ -153,24 +153,26 @@ const mapStyles =
 export default function NYCMap(props) {
     //places the user's location on the map
     const [userLocation, setUserLocation] = useState(null);
+    //places the user's location on the map
+    const [userLocation, setUserLocation] = useState(null);
     const [showTextbox, setShowTextbox] = useState(false);
     const defaultPosition = { lat: 40.712775, lng: -74.005973 };
     // Get user's location; this must be used so that user coords can be used in this function
     useEffect(() => {
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(position => {
-            setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-            //Hunter coords as location for testing
-            //lat: 40.7678,
-            //lng: -73.9645,
-            });
+            navigator.geolocation.getCurrentPosition(position => {
+                setUserLocation({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+                //Hunter coords as location for testing
+                //lat: 40.7678,
+                //lng: -73.9645,
+                });
           });
         }
       }, []);
-    
     return (
+        //Markers for the user's location and the bathrooms
         //Markers for the user's location and the bathrooms
         <div style={{ height: "70vh", width: "70vw" }}>
             <Map
@@ -192,7 +194,7 @@ export default function NYCMap(props) {
                       strokeColor: 'rgb(255,255,255)',
                       strokeWeight: 2,
                     }}
-                  />
+                />
                 ))}
                 {props.bathrooms.map(bathroom => (
                     <Marker key={bathroom.BathroomID}
