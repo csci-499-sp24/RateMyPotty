@@ -3,6 +3,7 @@ const cors = require('cors')
 const app = express();
 const { Sequelize, DataTypes } = require('sequelize');
 const { BathroomModel } = require('./models/bathroom');
+const { UserModel } = require('./models/user')
 require('dotenv').config();
 
 app.use(cors());
@@ -13,10 +14,12 @@ app.get("/api/home", (req, res) => {
 
 if(process.env.USERNAME && process.env.PASSWORD && process.env.HOST){
     BathroomModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
+    UserModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
 } else {
     console.log('Could not find the username/password/host info.');
 }
 BathroomModel.defineBathroomModel();
+UserModel.defineUserModel();
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
@@ -33,7 +36,6 @@ app.get("/api/bathrooms", async (req, res) => {
      res.json({data: bathrooms})
 
 });
-
 
 // Server trying to connect to the database using sequelize
 let sequelize;

@@ -12,7 +12,7 @@ class BathroomModel{
         });
         try{
             await BathroomModel.sequelize.authenticate();
-            console.log('Connection has been established successfully.');
+            console.log('Bathroom Model connection has been established successfully.');
         }catch(error){
             console.error('Unable to connect to the database:', error);
         }
@@ -42,14 +42,7 @@ class BathroomModel{
                 type: DataTypes.FLOAT,
                 allowNull: false
 
-            },
-            /*
-            Rating: {
-                type: DataTypes.FLOAT,
-                allowNull: true,
-
             }
-            */
         });
     }
 
