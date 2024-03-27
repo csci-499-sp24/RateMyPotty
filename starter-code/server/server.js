@@ -3,7 +3,8 @@ const cors = require('cors')
 const app = express();
 const { Sequelize, DataTypes } = require('sequelize');
 const { BathroomModel } = require('./models/bathroom');
-const { UserModel } = require('./models/user')
+const { UserModel } = require('./models/user');
+const { FavoritesModel } = require('./models/Favorites');
 require('dotenv').config();
 
 app.use(cors());
@@ -12,14 +13,37 @@ app.get("/api/home", (req, res) => {
     res.json({message: "Hello World!"});
 });
 
-if(process.env.USERNAME && process.env.PASSWORD && process.env.HOST){
-    BathroomModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
-    UserModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
-} else {
+function connectModelsToSequelize(){
+    if(process.env.USERNAME && process.env.PASSWORD && process.env.HOST){
+        BathroomModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
+        UserModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
+        FavoritesModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
+    } else {
     console.log('Could not find the username/password/host info.');
+    }   
 }
+
+connectModelsToSequelize();
 BathroomModel.defineBathroomModel();
 UserModel.defineUserModel();
+FavoritesModel.defineFavoritesModel();
+
+/*
+DO NOT REMOVE MIGHT NEED LATER.
+This only needs to be done once to set up the tables on supabase but I am keeping this code here incase our database gets messed up somehow and we need to remake everything.
+
+BathroomModel.defineBathroomModel();
+BathroomModel.connectBathroomModel();
+UserModel.defineUserModel();
+UserModel.connectUserModel();
+FavoritesModel.defineFavoritesModel();
+FavoritesModel.connectFavoritesModel();
+
+//Setting up Associations. This is a Many to Many assocation.
+BathroomModel.bathroom.belongsToMany(UserModel.user, {through: FavoritesModel.favorites });
+UserModel.user.belongsToMany(BathroomModel.bathroom, {through: FavoritesModel.favorites });
+*/
+
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {

@@ -1,9 +1,11 @@
 const { Sequelize, DataTypes } = require('sequelize');
+const { BathroomModel } = require('./bathroom');
+const { UserModel } = require('./user');
 require('dotenv').config();
 
 class FavoritesModel{
     static sequelize;
-    static favorite;
+    static favorites;
 
     static async connectToSequelize(username, password, host) {
         FavoritesModel.sequelize = new Sequelize('postgres', username, password, {
@@ -19,31 +21,38 @@ class FavoritesModel{
     }
 
     static defineFavoritesModel() {
-        FavoritesModel.favorite = FavoritesModel.sequelize.define('Favorites', {
+        FavoritesModel.favorites = FavoritesModel.sequelize.define('Favorites', {
             BathroomID: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
-            
+                references: {
+                    model: BathroomModel.bathroom,
+                    key: 'BathroomID'
+                }
             },
             UserID: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-                primaryKey: true
+                primaryKey: true,
+                references: {
+                    model: UserModel.user,
+                    key: 'UserID'
+                }
             },
             Name: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
             }
         });
     }
 
     static async connectFavoritesModel(){
         try {
-            await FavoritesModel.favorite.sync()
+            await FavoritesModel.favorites.sync()
             console.log('Successfully synced favorite');
         }catch(error){
-            console.error('Unable to sync User', error);
+            console.error('Unable to sync Favorites', error);
         }
     }
 }
