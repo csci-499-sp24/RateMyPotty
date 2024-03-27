@@ -47,7 +47,7 @@ useEffect(() => {
   // Moved the bathrooms state and api call to homepage because we need that data here to find the nearest bathroom
   useEffect(() => {
     // Make a request to the server inorder to grab bathroom data
-    fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/bathrooms')
+    fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/bathrooms')
       .then((res) => res.json())
       .then(data => setBathrooms(data.data));
 

@@ -37,6 +37,7 @@ class UserModel{
         });
     }
 
+
     static async connectUserModel(){
         try {
             await UserModel.user.sync()
