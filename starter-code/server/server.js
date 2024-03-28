@@ -4,7 +4,7 @@ const app = express();
 const { Sequelize, DataTypes } = require('sequelize');
 const { BathroomModel } = require('./models/bathroom');
 const { UserModel } = require('./models/user');
-const { FavoritesModel } = require('./models/Favorites');
+const { FavoritesModel } = require('./models/favorites');
 require('dotenv').config();
 
 app.use(cors());
