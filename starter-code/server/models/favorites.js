@@ -32,7 +32,7 @@ class FavoritesModel{
                 }
             },
             UserID: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.UUID,
                 allowNull: false,
                 primaryKey: true,
                 references: {

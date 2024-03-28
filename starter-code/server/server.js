@@ -27,6 +27,8 @@ connectModelsToSequelize();
 BathroomModel.defineBathroomModel();
 UserModel.defineUserModel();
 FavoritesModel.defineFavoritesModel();
+BathroomModel.bathroom.belongsToMany(UserModel.user, {through: FavoritesModel.favorites });
+UserModel.user.belongsToMany(BathroomModel.bathroom, {through: FavoritesModel.favorites });
 
 /*
 DO NOT REMOVE MIGHT NEED LATER.
