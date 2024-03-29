@@ -7,20 +7,14 @@ import Hero from '../components/Hero';
 import Footer from '../components/Footer';
 import NYCMap from '../components/NYCMap';
 import Navbar from '../components/Navbar';
+import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Testimonials from '../components/testimonials';
 import Faq from '../components/faq';
 
 
 function Index({ darkMode, toggleDarkMode }) {
-<<<<<<< HEAD
   const mapRef = useRef(null); //for scrolling reference in hero and NYCMap
   //const defaultPosition = { lat: null, lng: null };
-=======
-
-  const mapRef = useRef(null); //for scrolling reference in hero and NYCMap
-
-  const defaultPosition = { lat: 40.712775, lng: -74.005973 };
->>>>>>> 9f5cc43 (fixed marker text)
   const geometryLibrary = useMapsLibrary('geometry');
   const map = useMap();
   const [userPosition, setUserPosition] = useState({});
