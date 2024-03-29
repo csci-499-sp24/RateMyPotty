@@ -7,7 +7,9 @@ const Hero = (props) => {
   const handleEmergencyButtonClick = () => {
     props.handleEmergencyButtonClick();
     props.mapRef.current.scrollIntoView({ behavior: 'smooth' });
-  }
+  } //this is for scrolling to the map when the emergency button is clicked
+
+  
   return (
     <>
       <Container className="flex flex-wrap ">
@@ -23,7 +25,7 @@ const Hero = (props) => {
 
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
               <button
-                onClick={handleEmergencyButtonClick}
+                onClick={handleEmergencyButtonClick} //removed props from here
                 className="flex items-center px-8 py-4 h-16 text-2xl font-medium text-center text-white bg-red-600 rounded-md ">
                 <Image 
                   src={emergencyLogo}
