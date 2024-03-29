@@ -79,17 +79,6 @@ function LoggedInHomepage({ darkMode, toggleDarkMode }) {
 
     // Open the popup for this bathroom
     setPopupWindow(nearestBathroom)
-
-    // State to handle the visibility of the filter options
-  const [showFilterOptions, setShowFilterOptions] = useState(false);
-
-  // Function to handle filter button click
-  const handleFilterButtonClick = () => {
-    setShowFilterOptions(!showFilterOptions);
-  };
-
-
-
   };
 
   return (
