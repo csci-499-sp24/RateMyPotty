@@ -9,6 +9,7 @@ import Hero from '../components/Hero';
 import Footer from '../components/Footer';
 import NYCMap from '../components/NYCMap';
 import Navbar from '../components/Navbar';
+import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Testimonials from '../components/testimonials';
 import Faq from '../components/faq';
 
