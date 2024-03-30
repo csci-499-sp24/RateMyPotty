@@ -11,7 +11,7 @@ create trigger new_user_trigger
     for each row execute function create_profile_for_new_user();
 
 /*This is not a full Postsgresql function but is what is written in Database under Functions on supabase. 
-The function definition is not needed in the supabase UI so I just need to include what it does.
+The function definition is not needed in the supabase UI so I just need to include what the function does.
 */
 
 BEGIN
