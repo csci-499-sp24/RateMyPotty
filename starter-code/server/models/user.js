@@ -21,18 +21,14 @@ class UserModel{
     static defineUserModel() {
         UserModel.user = UserModel.sequelize.define('User', {
             UserID: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                autoIncrement: true,
+                type: DataTypes.UUID,
                 primaryKey: true
             },
-            Username: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
             Email: {
-                type: DataTypes.STRING,
-                allowNull: false
+                type: DataTypes.TEXT
+            },
+            Username: {
+                type: DataTypes.TEXT
             }
         });
     }

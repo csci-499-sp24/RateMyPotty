@@ -23,9 +23,7 @@ const Signup = () => {
             supabaseClient={supabase}
             appearance={{ theme: ThemeSupa }}
             providers={['google', 'facebook', 'twitter', 'github']}
-        />
-        <p>Username</p>
-        
+        />        
         <div>
             <Footer/>
         </div>

@@ -5,6 +5,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const { BathroomModel } = require('./models/bathroom');
 const { UserModel } = require('./models/user');
 const { FavoritesModel } = require('./models/favorites');
+const { ReviewModel } = require('./models/review');
 require('dotenv').config();
 
 app.use(cors());
@@ -18,6 +19,7 @@ function connectModelsToSequelize(){
         BathroomModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
         UserModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
         FavoritesModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
+        ReviewModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
     } else {
     console.log('Could not find the username/password/host info.');
     }   
@@ -27,6 +29,12 @@ connectModelsToSequelize();
 BathroomModel.defineBathroomModel();
 UserModel.defineUserModel();
 FavoritesModel.defineFavoritesModel();
+ReviewModel.defineReviewModel();
+BathroomModel.bathroom.belongsToMany(UserModel.user, {through: FavoritesModel.favorites });
+UserModel.user.belongsToMany(BathroomModel.bathroom, {through: FavoritesModel.favorites });
+BathroomModel.bathroom.belongsToMany(UserModel.user, {through: ReviewModel.reviews });
+UserModel.user.belongsToMany(BathroomModel.bathroom, {through: ReviewModel.reviews });
+
 
 /*
 DO NOT REMOVE MIGHT NEED LATER.
@@ -38,6 +46,8 @@ UserModel.defineUserModel();
 UserModel.connectUserModel();
 FavoritesModel.defineFavoritesModel();
 FavoritesModel.connectFavoritesModel();
+ReviewModel.defineReviewModel();
+ReviewModel.connectReviewModel();
 
 //Setting up Associations. This is a Many to Many assocation.
 BathroomModel.bathroom.belongsToMany(UserModel.user, {through: FavoritesModel.favorites });
