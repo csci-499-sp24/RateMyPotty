@@ -6,6 +6,7 @@ import {
 
 
 import Hero from '../components/Hero';
+import LoggedInHero from '@/components/LoggedInHero';
 import Footer from '../components/Footer';
 import NYCMap from '../components/NYCMap';
 import Navbar from '../components/Navbar';
@@ -27,6 +28,7 @@ function Index({ darkMode, toggleDarkMode }) {
   const [popupWindow, setPopupWindow] = useState(null);
   const inputRef = useRef(null);
   const autoCompleteRef = useRef();
+  const [isLoggedIn, setIsLoggedIn] = useState(false); //added for login/logout state
 
   // Get user's position
   useEffect(() => {
@@ -84,6 +86,23 @@ function Index({ darkMode, toggleDarkMode }) {
 
   }, [])
 
+
+    // Function to handle login
+    const login = () => {
+      // ... login code
+  
+      // After the user is successfully logged in:
+      setIsLoggedIn(true);
+    };
+  
+    // Function to handle logout
+    const logout = () => {
+      // ... your logout code
+  
+      // After the user is successfully logged out:
+      setIsLoggedIn(false);
+    };
+
   // Function to handle emergency button click
   const handleEmergencyButtonClick = () => {
     // Do nothing if we do not have the user's location
@@ -117,31 +136,30 @@ function Index({ darkMode, toggleDarkMode }) {
   return (
     <div className="container-fluid">
       <Navbar />
-      <label></label>
-      {/* <input ref={inputRef} /> */}
-
 
       <div className="row">
         <div className="col-md-3">
-
+          {/* Conditionally render sidebar based on isLoggedIn */}
+          {/* If you have a LoggedInSidebar component, you can use it here */}
         </div>
         <div className="col-md-9">
           <div className="main-content">
-            <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef}
-              inputRef={inputRef}
-            />
+          <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} /> 
             <div id="map" className="map-container" ref={mapRef}>
-              <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow} />
-            </div>
+            <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
+            </div> 
           </div>
         </div>
       </div>
-      <Faq />
-      <Testimonials />
+      {!isLoggedIn && <Faq />}
+      {!isLoggedIn && <Testimonials />}
       <Footer />
     </div>
-
   );
 }
+
+/*The ternary syntax is life if else for Navbar, if logged in , it will show logged in
+navbar , else it will show regular navbar, the iss Logged in some tags is when you
+want this component to be show so FAQ and Testimonial only shown when in logged out state */
 
 export default Index;

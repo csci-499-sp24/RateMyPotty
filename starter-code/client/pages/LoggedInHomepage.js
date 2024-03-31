@@ -1,9 +1,13 @@
+/*Currently for display or if instead of conditionally rendering, we
+use another page for logged in state because there are too many differences*/
+
 import React, {useState, useEffect, useRef} from 'react';
 import {
   useMapsLibrary,
   useMap
 } from "@vis.gl/react-google-maps";
 import Hero from '../components/Hero';
+import LoggedInHero from '@/components/LoggedInHero';
 import Footer from '../components/Footer';
 import NYCMap from '../components/NYCMap';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
@@ -91,7 +95,7 @@ function LoggedInHomepage({ darkMode, toggleDarkMode }) {
         </div>
         <div className="col-md-9">
           <div className="main-content">
-            <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} /> 
+            <LoggedInHero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} /> 
             <div id="map" className="map-container" ref={mapRef}>
               <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
             </div> 
