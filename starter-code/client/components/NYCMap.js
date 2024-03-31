@@ -152,23 +152,8 @@ const mapStyles =
 
 export default function NYCMap(props) {
     //places the user's location on the map
-    const [userLocation, setUserLocation] = useState(null);
     const [showTextbox, setShowTextbox] = useState(false);
     const defaultPosition = { lat: 40.712775, lng: -74.005973 };
-    // Get user's location; this must be used so that user coords can be used in this function
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                setUserLocation({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-                //Hunter coords as location for testing
-                //lat: 40.7678,
-                //lng: -73.9645,
-                });
-          });
-        }
-      }, []);
     return (
         //Markers for the user's location and the bathrooms
         <div style={{ height: "70vh", width: "70vw" }}>
@@ -178,20 +163,24 @@ export default function NYCMap(props) {
                 mapTypeControl={false}
                 gestureHandling={true}
                 defaultCenter={defaultPosition}
-                defaultZoom={13}
+                defaultZoom={15}
                 styles={mapStyles}>
-                <Marker
-                    key="userLocation"
-                    position={userLocation}
-                    icon={{
-                        path: typeof window !== 'undefined' && window.google && window.google.maps && window.google.maps.SymbolPath ? window.google.maps.SymbolPath.CIRCLE : '',
-                        fillColor: '#4285F4',
-                        fillOpacity: 1,
-                        scale: 8,
-                        strokeColor: 'rgb(255,255,255)',
-                        strokeWeight: 2,
-                    }}
-                />
+                {props.userPosition.lat ?
+                    <Marker
+                        key="userLocation"
+                        position={props.userPosition}
+                        icon={{
+                            path: typeof window !== 'undefined' && window.google && window.google.maps && window.google.maps.SymbolPath ? window.google.maps.SymbolPath.CIRCLE : '',
+                            fillColor: '#4285F4',
+                            fillOpacity: 1,
+                            scale: 8,
+                            strokeColor: 'rgb(255,255,255)',
+                            strokeWeight: 2,
+                        }}
+                    />
+                    : null
+                }
+
                 {props.bathrooms.map(bathroom => (
                     <Marker key={bathroom.BathroomID}
                         position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
@@ -204,7 +193,7 @@ export default function NYCMap(props) {
                             url: "/toilet.png",
                             scaledSize: { width: 50, height: 50 }, // size of the icon
                         }}
-                    /> 
+                    />
                 ))}
                 {props.popupWindow &&
                     <InfoWindow
