@@ -5,14 +5,14 @@ on:
             - master
             - main
 jobs:
-  Backend-Functions: 
-    runs-on: ubuntu-latest
-    defaults: 
-      run:
-        working-directory: /home/runner/work/RateMyPotty/RateMyPotty/server
-    steps: 
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: npm install
-      - name: Run Test
-        run: npm test
+    build:
+        runs-on: ubuntu-latest
+        defaults: 
+              run:
+                working-directory: /home/runner/work/RateMyPotty/server
+        steps:
+              - uses: actions/checkout@v2
+              - name: Install dependencies
+                run: npm install
+              - name: Run Test
+                run: npm test
