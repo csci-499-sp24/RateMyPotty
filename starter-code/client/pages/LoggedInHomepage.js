@@ -1,28 +1,29 @@
 /*Currently for display or if instead of conditionally rendering, we
 use another page for logged in state because there are too many differences*/
 
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   useMapsLibrary,
-  useMap
+  useMap,
 } from "@vis.gl/react-google-maps";
-import Hero from '../components/Hero';
+
 import LoggedInHero from '@/components/LoggedInHero';
 import Footer from '../components/Footer';
 import NYCMap from '../components/NYCMap';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
-import Testimonials from '../components/testimonials';
-import Faq from '../components/faq';
 
 function LoggedInHomepage({ darkMode, toggleDarkMode }) {
-  const mapRef = useRef(null); //for scrolling reference in hero and NYCMap
-
-  const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+  const mapRef = useRef(null);
   const geometryLibrary = useMapsLibrary('geometry');
+  const placesLibrary = useMapsLibrary('places');
+
   const map = useMap();
   const [userPosition, setUserPosition] = useState({});
   const [bathrooms, setBathrooms] = useState([]);
   const [popupWindow, setPopupWindow] = useState(null);
+  const inputRef = useRef(null);
+  const autoCompleteRef = useRef();
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Set to true as this is the logged in homepage
 
 
   // Get user's position
@@ -55,6 +56,22 @@ function LoggedInHomepage({ darkMode, toggleDarkMode }) {
       .then(data => setBathrooms(data.data));
 
   }, [])
+
+  // Function to handle login
+  const login = () => {
+    // ... login code
+
+    // After the user is successfully logged in:
+    setIsLoggedIn(true);
+  };
+
+  // Function to handle logout
+  const logout = () => {
+    // ... your logout code
+
+    // After the user is successfully logged out:
+    setIsLoggedIn(false);
+  };
 
   // Function to handle emergency button click
   const handleEmergencyButtonClick = () => {
@@ -95,7 +112,9 @@ function LoggedInHomepage({ darkMode, toggleDarkMode }) {
         </div>
         <div className="col-md-9">
           <div className="main-content">
-            <LoggedInHero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} /> 
+            <LoggedInHero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef}
+            inputRef={inputRef}
+            /> 
             <div id="map" className="map-container" ref={mapRef}>
               <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
             </div> 

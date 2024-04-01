@@ -96,13 +96,6 @@ export default function Footer() {
                 <Linkedin />
               </a>*/}
               <a
-                href="https://github.com/yourusername"
-                target="_blank"
-                rel="noopener">
-                <span className="sr-only">GitHub</span>
-              <Github /> 
-              </a>
-              <a
                 href="https://github.com/csci-499-sp24/RateMyPotty"
                 target="_blank"
                 rel="noopener"

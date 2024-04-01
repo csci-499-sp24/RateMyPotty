@@ -86,7 +86,6 @@ function Index({ darkMode, toggleDarkMode }) {
 
   }, [])
 
-
     // Function to handle login
     const login = () => {
       // ... login code
@@ -97,7 +96,7 @@ function Index({ darkMode, toggleDarkMode }) {
   
     // Function to handle logout
     const logout = () => {
-      // ... your logout code
+      // ... logout code
   
       // After the user is successfully logged out:
       setIsLoggedIn(false);
@@ -144,7 +143,9 @@ function Index({ darkMode, toggleDarkMode }) {
         </div>
         <div className="col-md-9">
           <div className="main-content">
-          <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} /> 
+          <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef}
+          inputRef={inputRef} 
+          /> 
             <div id="map" className="map-container" ref={mapRef}>
             <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
             </div> 
