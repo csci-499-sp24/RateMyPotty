@@ -5,8 +5,14 @@ on:
             - master
             - main
 jobs:
-    coverage:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: ArtiomTr/jest-coverage-report-action@v2
+  Backend-Functions: 
+    runs-on: ubuntu-latest
+    defaults: 
+      run:
+        working-directory: ./server 
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run Test
+        run: npm test
