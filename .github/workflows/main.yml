@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults: 
       run:
-        working-directory: ./server 
+        working-directory: /home/runner/work/RateMyPotty/RateMyPotty/server
     steps: 
       - uses: actions/checkout@v2
       - name: Install dependencies
