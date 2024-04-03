@@ -6,7 +6,6 @@ import { useTheme } from 'next-themes';
 
 import { Map, InfoWindow, Marker } from "@vis.gl/react-google-maps";
 
-
 const mapStyles =
     [
         {
@@ -147,12 +146,14 @@ const mapStyles =
     ]
 
 
-    const StarRating = ({ value, onChange }) => {
+    const StarRating = () => {
+        const [rating, setRating] = useState(0);
+      
         const stars = Array.from({ length: 5 }, (_, index) => (
           <span
             key={index}
-            className={`star ${value >= index + 1 ? 'filled' : ''}`}
-            onClick={() => onChange(index + 1)}
+            className={`star ${rating >= index + 1 ? 'filled' : ''}`}
+            onClick={() => setRating(index + 1)}
           >
             &#9733;
           </span>
@@ -160,22 +161,22 @@ const mapStyles =
       
         return <div className="star-rating">{stars}</div>;
       };
-    
-export default function NYCMap(props) {
-    //places the user's location on the map
-    const [showTextbox, setShowTextbox] = useState(false);
-    const defaultPosition = { lat: 40.712775, lng: -74.005973 };
-    return (
-        //Markers for the user's location and the bathrooms
-        <div style={{ height: "70vh", width: "70vw" }}>
+      
+      export default function NYCMap(props) {
+        const [showTextbox, setShowTextbox] = useState(false);
+        const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+      
+        return (
+          <div style={{ height: "70vh", width: "70vw" }}>
             <Map
-                streetViewControl={true}
-                zoomControl={true}
-                mapTypeControl={false}
-                gestureHandling={true}
-                defaultCenter={defaultPosition}
-                defaultZoom={15}
-                styles={mapStyles}>
+              streetViewControl={true}
+              zoomControl={true}
+              mapTypeControl={false}
+              gestureHandling={true}
+              defaultCenter={defaultPosition}
+              defaultZoom={15}
+              styles={mapStyles}
+            >
                 {props.userPosition.lat ?
                     <Marker
                         key="userLocation"
@@ -229,10 +230,7 @@ export default function NYCMap(props) {
               </div>
               {showTextbox && <textarea />}
               <div className={styles.paragraph}>
-                <StarRating
-                  value={0}
-                  onChange={(newValue) => console.log(`New rating: ${newValue}`)}
-                />
+                <StarRating />
               </div>
               <div className={styles.paragraph}>
                 <p className>{props.popupWindow.Address}</p>
