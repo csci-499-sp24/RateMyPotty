@@ -18,7 +18,7 @@
     "@heroicons/react": "^2.1.1",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
-    "@supabase/supabase-js": "^2.39.8",
+    "@supabase/supabase-js": "^2.41.1",
     "@vis.gl/react-google-maps": "^0.7.1",
     "dotenv": "^16.4.5",
     "next": "14.1.0",
@@ -40,4 +40,3 @@
     "tailwindcss": "^3.4.1"
   }
 }
-

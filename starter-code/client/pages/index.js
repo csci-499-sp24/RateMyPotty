@@ -13,6 +13,8 @@ import Navbar from '../components/Navbar';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Testimonials from '../components/testimonials';
 import Faq from '../components/faq';
+import { supabase } from './supabaseClient';//for login/logout
+
 
 
 function Index({ darkMode, toggleDarkMode }) {
@@ -86,6 +88,21 @@ function Index({ darkMode, toggleDarkMode }) {
 
   }, [])
 
+  useEffect(() => {
+    const unsubscribe = supabase.auth.onAuthStateChange((event, session) => {
+      const user = session?.user;
+      setIsLoggedIn(!!user);
+    });
+  
+    // Cleanup function to remove the listener when the component unmounts
+    return () => {
+      if (typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
+    };
+  }, []);
+  
+{/*
     // Function to handle login
     const login = () => {
       // ... login code
@@ -101,6 +118,8 @@ function Index({ darkMode, toggleDarkMode }) {
       // After the user is successfully logged out:
       setIsLoggedIn(false);
     };
+
+  */}
 
   // Function to handle emergency button click
   const handleEmergencyButtonClick = () => {
@@ -131,11 +150,16 @@ function Index({ darkMode, toggleDarkMode }) {
     setPopupWindow(nearestBathroom)
   };
 
+  //logout function
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.log("Error logging out:", error.message);
+  };
+
 
   return (
     <div className="container-fluid">
-      <Navbar />
-
+      {isLoggedIn ? <LoggedInNavbar onLogout={logout} /> : <Navbar />}
       <div className="row">
         <div className="col-md-3">
           {/* Conditionally render sidebar based on isLoggedIn */}
@@ -143,11 +167,9 @@ function Index({ darkMode, toggleDarkMode }) {
         </div>
         <div className="col-md-9">
           <div className="main-content">
-          <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef}
-          inputRef={inputRef} 
-          /> 
+            <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} /> 
             <div id="map" className="map-container" ref={mapRef}>
-            <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
+              <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
             </div> 
           </div>
         </div>
@@ -156,7 +178,8 @@ function Index({ darkMode, toggleDarkMode }) {
       {!isLoggedIn && <Testimonials />}
       <Footer />
     </div>
-  );
+);
+
 }
 
 /*The ternary syntax is life if else for Navbar, if logged in , it will show logged in

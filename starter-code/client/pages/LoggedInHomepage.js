@@ -14,8 +14,10 @@ import LoggedInNavbar from '@/components/LoggedInNavbar';
 
 function LoggedInHomepage({ darkMode, toggleDarkMode }) {
   const mapRef = useRef(null);
+  //const default
   const geometryLibrary = useMapsLibrary('geometry');
   const placesLibrary = useMapsLibrary('places');
+
 
   const map = useMap();
   const [userPosition, setUserPosition] = useState({});
@@ -24,6 +26,7 @@ function LoggedInHomepage({ darkMode, toggleDarkMode }) {
   const inputRef = useRef(null);
   const autoCompleteRef = useRef();
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Set to true as this is the logged in homepage
+
 
 
   // Get user's position

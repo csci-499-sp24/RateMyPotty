@@ -3,7 +3,7 @@ import ThemeChanger from "./DarkSwitch";
 import Image from "next/image"
 import { Disclosure } from "@headlessui/react";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const navigation = [
     "Home",
     "About",
@@ -89,9 +89,9 @@ const Navbar = () => {
         </div>
 
         <div className="hidden mr-3 space-x-4 lg:flex nav__item">
-          <Link href="/signup" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
-              Log in / Sign up
-          </Link>
+         <Link href="/signup" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5" onClick={props.login}>
+          Log in / Sign up
+         </Link>
           
 
           <ThemeChanger />

@@ -3,7 +3,7 @@ import ThemeChanger from "./DarkSwitch";
 import Image from "next/image"
 import { Disclosure } from "@headlessui/react";
 
-const LoggedInNavbar = () => {
+const LoggedInNavbar = ({ onLogout }) => { // Added Logout prop here
   const navigation = [
     "Home",
     "About",
@@ -67,8 +67,8 @@ const LoggedInNavbar = () => {
                     <Link href="/profile" className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5">         
                         Profile
                     </Link>
-                    <button className="w-full px-6 py-2 mt-3 text-center text-white bg-red-600 rounded-md lg:ml-5">         
-                        Logout
+                    <button onClick={onLogout} className="w-full px-6 py-2 mt-3 text-center text-white bg-red-600 rounded-md lg:ml-5">         
+                         Logout
                     </button>
                   </>
                 </Disclosure.Panel>
@@ -94,7 +94,7 @@ const LoggedInNavbar = () => {
           <Link href="/profile" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
               Profile
           </Link>
-          <button className="px-6 py-2 text-white bg-red-600 rounded-md md:ml-5">
+          <button onClick={onLogout} className="px-6 py-2 text-white bg-red-600 rounded-md md:ml-5">
               Logout
           </button>
 
