@@ -13,7 +13,7 @@ import Navbar from '../components/Navbar';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Testimonials from '../components/testimonials';
 import Faq from '../components/faq';
-import { supabase } from './supabaseClient';//for login/logout
+import { supabase } from '../supabaseClient';//for login/logoußt
 
 
 
