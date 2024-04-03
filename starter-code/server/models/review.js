@@ -40,9 +40,12 @@ class ReviewModel{
                     key: 'UserID'
                 }
             },
-            Name: {
-                type: DataTypes.STRING,
+            Review_text: {
+                type: DataTypes.TEXT,
                 allowNull: false,
+            },
+            Rating:{
+                type: DataTypes.INTEGER,
             }
         });
     }

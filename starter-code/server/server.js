@@ -30,6 +30,7 @@ BathroomModel.defineBathroomModel();
 UserModel.defineUserModel();
 FavoritesModel.defineFavoritesModel();
 ReviewModel.defineReviewModel();
+
 BathroomModel.bathroom.belongsToMany(UserModel.user, {through: FavoritesModel.favorites });
 UserModel.user.belongsToMany(BathroomModel.bathroom, {through: FavoritesModel.favorites });
 BathroomModel.bathroom.belongsToMany(UserModel.user, {through: ReviewModel.reviews });
