@@ -229,7 +229,7 @@ export default function NYCMap(props) {
                         <p className>{props.popupWindow.Address}</p>
                       </div>
                     </div>
-                  </InfoWindow>
+                  </InfoWindow> /*adding this for github PR issue, just ignore*/
                 }
             </Map>
         </div>
