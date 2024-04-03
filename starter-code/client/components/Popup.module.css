@@ -8,6 +8,20 @@
     margin-top: 8%
 }
 
+.star-rating {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .star {
+    cursor: pointer;
+    color: #ccc;
+  }
+  
+  .star.filled {
+    color: gold;
+  }
+
 
 #name{
     font-size: 20px;
