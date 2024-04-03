@@ -197,31 +197,39 @@ export default function NYCMap(props) {
                 ))}
                 {props.popupWindow &&
                     <InfoWindow
-                        onCloseClick={() => {
-                            props.setPopupWindow(null);
-                            setShowTextbox(false); // Hide the textbox when the InfoWindow is closed
-                        }}
-                        position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
-                    >
-                        <div className={styles.popup}>
-                            <div id={styles.name}>
-                                <h1>{props.popupWindow.Name}</h1>
-                            </div>
-                            <div id={styles.buttons}>
-                                <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
-                                    onClick={() => setShowTextbox(true)}
-                                />
-                                <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} />
-                            </div>
-                            {showTextbox && <textarea />}
-                            <div className={styles.paragraph}>
-                                <p>Star Rating Goes Here!!!!!!</p>
-                            </div>
-                            <div className={styles.paragraph}>
-                                <p className>{props.popupWindow.Address}</p>
-                            </div>
-                        </div>
-                    </InfoWindow>
+                    onCloseClick={() => {
+                      props.setPopupWindow(null);
+                      setShowTextbox(false);
+                    }}
+                    position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
+                  >
+                    <div className={styles.popup}>
+                      <div id={styles.name}>
+                        <h1>{props.popupWindow.Name}</h1>
+                      </div>
+                      <div id={styles.buttons}>
+                        <FontAwesomeIcon
+                          icon={faPencil}
+                          className="fa-2x"
+                          id={styles.reviewButton}
+                          onClick={() => setShowTextbox(true)}
+                        />
+                        <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} />
+                      </div>
+                      {showTextbox && <textarea />}
+                      <div className={styles.paragraph}>
+                        <StarRatingComponent
+                          name="ratingScore"
+                          starCount={5}
+                          value={0}
+                          onStarClick={(nextValue) => console.log(nextValue)}
+                        />
+                      </div>
+                      <div className={styles.paragraph}>
+                        <p className>{props.popupWindow.Address}</p>
+                      </div>
+                    </div>
+                  </InfoWindow>
                 }
             </Map>
         </div>
