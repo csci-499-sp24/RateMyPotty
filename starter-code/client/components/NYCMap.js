@@ -3,6 +3,7 @@ import styles from './Popup.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from 'next-themes';
+import StarRating from './StarRating.js';
 
 import { Map, InfoWindow, Marker } from "@vis.gl/react-google-maps";
 
@@ -146,23 +147,7 @@ const mapStyles =
     ]
 
 
-    const StarRating = () => {
-        const [rating, setRating] = useState(0);
-      
-        const stars = Array.from({ length: 5 }, (_, index) => (
-          <span
-            key={index}
-            className={`star ${rating >= index + 1 ? 'filled' : ''}`}
-            onClick={() => setRating(index + 1)}
-          >
-            &#9733;
-          </span>
-        ));
-      
-        return <div className="star-rating">{stars}</div>;
-      };
-      
-      export default function NYCMap(props) {
+    export default function NYCMap(props) {
         const [showTextbox, setShowTextbox] = useState(false);
         const defaultPosition = { lat: 40.712775, lng: -74.005973 };
       
@@ -177,71 +162,72 @@ const mapStyles =
               defaultZoom={15}
               styles={mapStyles}
             >
-                {props.userPosition.lat ?
-                    <Marker
-                        key="userLocation"
-                        position={props.userPosition}
-                        icon={{
-                            path: typeof window !== 'undefined' && window.google && window.google.maps && window.google.maps.SymbolPath ? window.google.maps.SymbolPath.CIRCLE : '',
-                            fillColor: '#4285F4',
-                            fillOpacity: 1,
-                            scale: 8,
-                            strokeColor: 'rgb(255,255,255)',
-                            strokeWeight: 2,
-                        }}
-                    />
-                    : null
-                }
-
-                {props.bathrooms.map(bathroom => (
-                    <Marker key={bathroom.BathroomID}
-                        position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
-                        clickable={true}
-                        onClick={() => {
-                            props.setPopupWindow(bathroom);
-                        }}
-                        title={bathroom.Name}
-                        icon={{
-                            url: "/toilet.png",
-                            scaledSize: { width: 50, height: 50 }, // size of the icon
-                        }}
-                    />
-                ))}
-                {props.popupWindow && (
-          <InfoWindow
-            onCloseClick={() => {
-              props.setPopupWindow(null);
-              setShowTextbox(false);
-            }}
-            position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
-          >
-            <div className={styles.popup}>
-              <div id={styles.name}>
-                <h1>{props.popupWindow.Name}</h1>
-              </div>
-              <div id={styles.buttons}>
-                <FontAwesomeIcon
-                  icon={faPencil}
-                  className="fa-2x"
-                  id={styles.reviewButton}
-                  onClick={() => setShowTextbox(true)}
+              {props.userPosition.lat ? (
+                <Marker
+                  key="userLocation"
+                  position={props.userPosition}
+                  icon={{
+                    path: typeof window !== 'undefined' && window.google && window.google.maps && window.google.maps.SymbolPath ? window.google.maps.SymbolPath.CIRCLE : '',
+                    fillColor: '#4285F4',
+                    fillOpacity: 1,
+                    scale: 8,
+                    strokeColor: 'rgb(255,255,255)',
+                    strokeWeight: 2,
+                  }}
                 />
-                <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} />
-              </div>
-              {showTextbox && <textarea />}
-              <div className={styles.paragraph}>
-                <StarRating />
-              </div>
-              <div className={styles.paragraph}>
-                <p className>{props.popupWindow.Address}</p>
-              </div>
-            </div>
-          </InfoWindow>
-        )}
-      </Map>
-    </div>
-  );
-}
+              ) : null}
+      
+              {props.bathrooms.map(bathroom => (
+                <Marker
+                  key={bathroom.BathroomID}
+                  position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
+                  clickable={true}
+                  onClick={() => {
+                    props.setPopupWindow(bathroom);
+                  }}
+                  title={bathroom.Name}
+                  icon={{
+                    url: "/toilet.png",
+                    scaledSize: { width: 50, height: 50 },
+                  }}
+                />
+              ))}
+      
+              {props.popupWindow && (
+                <InfoWindow
+                  onCloseClick={() => {
+                    props.setPopupWindow(null);
+                    setShowTextbox(false);
+                  }}
+                  position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
+                >
+                  <div className={styles.popup}>
+                    <div id={styles.name}>
+                      <h1>{props.popupWindow.Name}</h1>
+                    </div>
+                    <div id={styles.buttons}>
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        className="fa-2x"
+                        id={styles.reviewButton}
+                        onClick={() => setShowTextbox(true)}
+                      />
+                      <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} />
+                    </div>
+                    {showTextbox && <textarea />}
+                    <div className={styles.paragraph}>
+                      <StarRating />
+                    </div>
+                    <div className={styles.paragraph}>
+                      <p className>{props.popupWindow.Address}</p>
+                    </div>
+                  </div>
+                </InfoWindow>
+              )}
+            </Map>
+          </div>
+        );
+      }
 
 /*
 <MarkerClusterer>

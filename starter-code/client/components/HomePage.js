@@ -7,6 +7,7 @@ import Testimonials from './testimonials';
 import Faq from './faq';
 
 
+
 function HomePage({ darkMode, toggleDarkMode }) {
   // Function to handle emergency button click
   const handleEmergencyButtonClick = () => {
