@@ -3,7 +3,6 @@ import styles from './Popup.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from 'next-themes';
-import StarRating from './StarRating.js';
 
 import { Map, InfoWindow, Marker } from "@vis.gl/react-google-maps";
 
@@ -146,6 +145,7 @@ const mapStyles =
         }
     ]
 
+    import StarRating from './StarRating.js';
 
     export default function NYCMap(props) {
         const [showTextbox, setShowTextbox] = useState(false);

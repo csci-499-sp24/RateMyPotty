@@ -1,16 +1,23 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar as farStar } from '@fortawesome/free-regular-svg-icons'
-import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
+import React, { useState } from 'react';
 
-// ...
+const StarRating = () => {
+  const [rating, setRating] = useState(0);
 
-{stars.map((star, index) => {
-  return (
-    <FontAwesomeIcon 
-      key={index} 
-      icon={star <= rating ? fasStar : farStar} 
-      className={`star ${star <= rating ? 'filled' : ''}`} 
+  const handleStarClick = (index) => {
+    setRating(index + 1);
+  };
+
+  const stars = Array.from({ length: 5 }, (_, index) => (
+    <span
+      key={index}
+      className={`star ${rating >= index + 1 ? 'filled' : ''}`}
       onClick={() => handleStarClick(index)}
-    />
-  );
-})}
+    >
+      &#9733;
+    </span>
+  ));
+
+  return <div className="star-rating">{stars}</div>;
+};
+
+export default StarRating;
