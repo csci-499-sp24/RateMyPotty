@@ -3,8 +3,8 @@ import styles from './Popup.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from 'next-themes';
-
 import { Map, InfoWindow, Marker } from "@vis.gl/react-google-maps";
+import StarRating from './StarRating.js';
 
 const mapStyles =
     [
@@ -145,23 +145,23 @@ const mapStyles =
         }
     ]
 
-    import StarRating from './StarRating.js';
-
     export default function NYCMap(props) {
-        const [showTextbox, setShowTextbox] = useState(false);
-        const defaultPosition = { lat: 40.712775, lng: -74.005973 };
-      
-        return (
+      const [showTextbox, setShowTextbox] = useState(false);
+      const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+      const [rating, setRating] = useState(0); // State for the rating value
+  
+      return (
           <div style={{ height: "70vh", width: "70vw" }}>
-            <Map
-              streetViewControl={true}
-              zoomControl={true}
-              mapTypeControl={false}
-              gestureHandling={true}
-              defaultCenter={defaultPosition}
-              defaultZoom={15}
-              styles={mapStyles}
-            >
+              <Map
+                  streetViewControl={true}
+                  zoomControl={true}
+                  mapTypeControl={false}
+                  gestureHandling={true}
+                  defaultCenter={defaultPosition}
+                  defaultZoom={15}
+                  styles={mapStyles}
+              >
+
               {props.userPosition.lat ? (
                 <Marker
                   key="userLocation"
@@ -194,40 +194,42 @@ const mapStyles =
               ))}
       
               {props.popupWindow && (
-                <InfoWindow
-                  onCloseClick={() => {
-                    props.setPopupWindow(null);
-                    setShowTextbox(false);
-                  }}
-                  position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
-                >
-                  <div className={styles.popup}>
-                    <div id={styles.name}>
-                      <h1>{props.popupWindow.Name}</h1>
-                    </div>
-                    <div id={styles.buttons}>
-                      <FontAwesomeIcon
-                        icon={faPencil}
-                        className="fa-2x"
-                        id={styles.reviewButton}
-                        onClick={() => setShowTextbox(true)}
-                      />
-                      <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} />
-                    </div>
-                    {showTextbox && <textarea />}
-                    <div className={styles.paragraph}>
-                      <StarRating />
-                    </div>
-                    <div className={styles.paragraph}>
-                      <p className>{props.popupWindow.Address}</p>
-                    </div>
-                  </div>
-                </InfoWindow>
-              )}
+                    <InfoWindow
+                        onCloseClick={() => {
+                            props.setPopupWindow(null);
+                            setShowTextbox(false);
+                            setRating(0); // Reset the rating value when the InfoWindow is closed
+                        }}
+                        position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
+                    >
+                        <div className={styles.popup}>
+                            <div id={styles.name}>
+                                <h1>{props.popupWindow.Name}</h1>
+                            </div>
+                            <div id={styles.buttons}>
+                                <FontAwesomeIcon
+                                    icon={faPencil}
+                                    className="fa-2x"
+                                    id={styles.reviewButton}
+                                    onClick={() => setShowTextbox(true)}
+                                />
+                                <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} />
+                            </div>
+                            {showTextbox && <textarea />}
+                            <div className={styles.paragraph}>
+                                <StarRating value={rating} onChange={setRating} /> {/* Pass the rating state and setRating function */}
+                            </div>
+                            <div className={styles.paragraph}>
+                                <p className>{props.popupWindow.Address}</p>
+                            </div>
+                        </div>
+                    </InfoWindow>
+                )}
             </Map>
-          </div>
-        );
-      }
+        </div>
+    );
+}
+
 
 /*
 <MarkerClusterer>
