@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './Popup.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencil, faHeart } from '@fortawesome/free-solid-svg-icons'
+import styles from './Popup.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from 'next-themes';
-
-import {
-    Map,
-    InfoWindow,
-    Marker
-} from "@vis.gl/react-google-maps";
+import { Map, InfoWindow, Marker } from "@vis.gl/react-google-maps";
+import MarkerClusterer from '@googlemaps/markerclusterer';
 
 
 const mapStyles =
@@ -150,85 +146,130 @@ const mapStyles =
         }
     ]
 
-export default function NYCMap(props) {
-    //places the user's location on the map
-    const [showTextbox, setShowTextbox] = useState(false);
-    const defaultPosition = { lat: 40.712775, lng: -74.005973 };
-    return (
-        //Markers for the user's location and the bathrooms
-        <div style={{ height: "70vh", width: "70vw" }}>
-            <Map
-                streetViewControl={true}
-                zoomControl={true}
-                mapTypeControl={false}
-                gestureHandling={true}
-                defaultCenter={defaultPosition}
-                defaultZoom={15}
-                styles={mapStyles}>
-                {props.userPosition.lat ?
-                    <Marker
-                        key="userLocation"
-                        position={props.userPosition}
-                        icon={{
-                            path: typeof window !== 'undefined' && window.google && window.google.maps && window.google.maps.SymbolPath ? window.google.maps.SymbolPath.CIRCLE : '',
-                            fillColor: '#4285F4',
-                            fillOpacity: 1,
-                            scale: 8,
-                            strokeColor: 'rgb(255,255,255)',
-                            strokeWeight: 2,
-                        }}
-                    />
-                    : null
+    export default function NYCMap(props) {
+        const [showTextbox, setShowTextbox] = useState(false);
+        const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+        const mapRef = useRef(null);
+        const clustererRef = useRef(null);
+    
+        
+        
+            useEffect(() => {
+                if (mapRef.current && !clustererRef.current) {
+                    clustererRef.current = new MarkerClusterer(mapRef.current, [], {
+                        imagePath: 'https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m',
+                        minimumClusterSize: 2, // Default minimum cluster size
+                    });
                 }
-
-                {props.bathrooms.map(bathroom => (
-                    <Marker key={bathroom.BathroomID}
-                        position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
-                        clickable={true}
-                        onClick={() => {
-                            props.setPopupWindow(bathroom);
-                        }}
-                        title={bathroom.Name}
-                        icon={{
+            }, []);
+        
+            useEffect(() => {
+                if (clustererRef.current && props.bathrooms.length > 0) {
+                    const markers = props.bathrooms.map(bathroom => new Marker({
+                        position: { lat: bathroom.Latitude, lng: bathroom.Longitude },
+                        map: mapRef.current,
+                        icon: {
                             url: "/toilet.png",
-                            scaledSize: { width: 50, height: 50 }, // size of the icon
-                        }}
-                    />
-                ))}
-                {props.popupWindow &&
-                    <InfoWindow
-                        onCloseClick={() => {
-                            props.setPopupWindow(null);
-                            setShowTextbox(false); // Hide the textbox when the InfoWindow is closed
-                        }}
-                        position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
-                    >
-                        <div className={styles.popup}>
-                            <div id={styles.name}>
-                                <h1>{props.popupWindow.Name}</h1>
-                            </div>
-                            <div id={styles.buttons}>
-                                <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
-                                    onClick={() => setShowTextbox(true)}
-                                />
-                                <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} />
-                            </div>
-                            {showTextbox && <textarea />}
-                            <div className={styles.paragraph}>
-                                <p>Star Rating Goes Here</p>
-                            </div>
-                            <div className={styles.paragraph}>
-                                <p className>{props.popupWindow.Address}</p>
-                            </div>
-                        </div>
-                    </InfoWindow>
+                            scaledSize: { width: 50, height: 50 },
+                        },
+                        title: bathroom.Name,
+                    }));
+                    clustererRef.current.clearMarkers();
+                    clustererRef.current.addMarkers(markers);
                 }
-            </Map>
-        </div>
+            }, [props.bathrooms]);
+        
+            useEffect(() => {
+                if (mapRef.current) {
+                    mapRef.current.addListener('zoom_changed', () => {
+                        const zoomLevel = mapRef.current.getZoom();
+                        if (zoomLevel < 10) {
+                            clustererRef.current.setMinimumClusterSize(100); 
+                        } else if (zoomLevel < 15) {
+                            clustererRef.current.setMinimumClusterSize(2);
+                        } else {
+                            clustererRef.current.setMinimumClusterSize(1);
+                        }
+                    });
+                }
+            }, []);
+        
 
-    )
-}
-
+        return (
+            //Markers for the user's location and the bathrooms
+            <div style={{ height: "70vh", width: "70vw" }}>
+                <Map
+                    streetViewControl={true}
+                    zoomControl={true}
+                    mapTypeControl={false}
+                    gestureHandling={true}
+                    defaultCenter={defaultPosition}
+                    defaultZoom={15}
+                    styles={mapStyles}>
+                    {props.userPosition.lat ?
+                        <Marker
+                            key="userLocation"
+                            position={props.userPosition}
+                            icon={{
+                                path: typeof window !== 'undefined' && window.google && window.google.maps && window.google.maps.SymbolPath ? window.google.maps.SymbolPath.CIRCLE : '',
+                                fillColor: '#4285F4',
+                                fillOpacity: 1,
+                                scale: 8,
+                                strokeColor: 'rgb(255,255,255)',
+                                strokeWeight: 2,
+                            }}
+                        />
+                        : null
+                    }
+    
+                    {props.bathrooms.map(bathroom => (
+                        <Marker key={bathroom.BathroomID}
+                            position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
+                            clickable={true}
+                            onClick={() => {
+                                props.setPopupWindow(bathroom);
+                            }}
+                            title={bathroom.Name}
+                            icon={{
+                                url: "/toilet.png",
+                                scaledSize: { width: 50, height: 50 }, // size of the icon
+                            }}
+                        />
+                    ))}
+                    {props.popupWindow &&
+                        <InfoWindow
+                            onCloseClick={() => {
+                                props.setPopupWindow(null);
+                                setShowTextbox(false); // Hide the textbox when the InfoWindow is closed
+                            }}
+                            position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
+                        >
+                            <div className={styles.popup}>
+                                <div id={styles.name}>
+                                    <h1>{props.popupWindow.Name}</h1>
+                                </div>
+                                <div id={styles.buttons}>
+                                    <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
+                                        onClick={() => setShowTextbox(true)}
+                                    />
+                                    <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} />
+                                </div>
+                                {showTextbox && <textarea />}
+                                <div className={styles.paragraph}>
+                                    <p>Star Rating Goes Here</p>
+                                </div>
+                                <div className={styles.paragraph}>
+                                    <p className>{props.popupWindow.Address}</p>
+                                </div>
+                            </div>
+                        </InfoWindow>
+                    }
+                </Map>
+            </div>
+    
+        )
+    }
+    
 /*
 <MarkerClusterer>
   {(clusterer) =>
