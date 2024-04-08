@@ -195,6 +195,9 @@ const mapStyles =
             }, []);
         
 
+
+
+            
         return (
             //Markers for the user's location and the bathrooms
             <div style={{ height: "70vh", width: "70vw" }}>
