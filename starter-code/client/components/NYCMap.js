@@ -3,6 +3,7 @@ import styles from './Popup.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faHeart,  } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
+import { faPencil as faPencilRegular } from '@fortawesome/free-regular-svg-icons'
 import { useTheme } from 'next-themes';
 
 import {
@@ -213,6 +214,90 @@ export default function NYCMap(props) {
     
     } ;
 
+    const reviewBathroom = async (BathroomID) => {
+        console.log('is this the bathroom id?', BathroomID)
+            try {
+               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/review', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({
+                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       BathroomID: BathroomID, // Replace with the actual bathroom ID
+                   }),
+               });
+
+               if (response.ok) {
+                    const data = await response.json();
+                   console.log('Review added', data);
+                   // Insert this bathroom into the review list
+                   props.setReviews([...props.reviews, data.data])
+               } else {
+                   console.error('Unable to add review');
+               }
+       } catch (error) {
+           console.error('Unable to add review', error);
+       }
+    
+    } ;
+
+    const deleteReviewBathroom = async (BathroomID) => {
+        console.log('is this the bathroom id?', BathroomID)
+            try {
+               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/review', {
+                   method: 'DELETE',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({
+                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       BathroomID: BathroomID, // Replace with the actual bathroom ID
+                   }),
+               });
+
+               if (response.ok) {
+                    
+                  const reviews = props.reviews.filter(reviews => reviews.BathroomID !== BathroomID);
+                   // Delete this bathroom in the reviews list
+                   props.setReviews(reviews)
+               } else {
+                   console.error('Unable to delete review');
+               }
+       } catch (error) {
+           console.error('Unable to delete error', error);
+       }
+    
+    } ;
+
+    const editReviewBathroom = async (BathroomID) => {
+        console.log('is this the bathroom id?', BathroomID)
+            try {
+               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/review', {
+                   method: 'PUT',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({
+                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       BathroomID: BathroomID, // Replace with the actual bathroom ID
+                   }),
+               });
+
+               if (response.ok) {
+                    const data = await response.json();
+                   console.log('Review updated', data);
+                   // Insert this bathroom into the review list
+                   props.setReviews([...props.reviews, data.data])
+               } else {
+                   console.error('Unable to update review');
+               }
+       } catch (error) {
+           console.error('Unable to update review', error);
+       }
+       
+    } ;
+
     return (
         //Markers for the user's location and the bathrooms
         <div style={{ height: "70vh", width: "70vw" }}>
@@ -267,10 +352,22 @@ export default function NYCMap(props) {
                                 <h1>{props.popupWindow.Name}</h1>
                             </div>
                             <div id={styles.buttons}>
+                            {props.reviews.findIndex(review => review.BathroomID === props.popupWindow.BathroomID) > -1 ?
+                            (
                                 <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
-                                    onClick={() => setShowTextbox(true)}
-                                    
+                                    onClick={() => {
+                                        setShowTextbox(true); 
+                                        editReviewBathroom(props.popupWindow.BathroomID);
+                                    }}
                                 />
+                            ) :
+                                <FontAwesomeIcon icon={faPencilRegular} className="fa-2x" id={styles.reviewButton}
+                                    onClick={() => {
+                                        setShowTextbox(true); 
+                                        reviewBathroom(props.popupWindow.BathroomID);
+                                    }}
+                                />
+                            }
                             {props.favorites.findIndex(favorite => favorite.BathroomID === props.popupWindow.BathroomID) > -1 ? 
                             (
                                 <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} 
@@ -284,7 +381,19 @@ export default function NYCMap(props) {
                             }
                                
                             </div>
-                            {showTextbox && <textarea />}
+                            
+                            {showTextbox && (
+                                <div>
+                                    <textarea 
+                                        value={reviews}
+                                        onChange={e => setReviews(e.target.value)} 
+                                        onBlur={editReviewBathroom} // Save changes when the textarea loses focus
+                                    />
+                                    <button onClick={deleteReviewBathroom}>{/* Add a button to delete the review */}
+                                    Delete Review
+                                    </button>
+                                </div>
+                            )}
                             <div className={styles.paragraph}>
                                 <p>Star Rating Goes Here</p>
                             </div>

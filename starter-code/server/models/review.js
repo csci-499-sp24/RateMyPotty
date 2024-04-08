@@ -22,24 +22,25 @@ class ReviewModel{
 
     static defineReviewModel() {
         ReviewModel.reviews = ReviewModel.sequelize.define('Review', {
-            BathroomID: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                primaryKey: true,
-                references: {
-                    model: BathroomModel.bathroom,
-                    key: 'BathroomID'
-                }
-            },
-            UserID: {
-                type: DataTypes.UUID,
-                allowNull: false,
-                primaryKey: true,
-                references: {
-                    model: UserModel.user,
-                    key: 'UserID'
-                }
-            },
+        // NOTE: Deleted because sequalize creates these fields for us when we define the relationships        
+        //    BathroomID: {
+        //        type: DataTypes.INTEGER,
+        //        allowNull: false,
+        //        primaryKey: true,
+        //       references: {
+        //            model: BathroomModel.bathroom,
+        //            key: 'BathroomID'
+        //        }
+        //    },
+        //    UserID: {
+        //        type: DataTypes.UUID,
+        //        allowNull: false,
+        //        primaryKey: true,
+        //       references: {
+        //            model: UserModel.user,
+        //            key: 'UserID'
+        //        }
+        //    },
             Name: {
                 type: DataTypes.STRING,
                 allowNull: false,

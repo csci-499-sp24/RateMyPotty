@@ -123,7 +123,66 @@ app.delete("/api/favorites", async (req, res) => {
 // 4. put (edit an existing review)
 
 //first step would be to step this up app.get("/api/review", async (req, res) => { 
+// endpoint to allow a user to review a bathroom
+app.post("/api/review", async (req, res) => {
+    // grab BathroomId and UserID from request
+    const UserID = req.body.UserID;
+    const BathroomID = req.body.BathroomID;
+    console.log(UserID, BathroomID)
+    const fakeName = 'some-name';
 
+    // Create and store this new review in our database
+    const review = await ReviewModel.reviews.create({
+        UserID,
+        BathroomID,
+        Name: fakeName
+    })
+
+    res.json({ data: review, message: 'successfully created bathroom review' })
+});
+app.get("/api/review", async (req, res) => {
+
+    const reviews = await ReviewModel.reviews.findAll({ UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59' });
+    console.log('reviews?', reviews);
+    res.json({ data: reviews })
+});
+app.delete("/api/review", async (req, res) => {
+
+    // grab BathroomId and UserID from request
+    const UserID = req.body.UserID;
+    const BathroomID = req.body.BathroomID;
+    console.log(UserID, BathroomID)
+
+
+    // delete this review in our database
+    const review = await ReviewModel.reviews.destroy({
+        where: {
+            UserID,
+            BathroomID
+        }
+    })
+
+    res.json({ message: 'successfully deleted bathroom review' })
+});
+app.put("/api/review", async (req, res) => {
+    // grab BathroomId and UserID from request
+    const UserID = req.body.UserID;
+    const BathroomID = req.body.BathroomID;
+    console.log(UserID, BathroomID)
+    const fakeName = 'some-name';
+
+    // Edit this review in our database
+    const review = await ReviewModel.reviews.update({
+        Name: fakeName
+    }, {
+        where: {
+            UserID,
+            BathroomID
+        }
+    })
+
+    res.json({ message: 'successfully updated bathroom review' })
+});
 // Server trying to connect to the database using sequelize
 let sequelize;
 
