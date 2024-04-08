@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 
-const StarRating = () => {
-  const [rating, setRating] = useState(0);
-
+const StarRating = ({ value, onChange }) => {
   const handleStarClick = (index) => {
-    setRating(index + 1);
+    onChange(index + 1);
   };
 
   const stars = Array.from({ length: 5 }, (_, index) => (
     <span
       key={index}
-      className={`star ${rating >= index + 1 ? 'filled' : ''}`}
+      className={`star ${value >= index + 1 ? 'filled' : ''}`}
       onClick={() => handleStarClick(index)}
     >
       &#9733;
