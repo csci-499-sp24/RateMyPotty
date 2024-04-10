@@ -16,7 +16,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const Signup = () => {
   const router = useRouter(); // initialize router
 
-  // was not being redirected when signed in so added this useEffect
+  // was not being redirected when signed in so 
   useEffect(() => {
     const unsubscribe = supabase.auth.onAuthStateChange(
       (event, session) => {

@@ -35,7 +35,7 @@ const LoggedInHero = (props) => {
                 Emergency
               </button>
               <p className="text-xl ml-24 my-4">Or</p>
-              <input className="py-3 pl-6 pr-2 rounded-md text-lg" ref={props.inputRef} />
+              <input className="py-3 pl-6 pr-2 rounded-md text-lg" ref={props.inputRef} placeholder="Enter a location" />
             </div>
           </div>
         </div>
