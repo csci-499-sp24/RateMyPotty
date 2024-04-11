@@ -3,6 +3,7 @@ import styles from './Popup.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from 'next-themes';
+import StarRating from './StarRating.js';
 
 import {
     Map,
@@ -215,7 +216,7 @@ export default function NYCMap(props) {
                             </div>
                             {showTextbox && <textarea />}
                             <div className={styles.paragraph}>
-                                <p>Star Rating Goes Here</p>
+                                <StarRating /> 
                             </div>
                             <div className={styles.paragraph}>
                                 <p className>{props.popupWindow.Address}</p>
