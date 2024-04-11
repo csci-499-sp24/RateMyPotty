@@ -124,6 +124,25 @@ app.delete("/api/favorites", async (req, res) => {
 
 //first step would be to step this up app.get("/api/review", async (req, res) => { 
 
+// endpoint to allow a user to review a bathroom
+app.post("/api/reviews", async (req, res) => {
+    // grab BathroomId, UserID and Review text from request
+    const UserID = req.body.UserID;
+    const BathroomID = req.body.BathroomID;
+    const ReviewText = req.body.Review_text;
+    console.log(UserID, BathroomID, ReviewText);
+
+    // Create and store this new favorite in our database
+    const review = await ReviewModel.reviews.create({
+        UserID,
+        BathroomID,
+        ReviewText
+    })
+
+    res.json({ data: review, message: 'successfully created review' })
+});
+
+
 // Server trying to connect to the database using sequelize
 let sequelize;
 
