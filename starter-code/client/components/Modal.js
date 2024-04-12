@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import modStyles from './Modal.module.css'; 
 
-const Modal = ({ isOpen, onClose, children, selectedName }) => {
+const Modal = ({ isOpen, onClose, children, selectedName, selectedAddress }) => {
     useEffect(() => {
         const handleEscapeKey = (event) => {
             if (event.key === 'Escape') {
@@ -27,7 +27,7 @@ const Modal = ({ isOpen, onClose, children, selectedName }) => {
                 <button className={modStyles.closeButton} onClick={onClose} aria-label="Close">&times;</button>
                 <div className={modStyles.modalBody}>
                     <h2 className={modStyles.modalTitle}>{selectedName || 'No Name'}</h2>
-                    <div className={modStyles.modalBodyContent}>{children}</div> 
+                    <div className={modStyles.modalBodyContent}>{selectedAddress}</div>
                 </div>
                 <div className={modStyles.modalFooter}>
                     <button className={modStyles.closeButton} onClick={onClose}>Close</button>
