@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from './Modal.module.css'; // Import your CSS module for styling
+import modStyles from './Modal.module.css'; 
 
 const Modal = ({ isOpen, onClose, children, selectedName }) => {
     useEffect(() => {
@@ -22,15 +22,15 @@ const Modal = ({ isOpen, onClose, children, selectedName }) => {
 
     return (
         <div>
-            <div className={styles.modalOverlay} onClick={onClose}></div>
-            <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-                <button className={styles.closeButton} onClick={onClose} aria-label="Close">&times;</button>
-                <div className={styles.modalBody}>
-                    <h2 className={styles.modalTitle}>{selectedName || 'No Name'}</h2>
-                    <div className={styles.modalBodyContent}>{children}</div> 
+            <div className={modStyles.modalOverlay} onClick={onClose}></div>
+            <div className={modStyles.modalContent} onClick={(e) => e.stopPropagation()}>
+                <button className={modStyles.closeButton} onClick={onClose} aria-label="Close">&times;</button>
+                <div className={modStyles.modalBody}>
+                    <h2 className={modStyles.modalTitle}>{selectedName || 'No Name'}</h2>
+                    <div className={modStyles.modalBodyContent}>{children}</div> 
                 </div>
-                <div className={styles.modalFooter}>
-                    <button className={styles.closeButton} onClick={onClose}>Close</button>
+                <div className={modStyles.modalFooter}>
+                    <button className={modStyles.closeButton} onClick={onClose}>Close</button>
                 </div>
             </div>
         </div>

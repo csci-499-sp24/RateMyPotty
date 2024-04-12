@@ -159,7 +159,7 @@ export default function NYCMap(props) {
     /* Modal Implementation State*/
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedName, setSelectedName] = useState(null);
-
+    /*When Modal is Clicked*/
     const handleNameClick = (name) => {
         setSelectedName(name);
         setIsModalOpen(true);
@@ -206,9 +206,10 @@ export default function NYCMap(props) {
                         }}
                     />
                 ))}
-                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <h2>{selectedName}</h2>
-                    {/* Additional content goes here */}
+                {/*Modal Implementation when styles.name is clicked,
+                passes in selectedName prop into Modal.js component */}
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} 
+                selectedName={selectedName}>
                 </Modal>
                 {props.popupWindow &&
                     <InfoWindow
