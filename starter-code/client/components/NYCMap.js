@@ -163,7 +163,6 @@ export default function NYCMap(props) {
     /*When pop_up name is clicked, define const of Modal*/
     const handleNameClick = (name) => {
         setSelectedName(name);
-        //there is an issue displaying Address, it isn't defined and I'm not sure why
         setSelectedAddress(props.popupWindow.Address); 
         setIsModalOpen(true);
     };

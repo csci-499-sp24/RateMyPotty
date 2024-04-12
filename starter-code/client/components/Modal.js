@@ -20,6 +20,9 @@ const Modal = ({ isOpen, onClose, children, selectedName, selectedAddress }) => 
 
     if (!isOpen) return null;
 
+    /*Placeholder imageUrl until able to pass images into Modal component */
+    const imageUrl = "https://static.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg"; 
+
     return (
         <div>
             <div className={modStyles.modalOverlay} onClick={onClose}></div>
@@ -28,6 +31,7 @@ const Modal = ({ isOpen, onClose, children, selectedName, selectedAddress }) => 
                 <div className={modStyles.modalBody}>
                     <h2 className={modStyles.modalTitle}>{selectedName || 'No Name'}</h2>
                     <div className={modStyles.modalBodyContent}>{selectedAddress}</div>
+                    <img src={imageUrl} alt="Image" className={modStyles.modalImage} />
                 </div>
                 <div className={modStyles.modalFooter}>
                     <button className={modStyles.closeButton} onClick={onClose}>Close</button>
