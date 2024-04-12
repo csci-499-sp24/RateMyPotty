@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import modStyles from './Modal.module.css'; 
 
-const Modal = ({ isOpen, onClose, children, selectedName, selectedAddress }) => {
+const Modal = ({ isOpen, onClose, selectedName, selectedAddress }) => {
     useEffect(() => {
         const handleEscapeKey = (event) => {
             if (event.key === 'Escape') {
