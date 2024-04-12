@@ -224,7 +224,7 @@ export default function NYCMap(props) {
                         <div className={styles.popup}>
                             <div id={styles.name}>
                                 {/*Modal component Appears when onClick is handled */}
-                                <h1 onClick={() => handleNameClick(props.popupWindow.Name)}>{props.popupWindow.Name}</h1>
+                                <h1 id={styles.hoverLocation} onClick={() => handleNameClick(props.popupWindow.Name)}>{props.popupWindow.Name}</h1>
                             </div>
                             <div id={styles.buttons}>
                                 <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}

@@ -40,3 +40,7 @@
 #reviewButton:hover{
     color: orange;
 }
+
+#hoverLocation:hover{
+    color:blue;
+}
