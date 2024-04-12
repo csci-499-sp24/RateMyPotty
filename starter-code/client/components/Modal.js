@@ -21,7 +21,7 @@ const Modal = ({ isOpen, onClose, children, selectedName, selectedAddress }) => 
     if (!isOpen) return null;
 
     /*Placeholder imageUrl until able to pass images into Modal component */
-    const imageUrl = "https://static.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg"; 
+    const imageUrl = "https://www.heringinternational.com/fileadmin/images/content/de/sanitaer/cwc/Goch-Bahnhof-CWC_R_110_B_960_.jpg"; 
 
     return (
         <div>
