@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styles from './Modal.module.css'; // Import your CSS module for styling
 
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onClose, children, selectedName }) => {
     useEffect(() => {
         const handleEscapeKey = (event) => {
             if (event.key === 'Escape') {
@@ -24,7 +24,13 @@ const Modal = ({ isOpen, onClose, children }) => {
         <div className={styles.modalOverlay} onClick={onClose}>
             <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                 <button className={styles.closeButton} onClick={onClose} aria-label="Close">&times;</button>
-                {children}
+                <div className={styles.modalBody}>
+                    <h2>{selectedName || 'No Name'}</h2>
+                    <div>{children}</div> 
+                </div>
+                <div className={styles.modalFooter}>
+                    <button onClick={onClose}>Close</button>
+                </div>
             </div>
         </div>
     );

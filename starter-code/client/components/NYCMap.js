@@ -206,10 +206,9 @@ export default function NYCMap(props) {
                         }}
                     />
                 ))}
-                {/* Modal: When div.id = {style.names} is clicked, this Modal pops open */}
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                     <h2>{selectedName}</h2>
-                    {/* Add more content as needed */}
+                    {/* Additional content goes here */}
                 </Modal>
                 {props.popupWindow &&
                     <InfoWindow
