@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from 'next-themes';
 import StarRating from './StarRating.js';
+import Modal from './Modal'; // Assuming you have a Modal component
 
 import {
     Map,
@@ -155,6 +156,15 @@ export default function NYCMap(props) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
     const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+    /* Modal Implementation State*/
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedName, setSelectedName] = useState(null);
+
+    const handleNameClick = (name) => {
+        setSelectedName(name);
+        setIsModalOpen(true);
+    };
+
     return (
         //Markers for the user's location and the bathrooms
         <div style={{ height: "70vh", width: "70vw" }}>
@@ -196,6 +206,11 @@ export default function NYCMap(props) {
                         }}
                     />
                 ))}
+                {/* Modal: When div.id = {style.names} is clicked, this Modal pops open */}
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    <h2>{selectedName}</h2>
+                    {/* Add more content as needed */}
+                </Modal>
                 {props.popupWindow &&
                     <InfoWindow
                         onCloseClick={() => {
@@ -206,7 +221,7 @@ export default function NYCMap(props) {
                     >
                         <div className={styles.popup}>
                             <div id={styles.name}>
-                                <h1>{props.popupWindow.Name}</h1>
+                                <h1 onClick={() => handleNameClick(props.popupWindow.Name)}>{props.popupWindow.Name}</h1>
                             </div>
                             <div id={styles.buttons}>
                                 <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
