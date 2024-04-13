@@ -47,9 +47,21 @@
     color: #333;
 }
 
+/* Update the modalBodyContent class to style the selectedReview div */
 .modalBodyContent {
     margin-top: 20px;
     color: #666;
+    padding: 10px; /* Add padding for spacing */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 8px; /* Add rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Style the text within the selectedReview div */
+.modalBodyContent p {
+    margin: 0; /* Remove default margin */
+    font-size: 16px; /* Adjust font size */
+    line-height: 1.5; /* Adjust line height for readability */
 }
 
 .modalFooter {

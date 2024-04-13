@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import modStyles from './Modal.module.css'; 
 
-const Modal = ({ isOpen, onClose, selectedName, selectedAddress }) => {
+const Modal = ({ isOpen, onClose, selectedName, selectedAddress, selectedReview }) => {
     useEffect(() => {
         const handleEscapeKey = (event) => {
             if (event.key === 'Escape') {
@@ -22,6 +22,7 @@ const Modal = ({ isOpen, onClose, selectedName, selectedAddress }) => {
 
     /*Placeholder imageUrl until able to pass images into Modal component */
     const imageUrl = "https://www.heringinternational.com/fileadmin/images/content/de/sanitaer/cwc/Goch-Bahnhof-CWC_R_110_B_960_.jpg"; 
+    
 
     return (
         <div>
@@ -32,6 +33,7 @@ const Modal = ({ isOpen, onClose, selectedName, selectedAddress }) => {
                     <h2 className={modStyles.modalTitle}>{selectedName || 'No Name'}</h2>
                     <div className={modStyles.modalBodyContent}>{selectedAddress}</div>
                     <img src={imageUrl} alt="Image" className={modStyles.modalImage} />
+                    <div className={modStyles.modalBodyContent}>{selectedReview}</div>
                 </div>
                 <div className={modStyles.modalFooter}>
                     <button className={modStyles.closeButton} onClick={onClose}>Close</button>
