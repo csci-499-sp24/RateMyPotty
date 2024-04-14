@@ -164,14 +164,17 @@ export default function NYCMap(props) {
     /*Temporary Reviews, until able to fetch written reviews*/
     const [selectedReview, setSelectedReview] = useState(null);
     const [selectedReview1, setSelectedReview1] = useState(null);
+    const [selectedReview2, setSelectedReview2] = useState(null);
     /*When pop_up name is clicked, define const of Modal*/
     const handleNameClick = (name) => {
         setSelectedName(name);
         setSelectedAddress(props.popupWindow.Address); 
         setIsModalOpen(true);
-        setSelectedReview("This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite.");
-        setSelectedReview1("This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite.");
+        setSelectedReview("AnonymousUser42: This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite. 5/5");
+        setSelectedReview1("AnonymousUser66: I dislike this bathroom. It's always dirty and it seems like it gets even crustier by the second. 2/5");
+        setSelectedReview2("Bob: This bathroom's alright. 3/5");
     };
+
     /*Modal Implementation State End*/
 
     return (
@@ -220,7 +223,8 @@ export default function NYCMap(props) {
                 to get reviews properly */}
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} 
                 selectedName={selectedName} selectedAddress={selectedAddress} 
-                selectedReview={selectedReview} selectedReview1={selectedReview1}>
+                selectedReview={selectedReview} selectedReview1={selectedReview1}
+                selectedReview2={selectedReview2}>
                 </Modal>
                 {props.popupWindow &&
                     <InfoWindow
