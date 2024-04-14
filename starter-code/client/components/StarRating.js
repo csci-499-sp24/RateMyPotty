@@ -6,11 +6,16 @@ import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 const StarRating = () => {
   // Creates state vriable to hold current rating
   const [rating, setRating] = useState(0);
-  
+  const clicked = useState(false);
+
+  let rated = false;
   // Defines a function to handle click events on the stars
   const handleClick = (rate) => {
     // When star is clicked, update the rating state variable
-    setRating(rate);
+    if (rated === false) {
+      rated = true;
+      setRating(rate);
+    }
   };
 
   return (
