@@ -157,7 +157,10 @@ const mapStyles =
 export default function NYCMap(props) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
-    const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+    const [showReviewSubmit, setShowReviewSubmit] = useState(false);
+    const[reviewText, setReviewText] = useState();
+    const defaultPosition = { lat: 40.712775, lng: -74.005973 }
+    const reviewTextAreaRef = useRef();
     const favoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
             try {
@@ -214,6 +217,41 @@ export default function NYCMap(props) {
     
     } ;
 
+    const reviewBathroom = async (BathroomID, ReviewText) => {
+        console.log('Review bathroom id:', BathroomID)
+            try {
+               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/reviews', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({
+                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       BathroomID: BathroomID,  // Replace with the actual bathroom ID
+                       ReviewText: ReviewText, 
+                   }),
+               });
+               if (response.ok) {
+                    const data = await response.json();
+                    console.log('Review added', data);
+                    // Insert this review into review table.
+                   //props.setReviews([...props.reviews, data.data])
+                    setReviewText('');
+               } else {
+                    console.error('Unable to add review');
+               }
+       } catch (error) {
+           console.error('Review error:', error);
+       }
+    };
+
+    const resetMarker = () => {
+        setReviewText('');
+        setShowTextbox(false);
+        setShowReviewSubmit(false);
+    }
+
+
     return (
         //Markers for the user's location and the bathrooms
         <div style={{ height: "70vh", width: "70vw" }}>
@@ -247,6 +285,7 @@ export default function NYCMap(props) {
                         clickable={true}
                         onClick={() => {
                             props.setPopupWindow(bathroom);
+                            resetMarker();
                         }}
                         title={bathroom.Name}
                         icon={{
@@ -260,6 +299,7 @@ export default function NYCMap(props) {
                         onCloseClick={() => {
                             props.setPopupWindow(null);
                             setShowTextbox(false); // Hide the textbox when the InfoWindow is closed
+                            setShowReviewSubmit(false);
                         }}
                         position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
                     >
@@ -269,7 +309,10 @@ export default function NYCMap(props) {
                             </div>
                             <div id={styles.buttons}>
                                 <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
-                                    onClick={() => setShowTextbox(true)}
+                                    onClick={() => {
+                                        setShowTextbox(true)
+                                        setShowReviewSubmit(true)
+                                    }}
                                     
                                 />
                             {props.favorites.findIndex(favorite => favorite.BathroomID === props.popupWindow.BathroomID) > -1 ? 
@@ -285,7 +328,10 @@ export default function NYCMap(props) {
                             }
                                
                             </div>
-                            {showTextbox && <textarea />}
+                            <div>
+                                {showTextbox && (<textarea ref={reviewTextAreaRef}/>)}
+                            </div>
+                            {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} type="submit" value="Submit">Submit</button>}
                             <div className={styles.paragraph}>
                                 <StarRating /> 
                             </div>
