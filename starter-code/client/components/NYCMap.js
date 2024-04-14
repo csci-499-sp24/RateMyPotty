@@ -12,6 +12,8 @@ import {
     Marker
 } from "@vis.gl/react-google-maps";
 
+//version without user marker
+
 
 const mapStyles =
     [
@@ -156,8 +158,6 @@ export default function NYCMap(props) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
     const defaultPosition = { lat: 40.712775, lng: -74.005973 };
-
-
     const favoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
             try {
