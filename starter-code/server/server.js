@@ -126,7 +126,7 @@ app.delete("/api/favorites", async (req, res) => {
 //first step would be to step this up app.get("/api/review", async (req, res) => { 
 
 // endpoint to allow a user to review a bathroom
-app.post("/api/reviews", async (req, res) => {
+app.post("api/reviews", async (req, res) => {
     console.log("abcdefg");
     console.log(req.body);
     // grab BathroomId, UserID and Review text from request
