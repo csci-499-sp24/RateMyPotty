@@ -166,15 +166,6 @@ function Index({ darkMode, toggleDarkMode }) {
   return (
     <div className="container-fluid">
       {isLoggedIn ? <LoggedInNavbar onLogout={logout} /> : <Navbar />}
-  console.log('favorites', favorites);
-
-  return (
-    <div className="container-fluid">
-      <Navbar />
-      <label></label>
-      {/* <input ref={inputRef} /> */}
-
-
       <div className="row">
         <div className="col-md-3">
           {/* Conditionally render sidebar based on isLoggedIn */}
@@ -186,12 +177,6 @@ function Index({ darkMode, toggleDarkMode }) {
             <LoggedInHero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} /> :
             <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} />
           }
-            <div id="map" className="map-container" ref={mapRef}>
-              <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
-            </div> 
-            <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef}
-              inputRef={inputRef}
-            />
             <div id="map" className="map-container" ref={mapRef}>
               <NYCMap 
               className="my-map" 
