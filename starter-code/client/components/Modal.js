@@ -31,9 +31,10 @@ const Modal = ({ isOpen, onClose, selectedName, selectedAddress, selectedReview 
                 <button className={modStyles.closeButton} onClick={onClose} aria-label="Close">&times;</button>
                 <div className={modStyles.modalBody}>
                     <h2 className={modStyles.modalTitle}>{selectedName || 'No Name'}</h2>
-                    <div className={modStyles.modalBodyContent}>{selectedAddress}</div>
                     <img src={imageUrl} alt="Image" className={modStyles.modalImage} />
-                    <div className={modStyles.modalBodyContent}>{selectedReview}</div>
+                    <div className={modStyles.modalBodyContent}>{selectedAddress}</div>
+                    <div className={modStyles.modalTitle}>Reviews</div>
+                    <div className={modStyles.selectedReview}>{selectedReview}</div>
                 </div>
                 <div className={modStyles.modalFooter}>
                     <button className={modStyles.closeButton} onClick={onClose}>Close</button>

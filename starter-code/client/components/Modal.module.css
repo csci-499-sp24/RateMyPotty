@@ -47,9 +47,13 @@
     color: #333;
 }
 
-/* Update the modalBodyContent class to style the selectedReview div */
 .modalBodyContent {
     margin-top: 20px;
+    color: #666;
+}
+
+/* Update the CSS to use an id selector */
+.selectedReview {
     color: #666;
     padding: 10px; /* Add padding for spacing */
     background-color: #f9f9f9; /* Light background color */
@@ -58,7 +62,7 @@
 }
 
 /* Style the text within the selectedReview div */
-.modalBodyContent p {
+.selectedReview div {
     margin: 0; /* Remove default margin */
     font-size: 16px; /* Adjust font size */
     line-height: 1.5; /* Adjust line height for readability */
@@ -84,6 +88,7 @@
 }
 
 .modalImage {
+    margin-top: 20px;
     width: 100%; /* Take up full width of its container */
     max-height: 300px; /* Limit the maximum height to maintain aspect ratio */
     object-fit: cover; /* Ensure the image covers the entire space */
