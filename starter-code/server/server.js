@@ -34,8 +34,9 @@ FavoritesModel.defineFavoritesModel();
 ReviewModel.defineReviewModel();
 BathroomModel.bathroom.belongsToMany(UserModel.user, { through: FavoritesModel.favorites, foreignKey: 'BathroomID' });
 UserModel.user.belongsToMany(BathroomModel.bathroom, { through: FavoritesModel.favorites, foreignKey: 'UserID' });
-BathroomModel.bathroom.belongsToMany(UserModel.user, { through: ReviewModel.reviews });
-UserModel.user.belongsToMany(BathroomModel.bathroom, { through: ReviewModel.reviews });
+BathroomModel.bathroom.belongsToMany(UserModel.user, { through: ReviewModel.reviews, foreignKey: 'BathroomID'});
+UserModel.user.belongsToMany(BathroomModel.bathroom, { through: ReviewModel.reviews, foreignKey: 'UserID' });
+
 
 /*
 DO NOT REMOVE MIGHT NEED LATER.
@@ -66,7 +67,7 @@ app.get("/api/bathrooms", async (req, res) => {
     //SELECT * FROM Bathrooms;
 
     const bathrooms = await BathroomModel.bathroom.findAll();
-    console.log('bathrooms?', bathrooms);
+    //console.log('bathrooms?', bathrooms);
     // Respond back to the client with this data
     res.json({ data: bathrooms })
 
@@ -77,7 +78,7 @@ app.post("/api/favorites", async (req, res) => {
     // grab BathroomId and UserID from request
     const UserID = req.body.UserID;
     const BathroomID = req.body.BathroomID;
-    console.log(UserID, BathroomID)
+    //console.log(UserID, BathroomID)
     const fakeName = 'some-name';
 
     // Create and store this new favorite in our database
@@ -93,7 +94,7 @@ app.post("/api/favorites", async (req, res) => {
 app.get("/api/favorites", async (req, res) => {
 
     const favorites = await FavoritesModel.favorites.findAll({ UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59' });
-    console.log('favorites?', favorites);
+    //console.log('favorites?', favorites);
     res.json({ data: favorites })
 });
 
@@ -102,7 +103,7 @@ app.delete("/api/favorites", async (req, res) => {
     // grab BathroomId and UserID from request
     const UserID = req.body.UserID;
     const BathroomID = req.body.BathroomID;
-    console.log(UserID, BathroomID)
+    //console.log(UserID, BathroomID)
 
 
     // Create and store this new favorite in our database
@@ -126,18 +127,23 @@ app.delete("/api/favorites", async (req, res) => {
 
 // endpoint to allow a user to review a bathroom
 app.post("/api/reviews", async (req, res) => {
+    console.log("abcdefg");
+    console.log(req.body);
     // grab BathroomId, UserID and Review text from request
     const UserID = req.body.UserID;
     const BathroomID = req.body.BathroomID;
-    const ReviewText = req.body.Review_text;
-    console.log(UserID, BathroomID, ReviewText);
+    const ReviewText = req.body.ReviewText;
+    console.log("This is the user ID:" + UserID);
+    console.log(BathroomID);
+    console.log(ReviewText);
 
-    // Create and store this new favorite in our database
+    // Create and store this new review in our database
+
     const review = await ReviewModel.reviews.create({
-        UserID,
-        BathroomID,
-        ReviewText
-    })
+        UserID: UserID,
+        BathroomID: BathroomID,
+        Review_text: ReviewText,
+    });
 
     res.json({ data: review, message: 'successfully created review' })
 });

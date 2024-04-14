@@ -157,6 +157,7 @@ export default function NYCMap(props) {
     const [showReviewSubmit, setShowReviewSubmit] = useState(false);
     const[reviewText, setReviewText] = useState();
     const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+    const reviewTextAreaRef = useRef();
 
 
     const favoriteBathroom = async (BathroomID) => {
@@ -215,7 +216,7 @@ export default function NYCMap(props) {
     
     } ;
 
-    const reviewBathroom = async (BathroomID, Review_text) => {
+    const reviewBathroom = async (BathroomID, ReviewText) => {
         console.log('Review bathroom id:', BathroomID)
             try {
                const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/reviews', {
@@ -226,20 +227,20 @@ export default function NYCMap(props) {
                    body: JSON.stringify({
                        UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
                        BathroomID: BathroomID,  // Replace with the actual bathroom ID
-                       Review_text: Review_text, 
+                       ReviewText: ReviewText, 
                    }),
                });
                if (response.ok) {
                     const data = await response.json();
                     console.log('Review added', data);
                     // Insert this review into review table.
-                    //props.setReviews([...props.reviews, data.data])
+                   //props.setReviews([...props.reviews, data.data])
                     setReviewText('');
                } else {
                     console.error('Unable to add review');
                }
        } catch (error) {
-           console.error('Unable to add review', error);
+           console.error('Review error:', error);
        }
     };
 
@@ -327,13 +328,9 @@ export default function NYCMap(props) {
                                
                             </div>
                             <div>
-                                {showTextbox && (
-                                    <textarea 
-                                    value = {reviewText}
-                                    onChange = {(e) => setReviewText(e.target.value)}
-                                />)}
+                                {showTextbox && (<textarea ref={reviewTextAreaRef}/>)}
                             </div>
-                            {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewText)} type="submit" value="Submit">Submit</button>}
+                            {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} type="submit" value="Submit">Submit</button>}
                             <div className={styles.paragraph}>
                                 <p>Star Rating Goes Here</p>
                             </div>
