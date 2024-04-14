@@ -219,7 +219,7 @@ export default function NYCMap(props) {
     const reviewBathroom = async (BathroomID, ReviewText) => {
         console.log('Review bathroom id:', BathroomID)
             try {
-               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/reviews', {
+               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/reviews', {
                    method: 'POST',
                    headers: {
                        'Content-Type': 'application/json',
