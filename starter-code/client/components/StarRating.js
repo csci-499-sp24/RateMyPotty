@@ -4,7 +4,7 @@ import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
 
 const StarRating = () => {
-  // Creates state vriable to hold current rating
+  // Creates state variable to hold current rating
   const [rating, setRating] = useState(0);
   const clicked = useState(false);
 
@@ -12,10 +12,7 @@ const StarRating = () => {
   // Defines a function to handle click events on the stars
   const handleClick = (rate) => {
     // When star is clicked, update the rating state variable
-    if (rated === false) {
-      rated = true;
-      setRating(rate);
-    }
+    setRating(rate);
   };
 
   return (
@@ -29,7 +26,13 @@ const StarRating = () => {
               type="radio"
               name="rating"
               value={ratingValue}
-              onClick={() => handleClick(ratingValue)}
+              onClick={() => {
+                  if (!rated) {
+                    handleClick(ratingValue);
+                    rated = true;
+                  }
+              }
+              }
               style={{ display: 'none' }}
             />
             <FontAwesomeIcon
