@@ -333,7 +333,9 @@ export default function NYCMap(props) {
                             </div>
                             {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} type="submit" value="Submit">Submit</button>}
                             <div className={styles.paragraph}>
-                                <StarRating /> 
+                                <StarRating
+                                    Bathroom = {props.popupWindow}
+                                />
                             </div>
                             <div className={styles.paragraph}>
                                 <p className>{props.popupWindow.Address}</p>

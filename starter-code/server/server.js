@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const cors = require('cors')
 const app = express();
 const { Sequelize, DataTypes } = require('sequelize');
@@ -7,6 +8,9 @@ const { UserModel } = require('./models/user');
 const { FavoritesModel } = require('./models/favorites');
 const { ReviewModel } = require('./models/review');
 require('dotenv').config();
+
+// create application/json parser
+const jsonParser = bodyParser.json();
 
 app.use(cors());
 app.use(express.json());
@@ -71,6 +75,23 @@ app.get("/api/bathrooms", async (req, res) => {
     // Respond back to the client with this data
     res.json({ data: bathrooms })
 
+});
+
+app.put("/api/rate/:id", jsonParser, async (req, res) => {
+    const bathroom_id = req.params.id;
+    const rating = req.body.rating;
+
+    const bathroom = await BathroomModel.bathroom.findByPk(bathroom_id)
+
+    let totalRatings = bathroom.TotalRatings;
+    let originalRating = bathroom.AverageRating === null ? 0.0 : bathroom.AverageRating;
+
+    bathroom.AverageRating = (originalRating + rating) / (totalRatings + 1);
+    bathroom.TotalRatings = totalRatings + 1;
+
+    await bathroom.save();
+
+    res.json({data: bathroom});
 });
 
 // endpoint to allow a user to favorite a bathroom
@@ -145,7 +166,6 @@ app.post("/api/reviews", async (req, res) => {
 
     res.json({ data: review, message: 'successfully created review' })
 });
-
 
 // Server trying to connect to the database using sequelize
 let sequelize;
