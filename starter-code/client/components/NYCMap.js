@@ -4,12 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faHeart,  } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import { useTheme } from 'next-themes';
+import StarRating from './StarRating.js';
 
 import {
     Map,
     InfoWindow,
     Marker
 } from "@vis.gl/react-google-maps";
+
+//version without user marker
 
 
 const mapStyles =
@@ -156,10 +159,8 @@ export default function NYCMap(props) {
     const [showTextbox, setShowTextbox] = useState(false);
     const [showReviewSubmit, setShowReviewSubmit] = useState(false);
     const[reviewText, setReviewText] = useState();
-    const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+    const defaultPosition = { lat: 40.712775, lng: -74.005973 }
     const reviewTextAreaRef = useRef();
-
-
     const favoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
             try {
@@ -332,7 +333,7 @@ export default function NYCMap(props) {
                             </div>
                             {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} type="submit" value="Submit">Submit</button>}
                             <div className={styles.paragraph}>
-                                <p>Star Rating Goes Here</p>
+                                <StarRating /> 
                             </div>
                             <div className={styles.paragraph}>
                                 <p className>{props.popupWindow.Address}</p>
