@@ -22,7 +22,7 @@ class ReviewModel{
 
     static defineReviewModel() {
         ReviewModel.reviews = ReviewModel.sequelize.define('Review', {
-            BathroomID: {
+            /*BathroomID: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
@@ -39,10 +39,13 @@ class ReviewModel{
                     model: UserModel.user,
                     key: 'UserID'
                 }
-            },
-            Name: {
-                type: DataTypes.STRING,
+            },*/
+            Review_text: {
+                type: DataTypes.TEXT,
                 allowNull: false,
+            },
+            Rating:{
+                type: DataTypes.INTEGER,
             }
         });
     }

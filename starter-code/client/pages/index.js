@@ -6,11 +6,14 @@ import {
 
 
 import Hero from '../components/Hero';
+import LoggedInHero from '@/components/LoggedInHero';
 import Footer from '../components/Footer';
 import NYCMap from '../components/NYCMap';
 import Navbar from '../components/Navbar';
+import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Testimonials from '../components/testimonials';
 import Faq from '../components/faq';
+import { supabase } from '../supabaseClient';//for login/logout
 
 
 function Index({ darkMode, toggleDarkMode }) {
@@ -23,9 +26,12 @@ function Index({ darkMode, toggleDarkMode }) {
   const map = useMap();
   const [userPosition, setUserPosition] = useState({});
   const [bathrooms, setBathrooms] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [popupWindow, setPopupWindow] = useState(null);
   const inputRef = useRef(null);
   const autoCompleteRef = useRef();
+  const [isLoggedIn, setIsLoggedIn] = useState(false); //added for login/logout state
+
 
   // Get user's position
   useEffect(() => {
@@ -81,7 +87,44 @@ function Index({ darkMode, toggleDarkMode }) {
       .then((res) => res.json())
       .then(data => setBathrooms(data.data));
 
+      // Make a request to the server in order to grab user's favorites
+     fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites') 
+      .then((res) => res.json())
+      .then(data => setFavorites(data.data));
   }, [])
+
+  useEffect(() => {
+    const unsubscribe = supabase.auth.onAuthStateChange((event, session) => {
+      const user = session?.user;
+      setIsLoggedIn(!!user);
+    });
+  
+    // Cleanup function to remove the listener when the component unmounts
+    return () => {
+      if (typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
+    };
+  }, []);
+  
+{/*
+    // Function to handle login
+    const login = () => {
+      // ... login code
+  
+      // After the user is successfully logged in:
+      setIsLoggedIn(true);
+    };
+  
+    // Function to handle logout
+    const logout = () => {
+      // ... logout code
+  
+      // After the user is successfully logged out:
+      setIsLoggedIn(false);
+    };
+
+  */}
 
   // Function to handle emergency button click
   const handleEmergencyButtonClick = () => {
@@ -113,34 +156,51 @@ function Index({ darkMode, toggleDarkMode }) {
   };
 
 
+  //logout function
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.log("Error logging out:", error.message);
+  };
+
+
   return (
     <div className="container-fluid">
-      <Navbar />
-      <label></label>
-      {/* <input ref={inputRef} /> */}
-
-
+      {isLoggedIn ? <LoggedInNavbar onLogout={logout} /> : <Navbar />}
       <div className="row">
         <div className="col-md-3">
-
+          {/* Conditionally render sidebar based on isLoggedIn */}
+          {/* If you have a LoggedInSidebar component, you can use it here */}
         </div>
         <div className="col-md-9">
           <div className="main-content">
-            <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef}
-              inputRef={inputRef}
-            />
+          {isLoggedIn ? 
+            <LoggedInHero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} /> :
+            <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} />
+          }
             <div id="map" className="map-container" ref={mapRef}>
-              <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow} />
+              <NYCMap 
+              className="my-map" 
+              userPosition={userPosition} 
+              bathrooms={bathrooms} 
+              popupWindow={popupWindow} 
+              setPopupWindow={setPopupWindow}
+              setFavorites={setFavorites}
+              favorites={favorites}
+               />
             </div>
           </div>
         </div>
       </div>
-      <Faq />
-      <Testimonials />
+      {!isLoggedIn && <Faq />}
+      {!isLoggedIn && <Testimonials />}
       <Footer />
     </div>
+);
 
-  );
 }
+
+/*The ternary syntax is life if else for Navbar, if logged in , it will show logged in
+navbar , else it will show regular navbar, the iss Logged in some tags is when you
+want this component to be show so FAQ and Testimonial only shown when in logged out state */
 
 export default Index;

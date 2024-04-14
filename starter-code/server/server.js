@@ -13,20 +13,22 @@ require('dotenv').config();
 const jsonParser = bodyParser.json();
 
 app.use(cors());
+app.use(express.json());
+
 
 app.get("/api/home", (req, res) => {
-    res.json({message: "Hello World!"});
+    res.json({ message: "Hello World!" });
 });
 
-function connectModelsToSequelize(){
-    if(process.env.USERNAME && process.env.PASSWORD && process.env.HOST){
+function connectModelsToSequelize() {
+    if (process.env.USERNAME && process.env.PASSWORD && process.env.HOST) {
         BathroomModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
         UserModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
         FavoritesModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
         ReviewModel.connectToSequelize(process.env.USERNAME, process.env.PASSWORD, process.env.HOST);
     } else {
-    console.log('Could not find the username/password/host info.');
-    }   
+        console.log('Could not find the username/password/host info.');
+    }
 }
 
 connectModelsToSequelize();
@@ -34,10 +36,10 @@ BathroomModel.defineBathroomModel();
 UserModel.defineUserModel();
 FavoritesModel.defineFavoritesModel();
 ReviewModel.defineReviewModel();
-BathroomModel.bathroom.belongsToMany(UserModel.user, {through: FavoritesModel.favorites });
-UserModel.user.belongsToMany(BathroomModel.bathroom, {through: FavoritesModel.favorites });
-BathroomModel.bathroom.belongsToMany(UserModel.user, {through: ReviewModel.reviews });
-UserModel.user.belongsToMany(BathroomModel.bathroom, {through: ReviewModel.reviews });
+BathroomModel.bathroom.belongsToMany(UserModel.user, { through: FavoritesModel.favorites, foreignKey: 'BathroomID' });
+UserModel.user.belongsToMany(BathroomModel.bathroom, { through: FavoritesModel.favorites, foreignKey: 'UserID' });
+BathroomModel.bathroom.belongsToMany(UserModel.user, { through: ReviewModel.reviews, foreignKey: 'BathroomID'});
+UserModel.user.belongsToMany(BathroomModel.bathroom, { through: ReviewModel.reviews, foreignKey: 'UserID' });
 
 
 /*
@@ -66,12 +68,12 @@ app.listen(port, () => {
 
 app.get("/api/bathrooms", async (req, res) => {
     // Get the bathroom data from the database
-     //SELECT * FROM Bathrooms;
-     
-     const bathrooms = await BathroomModel.bathroom.findAll();
-     console.log('bathrooms?', bathrooms);
-     // Respond back to the client with this data
-     res.json({data: bathrooms})
+    //SELECT * FROM Bathrooms;
+
+    const bathrooms = await BathroomModel.bathroom.findAll();
+    //console.log('bathrooms?', bathrooms);
+    // Respond back to the client with this data
+    res.json({ data: bathrooms })
 
 });
 
@@ -92,21 +94,94 @@ app.put("/api/rate/:id", jsonParser, async (req, res) => {
     res.json({data: bathroom});
 });
 
+// endpoint to allow a user to favorite a bathroom
+app.post("/api/favorites", async (req, res) => {
+    // grab BathroomId and UserID from request
+    const UserID = req.body.UserID;
+    const BathroomID = req.body.BathroomID;
+    //console.log(UserID, BathroomID)
+    const fakeName = 'some-name';
+
+    // Create and store this new favorite in our database
+    const favorite = await FavoritesModel.favorites.create({
+        UserID,
+        BathroomID,
+        Name: fakeName
+    })
+
+    res.json({ data: favorite, message: 'successfully created bathroom' })
+});
+
+app.get("/api/favorites", async (req, res) => {
+
+    const favorites = await FavoritesModel.favorites.findAll({ UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59' });
+    //console.log('favorites?', favorites);
+    res.json({ data: favorites })
+});
+
+app.delete("/api/favorites", async (req, res) => {
+
+    // grab BathroomId and UserID from request
+    const UserID = req.body.UserID;
+    const BathroomID = req.body.BathroomID;
+    //console.log(UserID, BathroomID)
+
+
+    // Create and store this new favorite in our database
+    const favorite = await FavoritesModel.favorites.destroy({
+        where: {
+            UserID,
+            BathroomID
+        }
+    })
+
+    res.json({ message: 'successfully deleted bathroom' })
+});
+
+//Need 4 different endpoints (post, get, delete, put) for review functiionality 
+// 1. post (create a review in database)
+// 2. get (all reviews of a bathroom)
+// 3. delete (a review)
+// 4. put (edit an existing review)
+
+//first step would be to step this up app.get("/api/review", async (req, res) => { 
+
+// endpoint to allow a user to review a bathroom
+app.post("/api/reviews", async (req, res) => {
+    // grab BathroomId, UserID and Review text from request
+    const UserID = req.body.UserID;
+    const BathroomID = req.body.BathroomID;
+    const ReviewText = req.body.ReviewText;
+    console.log("This is the user ID:" + UserID);
+    console.log(BathroomID);
+    console.log(ReviewText);
+
+    // Create and store this new review in our database
+
+    const review = await ReviewModel.reviews.create({
+        UserID: UserID,
+        BathroomID: BathroomID,
+        Review_text: ReviewText,
+    });
+
+    res.json({ data: review, message: 'successfully created review' })
+});
+
 // Server trying to connect to the database using sequelize
 let sequelize;
 
-if(process.env.USERNAME && process.env.PASSWORD && process.env.HOST){
+if (process.env.USERNAME && process.env.PASSWORD && process.env.HOST) {
     sequelize = new Sequelize('postgres', process.env.USERNAME, process.env.PASSWORD, {
         host: process.env.HOST,
         dialect: "postgres"
     });
 }
 
-async function connectSequelize(){
-    try{
+async function connectSequelize() {
+    try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
-    }catch(error){
+    } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
 }
