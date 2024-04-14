@@ -23,6 +23,7 @@ function Index({ darkMode, toggleDarkMode }) {
   const map = useMap();
   const [userPosition, setUserPosition] = useState({});
   const [bathrooms, setBathrooms] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [popupWindow, setPopupWindow] = useState(null);
   const inputRef = useRef(null);
   const autoCompleteRef = useRef();
@@ -81,6 +82,10 @@ function Index({ darkMode, toggleDarkMode }) {
       .then((res) => res.json())
       .then(data => setBathrooms(data.data));
 
+      // Make a request to the server in order to grab user's favorites
+     fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites') 
+      .then((res) => res.json())
+      .then(data => setFavorites(data.data));
   }, [])
 
   // Function to handle emergency button click
@@ -112,6 +117,7 @@ function Index({ darkMode, toggleDarkMode }) {
     setPopupWindow(nearestBathroom)
   };
 
+  console.log('favorites', favorites);
 
   return (
     <div className="container-fluid">
@@ -130,8 +136,18 @@ function Index({ darkMode, toggleDarkMode }) {
               inputRef={inputRef}
             />
             <div id="map" className="map-container" ref={mapRef}>
-              <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow} />
+              <NYCMap 
+              className="my-map" 
+              userPosition={userPosition} 
+              bathrooms={bathrooms} 
+              popupWindow={popupWindow} 
+              setPopupWindow={setPopupWindow}
+              setFavorites={setFavorites}
+              favorites={favorites}
+
+               />
             </div>
+        
           </div>
         </div>
       </div>
