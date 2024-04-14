@@ -216,7 +216,9 @@ export default function NYCMap(props) {
                             </div>
                             {showTextbox && <textarea />}
                             <div className={styles.paragraph}>
-                                <StarRating /> 
+                                <StarRating
+                                    Bathroom = {props.popupWindow}
+                                />
                             </div>
                             <div className={styles.paragraph}>
                                 <p className>{props.popupWindow.Address}</p>

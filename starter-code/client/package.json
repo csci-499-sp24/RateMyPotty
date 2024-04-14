@@ -20,6 +20,7 @@
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.39.8",
     "@vis.gl/react-google-maps": "^0.7.1",
+    "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "next": "14.1.0",
     "next-themes": "^0.3.0",
@@ -40,4 +41,3 @@
     "tailwindcss": "^3.4.1"
   }
 }
-

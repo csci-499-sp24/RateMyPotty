@@ -2,17 +2,28 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
+import RatingApi from '../pages/api/starrating';
 
-const StarRating = () => {
+const StarRating = ({Bathroom}) => {
   // Creates state variable to hold current rating
-  const [rating, setRating] = useState(0);
+  const originalRating = Bathroom.AverageRating === null ? 0 : Math.round(Bathroom.AverageRating);
+
+  const [rating, setRating] = useState(originalRating);
   const clicked = useState(false);
 
   let rated = false;
   // Defines a function to handle click events on the stars
-  const handleClick = (rate) => {
+  const handleClick = async (rate) => {
     // When star is clicked, update the rating state variable
     setRating(rate);
+    try {
+      const response = await RatingApi.put(`/${Bathroom.BathroomID}`, {
+        rating: rate
+      });
+    }
+    catch (err) {
+      console.log(err);
+    }
   };
 
   return (
