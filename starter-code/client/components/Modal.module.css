@@ -54,6 +54,7 @@
 
 /* Update the CSS to use an id selector */
 .selectedReview {
+    margin-bottom: 10px;
     color: #666;
     padding: 10px; /* Add padding for spacing */
     background-color: #f9f9f9; /* Light background color */

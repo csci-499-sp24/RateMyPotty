@@ -156,19 +156,23 @@ export default function NYCMap(props) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
     const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+
     /* Modal Implementation State*/
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedName, setSelectedName] = useState(null);
     const [selectedAddress, setSelectedAddress] = useState(null);
     /*Temporary Reviews, until able to fetch written reviews*/
     const [selectedReview, setSelectedReview] = useState(null);
+    const [selectedReview1, setSelectedReview1] = useState(null);
     /*When pop_up name is clicked, define const of Modal*/
     const handleNameClick = (name) => {
         setSelectedName(name);
         setSelectedAddress(props.popupWindow.Address); 
         setIsModalOpen(true);
-        setSelectedReview("very nice");
+        setSelectedReview("This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite.");
+        setSelectedReview1("This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite.");
     };
+    /*Modal Implementation State End*/
 
     return (
         //Markers for the user's location and the bathrooms
@@ -212,10 +216,11 @@ export default function NYCMap(props) {
                     />
                 ))}
                 {/*Modal Implementation when styles.name is clicked,
-                passes in selectedName prop into Modal.js component */}
+                passes in selectedName prop into Modal.js component, take out selectedReview1 once able
+                to get reviews properly */}
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} 
                 selectedName={selectedName} selectedAddress={selectedAddress} 
-                selectedReview={selectedReview}>
+                selectedReview={selectedReview} selectedReview1={selectedReview1}>
                 </Modal>
                 {props.popupWindow &&
                     <InfoWindow
