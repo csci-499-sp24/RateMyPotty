@@ -166,16 +166,7 @@ function Index({ darkMode, toggleDarkMode }) {
   return (
     <div className="container-fluid">
       {isLoggedIn ? <LoggedInNavbar onLogout={logout} /> : <Navbar />}
-  console.log('favorites', favorites);
-
-  return (
-    <div className="container-fluid">
-      <Navbar />
-      <label></label>
-      {/* <input ref={inputRef} /> */}
-
-
-      <div className="row">
+       <div className="row">
         <div className="col-md-3">
           {/* Conditionally render sidebar based on isLoggedIn */}
           {/* If you have a LoggedInSidebar component, you can use it here */}
