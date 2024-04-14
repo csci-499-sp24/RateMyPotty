@@ -187,12 +187,6 @@ function Index({ darkMode, toggleDarkMode }) {
             <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} />
           }
             <div id="map" className="map-container" ref={mapRef}>
-              <NYCMap className="my-map" userPosition={userPosition} bathrooms={bathrooms} popupWindow={popupWindow} setPopupWindow={setPopupWindow}/>
-            </div> 
-            <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef}
-              inputRef={inputRef}
-            />
-            <div id="map" className="map-container" ref={mapRef}>
               <NYCMap 
               className="my-map" 
               userPosition={userPosition} 
