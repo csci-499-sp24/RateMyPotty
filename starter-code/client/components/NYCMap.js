@@ -5,6 +5,7 @@ import { faPencil, faHeart,  } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import { useTheme } from 'next-themes';
 import StarRating from './StarRating.js';
+import Modal from './Modal'; // Assuming you have a Modal component
 
 import {
     Map,
@@ -157,6 +158,27 @@ const mapStyles =
 export default function NYCMap(props) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
+    const defaultPosition = { lat: 40.712775, lng: -74.005973 };
+
+    /* Modal Implementation State*/
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedName, setSelectedName] = useState(null);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    /*Temporary Reviews, until able to fetch written reviews*/
+    const [selectedReview, setSelectedReview] = useState(null);
+    const [selectedReview1, setSelectedReview1] = useState(null);
+    const [selectedReview2, setSelectedReview2] = useState(null);
+    /*When pop_up name is clicked, define const of Modal, 
+    remove setSelectedReview1 and 2 once able to fetch reviews*/
+    const handleNameClick = (name) => {
+        setSelectedName(name);
+        setSelectedAddress(props.popupWindow.Address); 
+        setIsModalOpen(true);
+        setSelectedReview("AnonymousUser42: This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite. 5/5");
+        setSelectedReview1("AnonymousUser66: I dislike this bathroom. It's always dirty and it seems like it gets even crustier by the second. 2/5");
+        setSelectedReview2("Bob: This bathroom's alright. 3/5");
+    };
+    
     const [showReviewSubmit, setShowReviewSubmit] = useState(false);
     const[reviewText, setReviewText] = useState();
     const defaultPosition = { lat: 40.712775, lng: -74.005973 }
@@ -187,7 +209,7 @@ export default function NYCMap(props) {
            console.error('Unable to add favorite', error);
        }
     
-    } ;
+    };
 
     const deleteFavoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
@@ -215,7 +237,7 @@ export default function NYCMap(props) {
            console.error('Unable to add favorite', error);
        }
     
-    } ;
+    };
 
     const reviewBathroom = async (BathroomID, ReviewText) => {
         console.log('Review bathroom id:', BathroomID)
@@ -250,7 +272,6 @@ export default function NYCMap(props) {
         setShowTextbox(false);
         setShowReviewSubmit(false);
     }
-
 
     return (
         //Markers for the user's location and the bathrooms
@@ -294,6 +315,14 @@ export default function NYCMap(props) {
                         }}
                     />
                 ))}
+                {/*Modal Implementation when styles.name is clicked,
+                passes in selectedName prop into Modal.js component, take out selectedReview1 and 2 once able
+                to get reviews properly */}
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} 
+                selectedName={selectedName} selectedAddress={selectedAddress} 
+                selectedReview={selectedReview} selectedReview1={selectedReview1}
+                selectedReview2={selectedReview2}>
+                </Modal>
                 {props.popupWindow &&
                     <InfoWindow
                         onCloseClick={() => {
@@ -305,7 +334,8 @@ export default function NYCMap(props) {
                     >
                         <div className={styles.popup}>
                             <div id={styles.name}>
-                                <h1>{props.popupWindow.Name}</h1>
+                                {/*Modal component appears when onClick is handled */}
+                                <h1 id={styles.hoverLocation} onClick={() => handleNameClick(props.popupWindow.Name)}>{props.popupWindow.Name}</h1>
                             </div>
                             <div id={styles.buttons}>
                                 <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
