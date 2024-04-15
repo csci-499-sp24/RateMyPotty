@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import { createClient } from '@supabase/supabase-js';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { useRouter } from 'next/router'; // import useRouter
+import { useRouter } from 'next/router'; // import useRouter remove this
   
 require('dotenv').config();
 
