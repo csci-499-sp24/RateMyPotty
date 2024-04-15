@@ -5,7 +5,6 @@ import { faPencil, faHeart,  } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import { useTheme } from 'next-themes';
 import StarRating from './StarRating.js';
-import Modal from './Modal'; // Assuming you have a Modal component
 
 import {
     Map,
@@ -208,7 +207,7 @@ export default function NYCMap(props) {
            console.error('Unable to add favorite', error);
        }
     
-    };
+    } ;
 
     const deleteFavoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
@@ -236,7 +235,7 @@ export default function NYCMap(props) {
            console.error('Unable to add favorite', error);
        }
     
-    };
+    } ;
 
     const reviewBathroom = async (BathroomID, ReviewText) => {
         console.log('Review bathroom id:', BathroomID)
@@ -271,6 +270,7 @@ export default function NYCMap(props) {
         setShowTextbox(false);
         setShowReviewSubmit(false);
     }
+
 
     return (
         //Markers for the user's location and the bathrooms
@@ -314,14 +314,6 @@ export default function NYCMap(props) {
                         }}
                     />
                 ))}
-                {/*Modal Implementation when styles.name is clicked,
-                passes in selectedName prop into Modal.js component, take out selectedReview1 and 2 once able
-                to get reviews properly */}
-                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} 
-                selectedName={selectedName} selectedAddress={selectedAddress} 
-                selectedReview={selectedReview} selectedReview1={selectedReview1}
-                selectedReview2={selectedReview2}>
-                </Modal>
                 {props.popupWindow &&
                     <InfoWindow
                         onCloseClick={() => {
@@ -333,8 +325,7 @@ export default function NYCMap(props) {
                     >
                         <div className={styles.popup}>
                             <div id={styles.name}>
-                                {/*Modal component appears when onClick is handled */}
-                                <h1 id={styles.hoverLocation} onClick={() => handleNameClick(props.popupWindow.Name)}>{props.popupWindow.Name}</h1>
+                                <h1>{props.popupWindow.Name}</h1>
                             </div>
                             <div id={styles.buttons}>
                                 <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
