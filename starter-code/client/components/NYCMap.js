@@ -158,7 +158,6 @@ const mapStyles =
 export default function NYCMap(props) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
-    const defaultPosition = { lat: 40.712775, lng: -74.005973 };
 
     /* Modal Implementation State*/
     const [isModalOpen, setIsModalOpen] = useState(false);
