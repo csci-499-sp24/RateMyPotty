@@ -41,7 +41,14 @@ class BathroomModel{
             Latitude: {
                 type: DataTypes.FLOAT,
                 allowNull: false
-
+            },
+            AverageRating: {
+                type: DataTypes.FLOAT,
+                allowNull: true
+            },
+            TotalRatings: {
+                type: DataTypes.INTEGER,
+                allowNull: false
             }
         });
     }

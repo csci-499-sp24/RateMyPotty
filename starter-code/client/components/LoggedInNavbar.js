@@ -3,13 +3,12 @@ import ThemeChanger from "./DarkSwitch";
 import Image from "next/image"
 import { Disclosure } from "@headlessui/react";
 
-const Navbar = (props) => {
+const LoggedInNavbar = ({ onLogout }) => { // Added Logout prop here
   const navigation = [
     "Home",
     "About",
     "Map",
     "Favorite List",
-
   ];
 
   return (
@@ -61,13 +60,16 @@ const Navbar = (props) => {
                 <Disclosure.Panel className="flex flex-wrap w-full my-5 lg:hidden">
                   <>
                     {navigation.map((item, index) => (
-                      <Link key={index} href="/" className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800 focus:outline-none">
+                      <Link key={index} href="/" className="w-full px-4 py-2 -ml-4 text-gray-500 rounded-md dark:text-gray-300 hover:text-indigo-500 focus:text-indigo-500 focus:bg-indigo-100 dark:focus:bg-gray-800">
                           {item}
                       </Link>
                     ))}
-                    <Link href="/signup" className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5">         
-                        Get Started
+                    <Link href="/profile" className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5">         
+                        Profile
                     </Link>
+                    <button onClick={onLogout} className="w-full px-6 py-2 mt-3 text-center text-white bg-red-600 rounded-md lg:ml-5">         
+                         Logout
+                    </button>
                   </>
                 </Disclosure.Panel>
               </div>
@@ -89,10 +91,12 @@ const Navbar = (props) => {
         </div>
 
         <div className="hidden mr-3 space-x-4 lg:flex nav__item">
-         <Link href="/signup" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5" onClick={props.login}>
-          Log in / Sign up
-         </Link>
-          
+          <Link href="/profile" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
+              Profile
+          </Link>
+          <button onClick={onLogout} className="px-6 py-2 text-white bg-red-600 rounded-md md:ml-5">
+              Logout
+          </button>
 
           <ThemeChanger />
         </div>
@@ -101,4 +105,4 @@ const Navbar = (props) => {
   );
 }
 
-export default Navbar;
+export default LoggedInNavbar;

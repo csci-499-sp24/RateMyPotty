@@ -1,9 +1,10 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import{ createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa} from '@supabase/auth-ui-shared';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { useRouter } from 'next/router'; // import useRouter
   
 require('dotenv').config();
 
@@ -13,21 +14,40 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
   
 const Signup = () => {
-    return (
-    <div>
-        <div>
-            <Navbar/>
+  const router = useRouter(); // initialize router
 
-        </div>
-        <Auth
-            supabaseClient={supabase}
-            appearance={{ theme: ThemeSupa }}
-            providers={['google', 'facebook', 'twitter', 'github']}
-        />        
-        <div>
-            <Footer/>
-        </div>
+  // was not being redirected when signed in so 
+  useEffect(() => {
+    const unsubscribe = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === 'SIGNED_IN') {
+          router.push('/');
+        }
+      }
+    );
+  
+    return () => {
+      if (typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
+    };
+  }, []);
+
+  return (
+    <div>
+      <div>
+        <Navbar/>
+      </div>
+      <Auth
+        supabaseClient={supabase}
+        appearance={{ theme: ThemeSupa }}
+        providers={['google', 'facebook', 'twitter', 'github']}
+      />        
+      <div>
+        <Footer/>
+      </div>
     </div>
-)};
+  );
+};
 
 export default Signup;

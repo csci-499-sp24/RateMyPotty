@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './Popup.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencil, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faHeart,  } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import { useTheme } from 'next-themes';
 import StarRating from './StarRating.js';
 import Modal from './Modal'; // Assuming you have a Modal component
@@ -11,6 +12,8 @@ import {
     InfoWindow,
     Marker
 } from "@vis.gl/react-google-maps";
+
+//version without user marker
 
 
 const mapStyles =
@@ -175,7 +178,100 @@ export default function NYCMap(props) {
         setSelectedReview1("AnonymousUser66: I dislike this bathroom. It's always dirty and it seems like it gets even crustier by the second. 2/5");
         setSelectedReview2("Bob: This bathroom's alright. 3/5");
     };
-    /*Modal Implementation State End*/
+    
+    const [showReviewSubmit, setShowReviewSubmit] = useState(false);
+    const[reviewText, setReviewText] = useState();
+    const defaultPosition = { lat: 40.712775, lng: -74.005973 }
+    const reviewTextAreaRef = useRef();
+    const favoriteBathroom = async (BathroomID) => {
+        console.log('is this the bathroom id?', BathroomID)
+            try {
+               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({
+                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       BathroomID: BathroomID, // Replace with the actual bathroom ID
+                   }),
+               });
+
+               if (response.ok) {
+                    const data = await response.json();
+                   console.log('Favorite added', data);
+                   // Insert this bathroom into the favorites list
+                   props.setFavorites([...props.favorites, data.data])
+               } else {
+                   console.error('Unable to add favorite');
+               }
+       } catch (error) {
+           console.error('Unable to add favorite', error);
+       }
+    
+    };
+
+    const deleteFavoriteBathroom = async (BathroomID) => {
+        console.log('is this the bathroom id?', BathroomID)
+            try {
+               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites', {
+                   method: 'DELETE',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({
+                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       BathroomID: BathroomID, // Replace with the actual bathroom ID
+                   }),
+               });
+
+               if (response.ok) {
+                    
+                  const favorites = props.favorites.filter(favorite => favorite.BathroomID !== BathroomID);
+                   // Delete this bathroom in the favorites list
+                   props.setFavorites(favorites)
+               } else {
+                   console.error('Unable to add favorite');
+               }
+       } catch (error) {
+           console.error('Unable to add favorite', error);
+       }
+    
+    };
+
+    const reviewBathroom = async (BathroomID, ReviewText) => {
+        console.log('Review bathroom id:', BathroomID)
+            try {
+               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/reviews', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json',
+                   },
+                   body: JSON.stringify({
+                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       BathroomID: BathroomID,  // Replace with the actual bathroom ID
+                       ReviewText: ReviewText, 
+                   }),
+               });
+               if (response.ok) {
+                    const data = await response.json();
+                    console.log('Review added', data);
+                    // Insert this review into review table.
+                   //props.setReviews([...props.reviews, data.data])
+                    setReviewText('');
+               } else {
+                    console.error('Unable to add review');
+               }
+       } catch (error) {
+           console.error('Review error:', error);
+       }
+    };
+
+    const resetMarker = () => {
+        setReviewText('');
+        setShowTextbox(false);
+        setShowReviewSubmit(false);
+    }
 
     return (
         //Markers for the user's location and the bathrooms
@@ -210,6 +306,7 @@ export default function NYCMap(props) {
                         clickable={true}
                         onClick={() => {
                             props.setPopupWindow(bathroom);
+                            resetMarker();
                         }}
                         title={bathroom.Name}
                         icon={{
@@ -231,6 +328,7 @@ export default function NYCMap(props) {
                         onCloseClick={() => {
                             props.setPopupWindow(null);
                             setShowTextbox(false); // Hide the textbox when the InfoWindow is closed
+                            setShowReviewSubmit(false);
                         }}
                         position={{ lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }}
                     >
@@ -241,13 +339,33 @@ export default function NYCMap(props) {
                             </div>
                             <div id={styles.buttons}>
                                 <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
-                                    onClick={() => setShowTextbox(true)}
+                                    onClick={() => {
+                                        setShowTextbox(true)
+                                        setShowReviewSubmit(true)
+                                    }}
+                                    
                                 />
-                                <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} />
+                            {props.favorites.findIndex(favorite => favorite.BathroomID === props.popupWindow.BathroomID) > -1 ? 
+                            (
+                                <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} 
+                                onClick={() => deleteFavoriteBathroom(props.popupWindow.BathroomID)}
+                            />
+                            ) :
+                            <FontAwesomeIcon icon={faHeartRegular} className="fa-2x" id={styles.notFavoriteButton} 
+                            onClick={() => favoriteBathroom(props.popupWindow.BathroomID)}
+                        />
+
+                            }
+                               
                             </div>
-                            {showTextbox && <textarea />}
+                            <div>
+                                {showTextbox && (<textarea ref={reviewTextAreaRef}/>)}
+                            </div>
+                            {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} type="submit" value="Submit">Submit</button>}
                             <div className={styles.paragraph}>
-                                <StarRating /> 
+                                <StarRating
+                                    Bathroom = {props.popupWindow}
+                                />
                             </div>
                             <div className={styles.paragraph}>
                                 <p className>{props.popupWindow.Address}</p>
