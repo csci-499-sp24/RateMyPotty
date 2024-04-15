@@ -165,7 +165,8 @@ export default function NYCMap(props) {
     const [selectedReview, setSelectedReview] = useState(null);
     const [selectedReview1, setSelectedReview1] = useState(null);
     const [selectedReview2, setSelectedReview2] = useState(null);
-    /*When pop_up name is clicked, define const of Modal*/
+    /*When pop_up name is clicked, define const of Modal, 
+    remove setSelectedReview1 and 2 once able to fetch reviews*/
     const handleNameClick = (name) => {
         setSelectedName(name);
         setSelectedAddress(props.popupWindow.Address); 
@@ -174,7 +175,6 @@ export default function NYCMap(props) {
         setSelectedReview1("AnonymousUser66: I dislike this bathroom. It's always dirty and it seems like it gets even crustier by the second. 2/5");
         setSelectedReview2("Bob: This bathroom's alright. 3/5");
     };
-
     /*Modal Implementation State End*/
 
     return (
@@ -219,7 +219,7 @@ export default function NYCMap(props) {
                     />
                 ))}
                 {/*Modal Implementation when styles.name is clicked,
-                passes in selectedName prop into Modal.js component, take out selectedReview1 once able
+                passes in selectedName prop into Modal.js component, take out selectedReview1 and 2 once able
                 to get reviews properly */}
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} 
                 selectedName={selectedName} selectedAddress={selectedAddress} 

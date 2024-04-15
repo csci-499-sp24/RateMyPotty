@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import modStyles from './Modal.module.css';
 
-
+/*Remove selectedReview1 and selectedReview2 from parameters once able to fetch reviews from database */
 const Modal = ({ isOpen, onClose, selectedName, selectedAddress, selectedReview, selectedReview1, selectedReview2 }) => {
     useEffect(() => {
         const handleEscapeKey = (event) => {
