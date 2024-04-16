@@ -46,6 +46,10 @@
     color: orange;
 }
 
+#hoverLocation:hover{
+    color:blue;
+}
+
 #submitButton{
     padding-top: 5%;
     padding-left: 45px;
