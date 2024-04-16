@@ -157,6 +157,26 @@ const mapStyles =
 export default function NYCMap(props) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
+
+    /* Modal Implementation State*/
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedName, setSelectedName] = useState(null);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    /*Temporary Reviews, until able to fetch written reviews*/
+    const [selectedReview, setSelectedReview] = useState(null);
+    const [selectedReview1, setSelectedReview1] = useState(null);
+    const [selectedReview2, setSelectedReview2] = useState(null);
+    /*When pop_up name is clicked, define const of Modal, 
+    remove setSelectedReview1 and 2 once able to fetch reviews*/
+    const handleNameClick = (name) => {
+        setSelectedName(name);
+        setSelectedAddress(props.popupWindow.Address); 
+        setIsModalOpen(true);
+        setSelectedReview("AnonymousUser42: This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite. 5/5");
+        setSelectedReview1("AnonymousUser66: I dislike this bathroom. It's always dirty and it seems like it gets even crustier by the second. 2/5");
+        setSelectedReview2("Bob: This bathroom's alright. 3/5");
+    };
+    
     const [showReviewSubmit, setShowReviewSubmit] = useState(false);
     const[reviewText, setReviewText] = useState();
     const defaultPosition = { lat: 40.712775, lng: -74.005973 }
