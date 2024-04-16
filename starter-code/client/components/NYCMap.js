@@ -177,6 +177,7 @@ export default function NYCMap(props) {
         setSelectedReview1("AnonymousUser66: I dislike this bathroom. It's always dirty and it seems like it gets even crustier by the second. 2/5");
         setSelectedReview2("Bob: This bathroom's alright. 3/5");
     };
+    /*Modal Implementation State Ends */
     
     const [showReviewSubmit, setShowReviewSubmit] = useState(false);
     const[reviewText, setReviewText] = useState();

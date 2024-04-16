@@ -21,7 +21,7 @@ const Modal = ({ isOpen, onClose, selectedName, selectedAddress, selectedReview,
 
     if (!isOpen) return null;
 
-    /*Placeholder imageUrl until able to pass images into Modal component */
+    /*Placeholder imageUrl until able to pass images into Modal.js component*/
     const imageUrl = "https://www.heringinternational.com/fileadmin/images/content/de/sanitaer/cwc/Goch-Bahnhof-CWC_R_110_B_960_.jpg"; 
     
 
