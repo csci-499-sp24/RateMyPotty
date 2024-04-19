@@ -1,7 +1,7 @@
-const { UserModel } = require('./user'); // adjust the path as needed
+const { UserModel } = require('./user');
 const { Sequelize, DataTypes } = require('sequelize');
 
-// Mock Sequelize
+// Mock Sequelize, documention on blackboard 
 jest.mock('sequelize', () => {
   const mSequelize = { define: jest.fn(), authenticate: jest.fn(), sync: jest.fn() };
   const actualSequelize = jest.requireActual('sequelize');
@@ -10,19 +10,19 @@ jest.mock('sequelize', () => {
 
 describe('UserModel', () => {
   beforeEach(() => {
-    // Reset the mock before each test
+    // reset the mock before each test, will create a fresh mock https://jestjs.io/docs/mock-functions
     Sequelize.mockClear();
-    // Set up the Sequelize instance
+    // setting up the sequelize instance
     UserModel.sequelize = new Sequelize();
-    // Define the User model
+    // defining the User model
     UserModel.defineUserModel();
   });
 
   it('connects to Sequelize', async () => {
-    // Call the method under test
-    await UserModel.connectToSequelize('username', 'password', 'host');
-    // Add your assertions here
+    await UserModel.connectToSequelize('username', 'password', 'host')
+    expect(UserModel.sequelize.authenticate).toHaveBeenCalled();
+    /*just adding call assertion for now which passes, to test
+      type npx jest user.test.js */
   });
 
-  // Add more test cases here if needed
 });
