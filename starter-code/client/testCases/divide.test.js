@@ -1,4 +1,3 @@
-// divide.test.js
 const divide = require('./divide');
 
 test('divides 8 / 4 to equal 2', () => {

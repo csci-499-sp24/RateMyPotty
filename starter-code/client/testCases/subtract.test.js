@@ -1,4 +1,3 @@
-// sum.test.js
 const subtract = require('./subtract');
 
 test('subtracts 1 - 2 to equal -1', () => {
