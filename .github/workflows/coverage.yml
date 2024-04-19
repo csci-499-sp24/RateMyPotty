@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./starter-code/server
+        working-directory: ./starter-code/server #this runs the test cases in server
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies for test
@@ -22,3 +22,18 @@ jobs:
         run: echo "${ENV_FILE_CONTENTS}" > .env
       - name: Test
         run: npm test -- --coverage
+
+
+#going to comment out client test cases for now
+
+#client-tests:
+ # runs-on: ubuntu-latest
+ # defaults:
+  #  run:
+    #   working-directory: ./starter-code/client
+#   steps:
+  #   - uses: actions/checkout@v3
+   #  - name: Install dependencies for client tests
+    #   run: npm install
+    # - name: Run client tests
+      # run: npm test -- --coverage
