@@ -31,7 +31,7 @@ function Index({ darkMode, toggleDarkMode }) {
   const inputRef = useRef(null);
   const autoCompleteRef = useRef();
   const [isLoggedIn, setIsLoggedIn] = useState(false); //added for login/logout state
-
+  const [userId, setUserId] = useState(null);
 
   // Get user's position
   useEffect(() => {
@@ -88,15 +88,19 @@ function Index({ darkMode, toggleDarkMode }) {
       .then(data => setBathrooms(data.data));
 
       // Make a request to the server in order to grab user's favorites
-     fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites') 
-      .then((res) => res.json())
-      .then(data => setFavorites(data.data));
-  }, [])
+      if(userId != null){
+        fetch(process.env.NEXT_PUBLIC_SERVER_URL + `api/favorites?userId=${userId}`) 
+        .then((res) => res.json())
+        .then(data => setFavorites(data.data));
+      }
+  }, [userId])
 
   useEffect(() => {
     const unsubscribe = supabase.auth.onAuthStateChange((event, session) => {
       const user = session?.user;
+      const id = session?.user.id;
       setIsLoggedIn(!!user);
+      setUserId(id);
     });
   
     // Cleanup function to remove the listener when the component unmounts
@@ -159,7 +163,12 @@ function Index({ darkMode, toggleDarkMode }) {
   //logout function
   const logout = async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) console.log("Error logging out:", error.message);
+    if (error){
+      console.log("Error logging out:", error.message);
+    }else{
+      setUserId(null);
+    }
+
   };
 
 
@@ -186,6 +195,7 @@ function Index({ darkMode, toggleDarkMode }) {
               setPopupWindow={setPopupWindow}
               setFavorites={setFavorites}
               favorites={favorites}
+              userId={isLoggedIn ? userId : null}
                />
             </div>
           </div>

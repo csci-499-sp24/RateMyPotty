@@ -155,7 +155,7 @@ const mapStyles =
         }
     ]
 
-export default function NYCMap(props) {
+export default function NYCMap({userId, ...props }) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
 
@@ -183,8 +183,11 @@ export default function NYCMap(props) {
     const[reviewText, setReviewText] = useState();
     const defaultPosition = { lat: 40.712775, lng: -74.005973 }
     const reviewTextAreaRef = useRef();
+     
+
     const favoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
+        console.log('The UserID:', userId)
             try {
                const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites', {
                    method: 'POST',
@@ -192,7 +195,7 @@ export default function NYCMap(props) {
                        'Content-Type': 'application/json',
                    },
                    body: JSON.stringify({
-                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       UserID: userId,/*'f398c2c3-ffb0-46f5-816f-25e854d80b59',*/ // Replace with the actual user ID
                        BathroomID: BathroomID, // Replace with the actual bathroom ID
                    }),
                });
@@ -220,7 +223,7 @@ export default function NYCMap(props) {
                        'Content-Type': 'application/json',
                    },
                    body: JSON.stringify({
-                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       UserID: userId, // Replace with the actual user ID
                        BathroomID: BathroomID, // Replace with the actual bathroom ID
                    }),
                });
@@ -248,7 +251,7 @@ export default function NYCMap(props) {
                        'Content-Type': 'application/json',
                    },
                    body: JSON.stringify({
-                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       UserID: userId, // Replace with the actual user ID
                        BathroomID: BathroomID,  // Replace with the actual bathroom ID
                        ReviewText: ReviewText, 
                    }),
