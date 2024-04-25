@@ -197,6 +197,7 @@ function Index({ darkMode, toggleDarkMode }) {
               setFavorites={setFavorites}
               favorites={favorites}
               userId={isLoggedIn ? userId : null}
+              loggedInOrNot={isLoggedIn}
                />
             </div>
           </div>
