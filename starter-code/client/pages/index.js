@@ -167,6 +167,7 @@ function Index({ darkMode, toggleDarkMode }) {
       console.log("Error logging out:", error.message);
     }else{
       setUserId(null);
+      setFavorites([]);
     }
 
   };
