@@ -21,6 +21,7 @@ function Index({ darkMode, toggleDarkMode }) {
   //const defaultPosition = { lat: null, lng: null };
   const geometryLibrary = useMapsLibrary('geometry');
   const placesLibrary = useMapsLibrary('places');
+  const routesLibrary = useMapsLibrary('routes'); //provides functionality related to routing and directions
 
 
   const map = useMap();
@@ -28,6 +29,8 @@ function Index({ darkMode, toggleDarkMode }) {
   const [bathrooms, setBathrooms] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [popupWindow, setPopupWindow] = useState(null);
+  const [directionsService, setDirectionsService] = useState(null); //calculates directions 
+  const [directionsRenderer, setDirectionsRenderer] = useState(null);//contains the result of the directions query
   const inputRef = useRef(null);
   const autoCompleteRef = useRef();
   const [isLoggedIn, setIsLoggedIn] = useState(false); //added for login/logout state
@@ -71,6 +74,25 @@ function Index({ darkMode, toggleDarkMode }) {
 
 
   }, [placesLibrary])
+
+  // Try to use routes google api
+
+  useEffect(() => {
+    if (routesLibrary) {
+      setDirectionsService(new routesLibrary.DirectionsService());
+      setDirectionsRenderer(new routesLibrary.DirectionsRenderer());
+    }
+
+  }, [routesLibrary])
+
+  //when DirectionsRenderer is updated, it'll reset the map to show that
+  useEffect(() => {
+    if (directionsRenderer) {
+      directionsRenderer.setMap(map);
+    }
+
+  }, [directionsRenderer])
+  
 
   // Once we have the user's location, set the map's center to it
   //added a null check 
@@ -125,6 +147,8 @@ function Index({ darkMode, toggleDarkMode }) {
     };
 
   */}
+
+
 
   // Function to handle emergency button click
   const handleEmergencyButtonClick = () => {
@@ -186,6 +210,8 @@ function Index({ darkMode, toggleDarkMode }) {
               setPopupWindow={setPopupWindow}
               setFavorites={setFavorites}
               favorites={favorites}
+              directionsService={ directionsService}
+              directionsRenderer={ directionsRenderer}
                />
             </div>
           </div>

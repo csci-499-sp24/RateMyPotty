@@ -272,6 +272,21 @@ export default function NYCMap(props) {
         setShowTextbox(false);
         setShowReviewSubmit(false);
     }
+    
+    /*displays navigation line on our map from the user's current position to any bathroom specified by the
+     lat and long coordinates when user clicks on the directions button in popup window*/
+    const showDirections = () => {
+        props.directionsService.route({
+              origin: props.userPosition, //userPosition shared via props from index.js
+              destination: { lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }, //lat/lon coords from popup window for any bathroom marker
+              travelMode: google.maps.TravelMode.WALKING, //by default our users will most likely be walking to the nearest bathroom but we can also add other direction modes such as driving
+            })
+            .then(response  => {
+              console.log('here')
+              props.setPopupWindow(null)//closes popup window after user clicks on the directions button so that its not in the way
+              props.directionsRenderer.setDirections(response)
+            })
+    }
 
 
     return (
@@ -359,7 +374,16 @@ export default function NYCMap(props) {
                         />
 
                             }
-                               
+                               <button
+                                    style={{
+                                        fontSize: '1.6em', 
+                                        fontWeight: 'bold', 
+                                        marginLeft: '35px' // Add left margin for space
+                                    }}
+                                    onClick={() => showDirections()}
+                                >
+                                    Directions
+                                </button>
                             </div>
                             <div>
                                 {showTextbox && (<textarea ref={reviewTextAreaRef}/>)}
