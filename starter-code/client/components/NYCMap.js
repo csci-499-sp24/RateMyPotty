@@ -375,7 +375,7 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                             <FontAwesomeIcon icon={faHeartRegular} className="fa-2x" id={styles.notFavoriteButton} 
                             onClick={() => favoriteBathroom(props.popupWindow.BathroomID)}
                             />
-                            }
+                            ,
                                <button
                                     style={{
                                         fontSize: '1.6em', 
