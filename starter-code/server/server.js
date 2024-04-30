@@ -113,8 +113,8 @@ app.post("/api/favorites", async (req, res) => {
 });
 
 app.get("/api/favorites", async (req, res) => {
-
-    const favorites = await FavoritesModel.favorites.findAll({ UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59' });
+    const userId = req.query.userId;
+    const favorites = await FavoritesModel.favorites.findAll({where:{ UserID: userId}});
     //console.log('favorites?', favorites);
     res.json({ data: favorites })
 });

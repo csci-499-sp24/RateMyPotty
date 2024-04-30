@@ -155,7 +155,7 @@ const mapStyles =
         }
     ]
 
-export default function NYCMap(props) {
+export default function NYCMap({userId, loggedInOrNot, ...props }) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
 
@@ -184,8 +184,11 @@ export default function NYCMap(props) {
     // Zooms into current location and if not defaults to NYC
     const centerPosition = props.userPosition.lat ? props.userPosition : { lat: 40.712775, lng: -74.005973 };
     const reviewTextAreaRef = useRef();
+     
+
     const favoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
+        console.log('The UserID:', userId)
             try {
                const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites', {
                    method: 'POST',
@@ -193,7 +196,7 @@ export default function NYCMap(props) {
                        'Content-Type': 'application/json',
                    },
                    body: JSON.stringify({
-                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       UserID: userId,/*'f398c2c3-ffb0-46f5-816f-25e854d80b59',*/ // Replace with the actual user ID
                        BathroomID: BathroomID, // Replace with the actual bathroom ID
                    }),
                });
@@ -221,7 +224,7 @@ export default function NYCMap(props) {
                        'Content-Type': 'application/json',
                    },
                    body: JSON.stringify({
-                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       UserID: userId, // Replace with the actual user ID
                        BathroomID: BathroomID, // Replace with the actual bathroom ID
                    }),
                });
@@ -249,7 +252,7 @@ export default function NYCMap(props) {
                        'Content-Type': 'application/json',
                    },
                    body: JSON.stringify({
-                       UserID: 'f398c2c3-ffb0-46f5-816f-25e854d80b59', // Replace with the actual user ID
+                       UserID: userId, // Replace with the actual user ID
                        BathroomID: BathroomID,  // Replace with the actual bathroom ID
                        ReviewText: ReviewText, 
                    }),
@@ -342,14 +345,13 @@ export default function NYCMap(props) {
                                 handleNameClick(props.popupWindow.Name)}>{props.popupWindow.Name}</h1>
                             </div>
                             <div id={styles.buttons}>
-                                <FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
+                                {loggedInOrNot && (<FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
                                     onClick={() => {
                                         setShowTextbox(true)
                                         setShowReviewSubmit(true)
                                     }}
-                                    
-                                />
-                            {props.favorites.findIndex(favorite => favorite.BathroomID === props.popupWindow.BathroomID) > -1 ? 
+                                />)}
+                            {loggedInOrNot && (props.favorites.findIndex(favorite => favorite.BathroomID === props.popupWindow.BathroomID) > -1 ? 
                             (
                                 <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} 
                                 onClick={() => deleteFavoriteBathroom(props.popupWindow.BathroomID)}
@@ -357,9 +359,9 @@ export default function NYCMap(props) {
                             ) :
                             <FontAwesomeIcon icon={faHeartRegular} className="fa-2x" id={styles.notFavoriteButton} 
                             onClick={() => favoriteBathroom(props.popupWindow.BathroomID)}
-                        />
+                            />
 
-                            }
+                            )}
                                
                             </div>
                             <div>
@@ -367,9 +369,9 @@ export default function NYCMap(props) {
                             </div>
                             {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} type="submit" value="Submit">Submit</button>}
                             <div className={styles.paragraph}>
-                                <StarRating
+                                {loggedInOrNot && (<StarRating
                                     Bathroom = {props.popupWindow}
-                                />
+                                />)}
                             </div>
                             <div className={styles.paragraph}>
                                 <p className>{props.popupWindow.Address}</p>
