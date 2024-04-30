@@ -50,7 +50,22 @@
     color:blue;
 }
 
-#submitButton{
-    padding-top: 5%;
-    padding-left: 45px;
+#submitButton {
+    display: inline-block;
+    font-size: 17px;
+    padding: 10px 20px; 
+    border-radius: 20px; 
+    background-color:#73dcff; 
+    text-align: center; 
+    cursor: pointer; 
+    border: none; 
+    outline: none; 
+}
+
+#submitButton:hover{
+    color:orange;
+}
+
+.directionsButtonContainer {
+    margin-left: 100px; 
 }
