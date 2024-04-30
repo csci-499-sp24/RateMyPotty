@@ -181,7 +181,8 @@ export default function NYCMap(props) {
     
     const [showReviewSubmit, setShowReviewSubmit] = useState(false);
     const[reviewText, setReviewText] = useState();
-    const defaultPosition = { lat: 40.712775, lng: -74.005973 }
+    // Zooms into current location and if not defaults to NYC
+    const centerPosition = props.userPosition.lat ? props.userPosition : { lat: 40.712775, lng: -74.005973 };
     const reviewTextAreaRef = useRef();
     const favoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
@@ -282,8 +283,8 @@ export default function NYCMap(props) {
                 zoomControl={true}
                 mapTypeControl={false}
                 gestureHandling={true}
-                defaultCenter={defaultPosition}
-                defaultZoom={15}
+                defaultCenter={centerPosition}
+                defaultZoom={16}
                 styles={mapStyles}>
                 {props.userPosition.lat ?
                     <Marker
@@ -312,7 +313,7 @@ export default function NYCMap(props) {
                         title={bathroom.Name}
                         icon={{
                             url: "/toilet.png",
-                            scaledSize: { width: 50, height: 50 }, // size of the icon
+                            scaledSize: { width: 40, height: 40 }, // size of the icon
                         }}
                     />
                 ))}
