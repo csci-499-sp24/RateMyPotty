@@ -12,9 +12,9 @@ const LoggedInHero = (props) => {
   }
   return (
     <>
-      <Container className="flex flex-wrap ">
-        <div className="flex items-center w-full lg:w-1/2">
-          <div className="max-w-2xl mb-8">
+      <Container className="flex flex-wrap justify-center items-center h-full">
+    <div className="flex flex-col items-center justify-center space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row mx-auto">
+        <div className="max-w-2xl mb-8">
             <h1 className="text-4xl font-bold leading-snug tracking-tight text-gray-800 lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight dark:text-white">
             Glad you&apos;re here!
             </h1>
@@ -22,7 +22,7 @@ const LoggedInHero = (props) => {
               Continue making your commute and restroom trips as seamless as possible. Need a restroom urgently? Click the button for the nearest one.
             </p>
 
-            <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
+            <div className="flex flex-col items-center space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
               <button
                 onClick={handleEmergencyButtonClick}
                 className="flex items-center px-12 py-4 h-12 text-xl font-medium text-center text-white bg-red-600 rounded-md ">
@@ -37,33 +37,11 @@ const LoggedInHero = (props) => {
               <p className="text-xl ml-24 my-4">Or</p>
               <input className="py-3 pl-6 pr-2 rounded-md text-lg" ref={props.inputRef} placeholder="Enter a location" />
             </div>
-          </div>
         </div>
-        <div className="flex items-center justify-center w-full lg:w-1/2">
-          <div className="">
-            <Image
-              src={heroImg}
-              width="616"
-              height="617"
-              className={"object-cover"}
-              alt="Hero Illustration"
-              loading="eager"
-              placeholder="blur"
-            />
-          </div>
-        </div>
-      </Container>
-      <Container>
-        <div className="flex flex-col justify-center">
-         
-          <div className="flex flex-wrap justify-center gap-5 mt-10 md:justify-around">
-
-            <div className="pt-2 text-gray-400 dark:text-gray-400">
-              <GitHubLogo />
-            </div>
-          </div>
-        </div>
-      </Container>
+    </div>
+    <div className="flex items-center justify-center w-full lg:w-1/2">
+    </div>
+</Container>
     </>
   );
 }
