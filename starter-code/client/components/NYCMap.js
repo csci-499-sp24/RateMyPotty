@@ -371,11 +371,11 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                                 <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} 
                                 onClick={() => deleteFavoriteBathroom(props.popupWindow.BathroomID)}
                             />
-                            ) :
+                            ) : (
                             <FontAwesomeIcon icon={faHeartRegular} className="fa-2x" id={styles.notFavoriteButton} 
                             onClick={() => favoriteBathroom(props.popupWindow.BathroomID)}
                             />
-                            ,
+                            ))}
                                <button
                                     style={{
                                         fontSize: '1.6em', 
@@ -386,7 +386,7 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                                 >
                                     Directions
                                 </button>
-                            )}
+                            
                             </div>
                             <div>
                                 {showTextbox && (<textarea ref={reviewTextAreaRef}/>)}
