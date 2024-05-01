@@ -1,6 +1,6 @@
 # RateMyPotty
 
-Added test cases
+Added test cases that should run during pull requests.
 
 
 
