@@ -1,6 +1,10 @@
 .popup{
-    height: 180px;
+    /* height: 180px;
+    width: 280px; */
+    height: auto; /* Change this line */
     width: 280px;
+    max-width: 100%; /* Add this line to ensure the popup doesn't exceed the viewport width */
+    overflow: visible;
 }
 
 .paragraph{
@@ -53,6 +57,7 @@
 
 #hoverLocation:hover{
     color:blue;
+    cursor: pointer;
 }
 
 #submitButton {
@@ -73,5 +78,9 @@
 
 .directionsButtonContainer {
     margin-left: 100px; 
+}
+
+#starRatingPointer:hover {
+    cursor: pointer;
 }
 
