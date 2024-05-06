@@ -40,5 +40,14 @@
     .dark textarea {
       @apply bg-white;
     }
+/*
+    @layer base {
+      html,
+      body {
+        @apply bg-gray-400; 
+        @apply dark:bg-trueGray-900; 
+      } 
+*/
+
   }
  /* last two are to fix the text color in the popup and the textarea background color */ 
