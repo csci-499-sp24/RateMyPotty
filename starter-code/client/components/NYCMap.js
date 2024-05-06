@@ -163,20 +163,28 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedName, setSelectedName] = useState(null);
     const [selectedAddress, setSelectedAddress] = useState(null);
+
+    /*Reviews*/
+    const [reviews, setReviews] = useState(null);
     /*Temporary Reviews, until able to fetch written reviews*/
-    const [selectedReview, setSelectedReview] = useState(null);
+    const [selectedReview, setSelectedReview] = useState([]);
     const [selectedReview1, setSelectedReview1] = useState(null);
     const [selectedReview2, setSelectedReview2] = useState(null);
     /*When pop_up name is clicked, define const of Modal, 
     remove setSelectedReview1 and 2 once able to fetch reviews*/
-    const handleNameClick = (name) => {
+    const handleNameClick = (name, bathroomid) => {
         setSelectedName(name);
         setSelectedAddress(props.popupWindow.Address); 
         setIsModalOpen(true);
-        setSelectedReview("AnonymousUser42: This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite. 5/5");
+        getBathroomReviews(bathroomid);
+        //setSelectedReview("AnonymousUser42: This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite. 5/5");
         setSelectedReview1("AnonymousUser66: I dislike this bathroom. It's always dirty and it seems like it gets even crustier by the second. 2/5");
-        setSelectedReview2("Bob: This bathroom's alright. 3/5");
     };
+
+    const handleCloseBathroomReview = () => {
+        setIsModalOpen(false)
+        setSelectedReview([])
+    }
     /*Modal Implementation State Ends */
     
     const [showReviewSubmit, setShowReviewSubmit] = useState(false);
@@ -195,7 +203,7 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                        'Content-Type': 'application/json',
                    },
                    body: JSON.stringify({
-                       UserID: userId,/*'f398c2c3-ffb0-46f5-816f-25e854d80b59',*/ // Replace with the actual user ID
+                       UserID: userId,
                        BathroomID: BathroomID, // Replace with the actual bathroom ID
                    }),
                });
@@ -258,15 +266,33 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                });
                if (response.ok) {
                     const data = await response.json();
-                    console.log('Review added', data);
-                    // Insert this review into review table.
-                   //props.setReviews([...props.reviews, data.data])
                     setReviewText('');
                } else {
                     console.error('Unable to add review');
                }
        } catch (error) {
            console.error('Review error:', error);
+       }
+    };
+
+    const getBathroomReviews = async (BathroomID) => {
+        console.log('Review bathroom id:', BathroomID)
+            try {
+               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `api/reviews?BathroomID=${BathroomID}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+               });
+               if (response.ok) {
+                    const data = await response.json();
+                    setSelectedReview(data);
+                    console.log('Bathroom reviews:', data);
+               } else {
+                    console.error('Unable to get reviews', error);
+               }
+       } catch (error) {
+           console.error('Get reviews error:', error);
        }
     };
 
@@ -341,7 +367,7 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                             <div id={styles.name}>
                                 {/*Modal component appears when onClick is handled */}
                                 <h1 id={styles.hoverLocation} onClick={() => 
-                                handleNameClick(props.popupWindow.Name)}>{props.popupWindow.Name}</h1>
+                                handleNameClick(props.popupWindow.Name, props.popupWindow.BathroomID)}>{props.popupWindow.Name}</h1>
                             </div>
                             <div id={styles.buttons}>
                                 {loggedInOrNot && (<FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}

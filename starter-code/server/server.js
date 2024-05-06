@@ -161,10 +161,19 @@ app.post("/api/reviews", async (req, res) => {
     const review = await ReviewModel.reviews.create({
         UserID: UserID,
         BathroomID: BathroomID,
-        Review_text: ReviewText,
+        Review_text: ReviewText
     });
 
     res.json({ data: review, message: 'successfully created review' })
+});
+
+app.get('/api/reviews', async (req, res) => {
+    const bathroomId = req.query.BathroomID;
+    const reviews = await ReviewModel.reviews.findAll({
+        where:{ BathroomID: bathroomId},
+        attributes: ['Review_text']
+    });
+    res.json(reviews);
 });
 
 // Server trying to connect to the database using sequelize
