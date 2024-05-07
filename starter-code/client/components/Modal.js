@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import modStyles from './Modal.module.css';
 
 /*Remove selectedReview1 and selectedReview2 from parameters once able to fetch reviews from database */
-const Modal = ({ isOpen, onClose, selectedName, selectedAddress, selectedReview, selectedReview1, selectedReview2 }) => {
+const Modal = ({ isOpen, onClose, selectedName, selectedAddress, selectedReview, selectedReview1}) => {
     useEffect(() => {
         const handleEscapeKey = (event) => {
             if (event.key === 'Escape') {
@@ -35,9 +35,11 @@ const Modal = ({ isOpen, onClose, selectedName, selectedAddress, selectedReview,
                     <img src={imageUrl} alt="Image" className={modStyles.modalImage} />
                     <div className={modStyles.modalBodyContent}>{selectedAddress}</div>
                     <div className={modStyles.modalTitle}>Reviews</div>
-                    <div className={modStyles.selectedReview}>{selectedReview}</div>
-                    <div className={modStyles.selectedReview}>{selectedReview1}</div>
-                    <div className={modStyles.selectedReview}>{selectedReview2}</div>
+                    {selectedReview.map((review, index) => (
+                        <div key={index}>
+                            <div className={modStyles.selectedReview}>{review.Review_text}</div> 
+                        </div>
+                    ))}
                 </div>
                 <div className={modStyles.modalFooter}>
                     <button className={modStyles.closeButton} onClick={onClose}>Close</button>
