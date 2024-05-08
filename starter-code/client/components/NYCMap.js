@@ -353,7 +353,7 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
                 </button>
         </div>
         
-        <div style={{ height: "70vh", width: "70vw" }}>
+        <div style={{ height: "70vh", width: "100vw" }}>
             <Map
                 streetViewControl={true}
                 zoomControl={true}

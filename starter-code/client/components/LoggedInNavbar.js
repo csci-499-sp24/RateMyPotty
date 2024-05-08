@@ -8,7 +8,7 @@ const LoggedInNavbar = ({ onLogout }) => { // Added Logout prop here
     "Home",
     "About",
     "Map",
-    "Favorite List",
+    //"Favorite List",
   ];
 
   return (

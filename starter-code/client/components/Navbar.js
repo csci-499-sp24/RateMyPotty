@@ -8,7 +8,7 @@ const Navbar = (props) => {
     "Home",
     "About",
     "Map",
-    "Favorite List",
+    //"Favorite List",
 
   ];
 
