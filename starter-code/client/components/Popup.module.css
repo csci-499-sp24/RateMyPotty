@@ -1,24 +1,32 @@
 .popup{
-    height: 180px;
+    /* height: 180px;
+    width: 280px; */
+    height: auto; /* Change this line */
     width: 280px;
+    max-width: 100%; /* Add this line to ensure the popup doesn't exceed the viewport width */
+    overflow: visible;
 }
 
 .paragraph{
     font-size: 15px;
-    margin-top: 8%
+    margin-top: 2%;
+    margin-bottom: 4%;
 }
 
 
 #name{
     font-size: 20px;
     display: inline-block;
-    width: 150px;
+    min-width: 150px;
+    max-width: 300px;
     font-weight: bold;
+    /** text-align: center; **/
 }
 
 #buttons{
     display: inline-block;
     padding-right: -100px;
+    margin-bottom: 5%;
     
 }
 
@@ -44,10 +52,12 @@
 
 #reviewButton:hover{
     color: orange;
+    cursor: pointer;
 }
 
 #hoverLocation:hover{
     color:blue;
+    cursor: pointer;
 }
 
 #submitButton {
@@ -69,3 +79,8 @@
 .directionsButtonContainer {
     margin-left: 100px; 
 }
+
+#starRatingPointer:hover {
+    cursor: pointer;
+}
+

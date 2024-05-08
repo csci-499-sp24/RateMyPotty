@@ -326,7 +326,7 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                 streetViewControl={true}
                 zoomControl={true}
                 mapTypeControl={false}
-                gestureHandling={true}
+                gestureHandling={'greedy'}
                 defaultCenter={centerPosition}
                 defaultZoom={16}
                 styles={mapStyles}>
@@ -385,11 +385,19 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                                 <h1 id={styles.hoverLocation} onClick={() => 
                                 handleNameClick(props.popupWindow.Name, props.popupWindow.BathroomID)}>{props.popupWindow.Name}</h1>
                             </div>
+                            <div className={styles.paragraph}>
+                                <p className>{props.popupWindow.Address}</p>
+                            </div>
+                            <div className={styles.paragraph}>
+                                {loggedInOrNot && (<StarRating
+                                    Bathroom = {props.popupWindow}
+                                />)}
+                            </div>
                             <div id={styles.buttons}>
                                 {loggedInOrNot && (<FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
                                     onClick={() => {
-                                        setShowTextbox(true)
-                                        setShowReviewSubmit(true)
+                                        setShowTextbox(prevShowTextbox => !prevShowTextbox)
+                                        setShowReviewSubmit(prevShowReviewSubmit => !prevShowReviewSubmit)
                                     }}
                                 />)}
                             {loggedInOrNot && (props.favorites.findIndex(favorite => favorite.BathroomID === props.popupWindow.BathroomID) > -1 ? 
@@ -406,26 +414,42 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                                     style={{
                                         fontSize: '1.6em', 
                                         fontWeight: 'bold', 
-                                        marginLeft: '35px' // Add left margin for space
+                                        /* marginLeft: '35px' */ // Add left margin for space
+                                        marginLeft: loggedInOrNot ? '35px' : '87.5px',
+                                        outline: 'none',
                                     }}
-                                    onClick={() => showDirections()}
+                                    onClick={() => showDirections()} className="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
                                 >
                                     Directions
                                 </button>
                             
                             </div>
                             <div>
-                                {showTextbox && (<textarea ref={reviewTextAreaRef}/>)}
+                                {showTextbox && (
+                                <textarea 
+                                    style={{
+                                        border: '2px solid #000',
+                                        borderRadius: '5px',
+                                        margin: 'auto',
+                                        display: 'block',
+                                        width: '100%',
+                                        outline: 'none',
+                                        padding: '5px',
+                                    }} ref={reviewTextAreaRef}/>)}
                             </div>
-                            {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} type="submit" value="Submit">Submit</button>}
-                            <div className={styles.paragraph}>
-                                {loggedInOrNot && (<StarRating
-                                    Bathroom = {props.popupWindow}
-                                />)}
-                            </div>
-                            <div className={styles.paragraph}>
-                                <p className>{props.popupWindow.Address}</p>
-                            </div>
+                            {showReviewSubmit && (
+                            <button 
+                                id={styles.submitButton} 
+                                onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} 
+                                type="submit" 
+                                value="Submit"
+                                style={{
+                                    display: 'block',
+                                    margin: 'auto',
+                                    marginTop: '10px',
+                                }}
+                            >
+                                Submit</button>)}
                         </div>
                     </InfoWindow>
                 }
