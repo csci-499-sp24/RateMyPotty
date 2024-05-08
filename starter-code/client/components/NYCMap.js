@@ -344,16 +344,16 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
 
     return (
         <div>
-            <div className="hidden mr-3 space-x-4 lg:flex nav__item">
+            <div className="flex justify-center py-3">
                 <button 
                     onClick={() => setShowFavorites(!showFavorites)}
                     className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5"
                 >
                     {showFavorites ? 'Show All Bathrooms' : 'Show Only Favorites'}
                 </button>
-        </div>
+            </div>
         
-        <div style={{ height: "70vh", width: "70vw" }}>
+        <div style={{ height: "70vh", width: "100vw" }}>
             <Map
                 streetViewControl={true}
                 zoomControl={true}

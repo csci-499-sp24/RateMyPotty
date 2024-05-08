@@ -13,11 +13,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%; /* or any specific height you want */
-    width: 100%; /* adjust as needed */
+    height: 100%vh; 
+    width: 100%; 
     position: relative;
   }
 
+  @media (max-width: 600px) {
+    .mapContainer {
+        height: 50vh; 
+    }
+}
   .overlay {
     width: 350px;
     max-height: 400px;
