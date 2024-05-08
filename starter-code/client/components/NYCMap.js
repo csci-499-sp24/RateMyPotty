@@ -317,10 +317,22 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
               props.directionsRenderer.setDirections(response)
             })
     }
+    
+    // State variable for toggling between showing all bathrooms and only favorites. Initially set to false, meaning all bathrooms are shown.
+    const [showFavorites, setShowFavorites] = useState(false);
 
 
     return (
-        //Markers for the user's location and the bathrooms
+        <div>
+            <div className="hidden mr-3 space-x-4 lg:flex nav__item">
+                <button 
+                    onClick={() => setShowFavorites(!showFavorites)}
+                    className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5"
+                >
+                    {showFavorites ? 'Show All Bathrooms' : 'Show Only Favorites'}
+                </button>
+        </div>
+        
         <div style={{ height: "70vh", width: "70vw" }}>
             <Map
                 streetViewControl={true}
@@ -345,15 +357,21 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                     />
                     : null
                 }
-
-                {props.bathrooms.map(bathroom => (
-                    <Marker key={bathroom.BathroomID}
-                        position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
-                        clickable={true}
-                        onClick={() => {
-                            props.setPopupWindow(bathroom);
-                            resetMarker();
-                        }}
+                
+                {props.bathrooms
+                    /*
+                    Filters the bathrooms to be displayed on the map. If 'showFavorites' is true, only bathrooms that are in the 'favorites' list (based on BathroomID) are included. 
+                    If 'showFavorites' is false, all bathrooms are included.
+                    */
+                    .filter(bathroom => showFavorites ? props.favorites.some(favorite => favorite.BathroomID === bathroom.BathroomID) : true)
+                    .map(bathroom => (
+                        <Marker key={bathroom.BathroomID}
+                            position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
+                            clickable={true}
+                            onClick={() => {
+                                props.setPopupWindow(bathroom);
+                                resetMarker();
+                            }}
                         title={bathroom.Name}
                         icon={{
                             url: "/toilet.png",
@@ -431,28 +449,7 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                 }
             </Map>
         </div>
-
+    </div>          
     )
 }
 
-/*
-<MarkerClusterer>
-  {(clusterer) =>
-    bathrooms.map((bathroom) => (
-      <Marker 
-        key={bathroom.BathroomID}
-        position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
-        clickable={true}
-        onClick={() => {
-          setPopupWindow(bathroom);
-        }}
-        title={bathroom.Name}
-        icon={{
-                url: "/toilet.png",
-                 scaledSize: { width: 50, height: 50 }, // size of the icon
-        }}
-      />
-    ))
-  }
-</MarkerClusterer>
-*/
