@@ -318,6 +318,9 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
                 props.setDirectionsResponse(response);
             })
     }
+    
+    // State variable for toggling between showing all bathrooms and only favorites. Initially set to false, meaning all bathrooms are shown.
+    const [showFavorites, setShowFavorites] = useState(false);
 
     const renderSteps = () => {
         return (
@@ -340,13 +343,22 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
 
 
     return (
-        //Markers for the user's location and the bathrooms
+        <div>
+            <div className="hidden mr-3 space-x-4 lg:flex nav__item">
+                <button 
+                    onClick={() => setShowFavorites(!showFavorites)}
+                    className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5"
+                >
+                    {showFavorites ? 'Show All Bathrooms' : 'Show Only Favorites'}
+                </button>
+        </div>
+        
         <div style={{ height: "70vh", width: "70vw" }}>
             <Map
                 streetViewControl={true}
                 zoomControl={true}
                 mapTypeControl={false}
-                gestureHandling={true}
+                gestureHandling={'greedy'}
                 defaultCenter={centerPosition}
                 defaultZoom={16}
                 className={styles.map}
@@ -366,17 +378,21 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
                     />
                     : null
                 }
-
-                {props.bathrooms.map(bathroom => (
-                    <Marker key={bathroom.BathroomID}
-                        position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
-                        clickable={true}
-                        onClick={() => {
-                            props.setPopupWindow(bathroom);
-                            props.setDirectionsResponse(null);
-
-                            resetMarker();
-                        }}
+   
+                {props.bathrooms
+                    /*
+                    Filters the bathrooms to be displayed on the map. If 'showFavorites' is true, only bathrooms that are in the 'favorites' list (based on BathroomID) are included. 
+                    If 'showFavorites' is false, all bathrooms are included.
+                    */
+                    .filter(bathroom => showFavorites ? props.favorites.some(favorite => favorite.BathroomID === bathroom.BathroomID) : true)
+                    .map(bathroom => (
+                        <Marker key={bathroom.BathroomID}
+                            position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
+                            clickable={true}
+                            onClick={() => {
+                                props.setPopupWindow(bathroom);
+                                resetMarker();
+                            }}
                         title={bathroom.Name}
                         icon={{
                             url: "/toilet.png",
@@ -408,11 +424,19 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
                                 <h1 id={styles.hoverLocation} onClick={() =>
                                     handleNameClick(props.popupWindow.Name, props.popupWindow.BathroomID)}>{props.popupWindow.Name}</h1>
                             </div>
+                            <div className={styles.paragraph}>
+                                <p className>{props.popupWindow.Address}</p>
+                            </div>
+                            <div className={styles.paragraph}>
+                                {loggedInOrNot && (<StarRating
+                                    Bathroom = {props.popupWindow}
+                                />)}
+                            </div>
                             <div id={styles.buttons}>
                                 {loggedInOrNot && (<FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
                                     onClick={() => {
-                                        setShowTextbox(true)
-                                        setShowReviewSubmit(true)
+                                        setShowTextbox(prevShowTextbox => !prevShowTextbox)
+                                        setShowReviewSubmit(prevShowReviewSubmit => !prevShowReviewSubmit)
                                     }}
                                 />)}
                                 {loggedInOrNot && (props.favorites.findIndex(favorite => favorite.BathroomID === props.popupWindow.BathroomID) > -1 ?
@@ -427,28 +451,45 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
                                     ))}
                                 <button
                                     style={{
-                                        fontSize: '1.6em',
-                                        fontWeight: 'bold',
-                                        marginLeft: '35px' // Add left margin for space
+                                        fontSize: '1.6em', 
+                                        fontWeight: 'bold', 
+                                        /* marginLeft: '35px' */ // Add left margin for space
+                                        marginLeft: loggedInOrNot ? '35px' : '87.5px',
+                                        outline: 'none',
                                     }}
-                                    onClick={() => showDirections()}
+                                    onClick={() => showDirections()} className="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
                                 >
                                     Directions
                                 </button>
 
                             </div>
                             <div>
-                                {showTextbox && (<textarea ref={reviewTextAreaRef} />)}
+
+                                {showTextbox && (
+                                <textarea 
+                                    style={{
+                                        border: '2px solid #000',
+                                        borderRadius: '5px',
+                                        margin: 'auto',
+                                        display: 'block',
+                                        width: '100%',
+                                        outline: 'none',
+                                        padding: '5px',
+                                    }} ref={reviewTextAreaRef}/>)}
                             </div>
-                            {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} type="submit" value="Submit">Submit</button>}
-                            <div className={styles.paragraph}>
-                                {loggedInOrNot && (<StarRating
-                                    Bathroom={props.popupWindow}
-                                />)}
-                            </div>
-                            <div className={styles.paragraph}>
-                                <p className>{props.popupWindow.Address}</p>
-                            </div>
+                            {showReviewSubmit && (
+                            <button 
+                                id={styles.submitButton} 
+                                onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} 
+                                type="submit" 
+                                value="Submit"
+                                style={{
+                                    display: 'block',
+                                    margin: 'auto',
+                                    marginTop: '10px',
+                                }}
+                            >
+                                Submit</button>)}
                         </div>
                     </InfoWindow>
                 }
@@ -470,28 +511,7 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
 
             </Map>
         </div>
-
+    </div>          
     )
 }
 
-/*
-<MarkerClusterer>
-  {(clusterer) =>
-    bathrooms.map((bathroom) => (
-      <Marker 
-        key={bathroom.BathroomID}
-        position={{ lat: bathroom.Latitude, lng: bathroom.Longitude }}
-        clickable={true}
-        onClick={() => {
-          setPopupWindow(bathroom);
-        }}
-        title={bathroom.Name}
-        icon={{
-                url: "/toilet.png",
-                 scaledSize: { width: 50, height: 50 }, // size of the icon
-        }}
-      />
-    ))
-  }
-</MarkerClusterer>
-*/

@@ -199,7 +199,6 @@ function Index({ darkMode, toggleDarkMode }) {
 
   };
 
-
   return (
     <div className="container-fluid">
       {isLoggedIn ? <LoggedInNavbar onLogout={logout} /> : <Navbar />}
@@ -210,10 +209,9 @@ function Index({ darkMode, toggleDarkMode }) {
         </div>
         <div className="col-md-9">
           <div className="main-content">
-          {isLoggedIn ? 
-            <LoggedInHero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} /> :
-            <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} />
-          }
+            {!isLoggedIn && 
+              <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} />
+            }
             <div id="map" className="map-container" ref={mapRef}>
               <NYCMap 
               className="my-map" 
@@ -231,6 +229,9 @@ function Index({ darkMode, toggleDarkMode }) {
               setDirectionsResponse={setDirectionsResponse}
                />
             </div>
+            {isLoggedIn && 
+              <LoggedInHero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} />
+            }
           </div>
         </div>
       </div>
@@ -238,7 +239,7 @@ function Index({ darkMode, toggleDarkMode }) {
       {!isLoggedIn && <Testimonials />}
       <Footer />
     </div>
-);
+  );
 
 }
 
