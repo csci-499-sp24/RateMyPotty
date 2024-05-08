@@ -15,7 +15,63 @@
     align-items: center;
     height: 100%; /* or any specific height you want */
     width: 100%; /* adjust as needed */
+    position: relative;
   }
+
+  .overlay {
+    width: 350px;
+    max-height: 400px;
+    overflow-y: scroll;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: #27313E;
+    color: white;
+    padding: 16px;
+    border-radius: 6px;
+  }
+
+  .start  {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .end  {
+    margin-top: 20px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .subinfo_container {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .duration {
+    margin-right: 16px;
+  }
+
+.step {
+  margin-bottom: 14px;
+
+}
+
+.step-distance-container {
+  display: flex;
+  align-items: center;
+}
+
+.horizontal-line {
+  margin-left: 5px;
+  flex: 1;
+  height: 1px;
+  background-color: white;
+  margin-top: 2px;
+}
+
   .paragraph-light {
     color: black; /* Color for light mode */
   }

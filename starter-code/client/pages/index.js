@@ -35,6 +35,7 @@ function Index({ darkMode, toggleDarkMode }) {
   const autoCompleteRef = useRef();
   const [isLoggedIn, setIsLoggedIn] = useState(false); //added for login/logout state
   const [userId, setUserId] = useState(null);
+  const [directionsResponse, setDirectionsResponse] = useState(null);
 
   // Get user's position
   useEffect(() => {
@@ -64,6 +65,7 @@ function Index({ darkMode, toggleDarkMode }) {
         const lng = place.geometry.location.lng()
         // Updating state tells react to update the map and set the center to the user's location
         setPopupWindow(null)
+        setDirectionsResponse(null)
         setUserPosition({ lat: lat, lng: lng })
 
         // Scrolls to the map but with a 50px gap at the top to give it some space 
@@ -180,7 +182,8 @@ function Index({ darkMode, toggleDarkMode }) {
     map.panTo({ lat: nearestBathroom.Latitude, lng: nearestBathroom.Longitude });
 
     // Open the popup for this bathroom
-    setPopupWindow(nearestBathroom)
+    setPopupWindow(nearestBathroom);
+    setDirectionsResponse(null);
   };
 
 
@@ -224,6 +227,8 @@ function Index({ darkMode, toggleDarkMode }) {
               directionsRenderer={ directionsRenderer}
               userId={isLoggedIn ? userId : null}
               loggedInOrNot={isLoggedIn}
+              directionsResponse={directionsResponse}
+              setDirectionsResponse={setDirectionsResponse}
                />
             </div>
           </div>

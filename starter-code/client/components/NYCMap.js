@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './Popup.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencil, faHeart,  } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faHeart, } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import { useTheme } from 'next-themes';
 import StarRating from './StarRating.js';
-import Modal from './Modal'; 
+import Modal from './Modal';
 
 import {
     Map,
@@ -155,7 +155,7 @@ const mapStyles =
         }
     ]
 
-export default function NYCMap({userId, loggedInOrNot, ...props }) {
+export default function NYCMap({ userId, loggedInOrNot, ...props }) {
     //places the user's location on the map
     const [showTextbox, setShowTextbox] = useState(false);
 
@@ -174,7 +174,7 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
     remove setSelectedReview1 and 2 once able to fetch reviews*/
     const handleNameClick = (name, bathroomid) => {
         setSelectedName(name);
-        setSelectedAddress(props.popupWindow.Address); 
+        setSelectedAddress(props.popupWindow.Address);
         setIsModalOpen(true);
         getBathroomReviews(bathroomid);
         //setSelectedReview("AnonymousUser42: This bathroom is amazing. Always clean and orderly. I think this bathroom is my favorite. 5/5");
@@ -186,115 +186,115 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
         setSelectedReview([])
     }
     /*Modal Implementation State Ends */
-    
+
     const [showReviewSubmit, setShowReviewSubmit] = useState(false);
-    const[reviewText, setReviewText] = useState();
+    const [reviewText, setReviewText] = useState();
     // Zooms into current location and if not defaults to NYC
     const centerPosition = props.userPosition.lat ? props.userPosition : { lat: 40.712775, lng: -74.005973 };
     const reviewTextAreaRef = useRef();
-     
+
 
     const favoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
         console.log('The UserID:', userId)
-            try {
-               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites', {
-                   method: 'POST',
-                   headers: {
-                       'Content-Type': 'application/json',
-                   },
-                   body: JSON.stringify({
-                       UserID: userId,
-                       BathroomID: BathroomID, // Replace with the actual bathroom ID
-                   }),
-               });
+        try {
+            const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    UserID: userId,
+                    BathroomID: BathroomID, // Replace with the actual bathroom ID
+                }),
+            });
 
-               if (response.ok) {
-                    const data = await response.json();
-                   console.log('Favorite added', data);
-                   // Insert this bathroom into the favorites list
-                   props.setFavorites([...props.favorites, data.data])
-               } else {
-                   console.error('Unable to add favorite');
-               }
-       } catch (error) {
-           console.error('Unable to add favorite', error);
-       }
-    
-    } ;
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Favorite added', data);
+                // Insert this bathroom into the favorites list
+                props.setFavorites([...props.favorites, data.data])
+            } else {
+                console.error('Unable to add favorite');
+            }
+        } catch (error) {
+            console.error('Unable to add favorite', error);
+        }
+
+    };
 
     const deleteFavoriteBathroom = async (BathroomID) => {
         console.log('is this the bathroom id?', BathroomID)
-            try {
-               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites', {
-                   method: 'DELETE',
-                   headers: {
-                       'Content-Type': 'application/json',
-                   },
-                   body: JSON.stringify({
-                       UserID: userId, // Replace with the actual user ID
-                       BathroomID: BathroomID, // Replace with the actual bathroom ID
-                   }),
-               });
+        try {
+            const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/favorites', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    UserID: userId, // Replace with the actual user ID
+                    BathroomID: BathroomID, // Replace with the actual bathroom ID
+                }),
+            });
 
-               if (response.ok) {
-                    
-                  const favorites = props.favorites.filter(favorite => favorite.BathroomID !== BathroomID);
-                   // Delete this bathroom in the favorites list
-                   props.setFavorites(favorites)
-               } else {
-                   console.error('Unable to add favorite');
-               }
-       } catch (error) {
-           console.error('Unable to add favorite', error);
-       }
-    
-    } ;
+            if (response.ok) {
+
+                const favorites = props.favorites.filter(favorite => favorite.BathroomID !== BathroomID);
+                // Delete this bathroom in the favorites list
+                props.setFavorites(favorites)
+            } else {
+                console.error('Unable to add favorite');
+            }
+        } catch (error) {
+            console.error('Unable to add favorite', error);
+        }
+
+    };
 
     const reviewBathroom = async (BathroomID, ReviewText) => {
         console.log('Review bathroom id:', BathroomID)
-            try {
-               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/reviews', {
-                   method: 'POST',
-                   headers: {
-                       'Content-Type': 'application/json',
-                   },
-                   body: JSON.stringify({
-                       UserID: userId, // Replace with the actual user ID
-                       BathroomID: BathroomID,  // Replace with the actual bathroom ID
-                       ReviewText: ReviewText, 
-                   }),
-               });
-               if (response.ok) {
-                    const data = await response.json();
-                    setReviewText('');
-               } else {
-                    console.error('Unable to add review');
-               }
-       } catch (error) {
-           console.error('Review error:', error);
-       }
+        try {
+            const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + 'api/reviews', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    UserID: userId, // Replace with the actual user ID
+                    BathroomID: BathroomID,  // Replace with the actual bathroom ID
+                    ReviewText: ReviewText,
+                }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setReviewText('');
+            } else {
+                console.error('Unable to add review');
+            }
+        } catch (error) {
+            console.error('Review error:', error);
+        }
     };
 
     const getBathroomReviews = async (BathroomID) => {
         console.log('Review bathroom id:', BathroomID)
-            try {
-               const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `api/reviews?BathroomID=${BathroomID}`, {
+        try {
+            const response = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + `api/reviews?BathroomID=${BathroomID}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 }
-               });
-               if (response.ok) {
-                    const data = await response.json();
-                    setSelectedReview(data);
-                    console.log('Bathroom reviews:', data);
-               } else {
-                    console.error('Unable to get reviews', error);
-               }
-       } catch (error) {
-           console.error('Get reviews error:', error);
-       }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setSelectedReview(data);
+                console.log('Bathroom reviews:', data);
+            } else {
+                console.error('Unable to get reviews', error);
+            }
+        } catch (error) {
+            console.error('Get reviews error:', error);
+        }
     };
 
     const resetMarker = () => {
@@ -302,20 +302,39 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
         setShowTextbox(false);
         setShowReviewSubmit(false);
     }
-    
+
     /*displays navigation line on our map from the user's current position to any bathroom specified by the
      lat and long coordinates when user clicks on the directions button in popup window*/
     const showDirections = () => {
         props.directionsService.route({
-              origin: props.userPosition, //userPosition shared via props from index.js
-              destination: { lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }, //lat/lon coords from popup window for any bathroom marker
-              travelMode: google.maps.TravelMode.WALKING, //by default our users will most likely be walking to the nearest bathroom but we can also add other direction modes such as driving
+            origin: props.userPosition, //userPosition shared via props from index.js
+            destination: { lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }, //lat/lon coords from popup window for any bathroom marker
+            travelMode: google.maps.TravelMode.WALKING, //by default our users will most likely be walking to the nearest bathroom but we can also add other direction modes such as driving
+        })
+            .then(response => {
+                console.log('here', response)
+                props.setPopupWindow(null)//closes popup window after user clicks on the directions button so that its not in the way
+                props.directionsRenderer.setDirections(response)
+                props.setDirectionsResponse(response);
             })
-            .then(response  => {
-              console.log('here')
-              props.setPopupWindow(null)//closes popup window after user clicks on the directions button so that its not in the way
-              props.directionsRenderer.setDirections(response)
-            })
+    }
+
+    const renderSteps = () => {
+        return (
+            <div className="steps">
+                {
+                    props.directionsResponse.routes[0].legs[0].steps.map(step => (
+                        <div className="step">
+                            <p dangerouslySetInnerHTML={{__html: step.instructions}}></p>
+                            <div className="step-distance-container">
+                                {step.distance.text} <div className="horizontal-line"></div>                        </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+        )
+
     }
 
 
@@ -329,6 +348,7 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                 gestureHandling={true}
                 defaultCenter={centerPosition}
                 defaultZoom={16}
+                className={styles.map}
                 styles={mapStyles}>
                 {props.userPosition.lat ?
                     <Marker
@@ -352,6 +372,8 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                         clickable={true}
                         onClick={() => {
                             props.setPopupWindow(bathroom);
+                            props.setDirectionsResponse(null);
+
                             resetMarker();
                         }}
                         title={bathroom.Name}
@@ -365,10 +387,10 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                 {/*Modal Implementation when styles.name is clicked,
                 passes in selectedName prop into Modal.js component, take out selectedReview1 and 2 once able
                 to get reviews properly */}
-                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} 
-                selectedName={selectedName} selectedAddress={selectedAddress} 
-                selectedReview={selectedReview} selectedReview1={selectedReview1}
-                selectedReview2={selectedReview2}>
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}
+                    selectedName={selectedName} selectedAddress={selectedAddress}
+                    selectedReview={selectedReview} selectedReview1={selectedReview1}
+                    selectedReview2={selectedReview2}>
                 </Modal>
                 {props.popupWindow &&
                     <InfoWindow
@@ -382,8 +404,8 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                         <div className={styles.popup}>
                             <div id={styles.name}>
                                 {/*Modal component appears when onClick is handled */}
-                                <h1 id={styles.hoverLocation} onClick={() => 
-                                handleNameClick(props.popupWindow.Name, props.popupWindow.BathroomID)}>{props.popupWindow.Name}</h1>
+                                <h1 id={styles.hoverLocation} onClick={() =>
+                                    handleNameClick(props.popupWindow.Name, props.popupWindow.BathroomID)}>{props.popupWindow.Name}</h1>
                             </div>
                             <div id={styles.buttons}>
                                 {loggedInOrNot && (<FontAwesomeIcon icon={faPencil} className="fa-2x" id={styles.reviewButton}
@@ -392,35 +414,35 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                                         setShowReviewSubmit(true)
                                     }}
                                 />)}
-                            {loggedInOrNot && (props.favorites.findIndex(favorite => favorite.BathroomID === props.popupWindow.BathroomID) > -1 ? 
-                            (
-                                <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton} 
-                                onClick={() => deleteFavoriteBathroom(props.popupWindow.BathroomID)}
-                            />
-                            ) : (
-                            <FontAwesomeIcon icon={faHeartRegular} className="fa-2x" id={styles.notFavoriteButton} 
-                            onClick={() => favoriteBathroom(props.popupWindow.BathroomID)}
-                            />
-                            ))}
-                               <button
+                                {loggedInOrNot && (props.favorites.findIndex(favorite => favorite.BathroomID === props.popupWindow.BathroomID) > -1 ?
+                                    (
+                                        <FontAwesomeIcon icon={faHeart} className="fa-2x" id={styles.favoriteButton}
+                                            onClick={() => deleteFavoriteBathroom(props.popupWindow.BathroomID)}
+                                        />
+                                    ) : (
+                                        <FontAwesomeIcon icon={faHeartRegular} className="fa-2x" id={styles.notFavoriteButton}
+                                            onClick={() => favoriteBathroom(props.popupWindow.BathroomID)}
+                                        />
+                                    ))}
+                                <button
                                     style={{
-                                        fontSize: '1.6em', 
-                                        fontWeight: 'bold', 
+                                        fontSize: '1.6em',
+                                        fontWeight: 'bold',
                                         marginLeft: '35px' // Add left margin for space
                                     }}
                                     onClick={() => showDirections()}
                                 >
                                     Directions
                                 </button>
-                            
+
                             </div>
                             <div>
-                                {showTextbox && (<textarea ref={reviewTextAreaRef}/>)}
+                                {showTextbox && (<textarea ref={reviewTextAreaRef} />)}
                             </div>
                             {showReviewSubmit && <button id={styles.submitButton} onClick={() => reviewBathroom(props.popupWindow.BathroomID, reviewTextAreaRef.current.value)} type="submit" value="Submit">Submit</button>}
                             <div className={styles.paragraph}>
                                 {loggedInOrNot && (<StarRating
-                                    Bathroom = {props.popupWindow}
+                                    Bathroom={props.popupWindow}
                                 />)}
                             </div>
                             <div className={styles.paragraph}>
@@ -429,6 +451,22 @@ export default function NYCMap({userId, loggedInOrNot, ...props }) {
                         </div>
                     </InfoWindow>
                 }
+                {
+                    props.directionsResponse ?
+                        (
+                            <div className="overlay">
+                                <p className="start">{props.directionsResponse.routes[0].legs[0].start_address}</p>
+                                <div class="subinfo_container">
+                                    <p class="duration">Duration: <b>{props.directionsResponse.routes[0].legs[0].duration.text}</b></p>
+                                    <p class="distance">Distance: <b>{props.directionsResponse.routes[0].legs[0].distance.text}</b></p>
+                                </div>
+                                {renderSteps()}
+                                <p className="end">{props.directionsResponse.routes[0].legs[0].end_address}</p>
+
+                            </div>
+                        ) : null
+                }
+
             </Map>
         </div>
 
