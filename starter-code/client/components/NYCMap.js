@@ -323,11 +323,12 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
         return (
             <div className="steps">
                 {
-                    props.directionsResponse.routes[0].legs[0].steps.map(step => (
-                        <div className="step">
+                    props.directionsResponse.routes[0].legs[0].steps.map((step, index) => (
+                        <div className="step" key ={index}>
                             <p dangerouslySetInnerHTML={{__html: step.instructions}}></p>
                             <div className="step-distance-container">
-                                {step.distance.text} <div className="horizontal-line"></div>                        </div>
+                                {step.distance.text} <div className="horizontal-line"></div>                        
+                            </div>
                         </div>
                     ))
                 }
