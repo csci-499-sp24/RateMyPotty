@@ -23,10 +23,10 @@ const Hero = (props) => {
               emergency? Click the button for the nearest restroom.
             </p>
 
-            <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
+            <div className="flex justify-center items-center flex-wrap">
               <button
                 onClick={handleEmergencyButtonClick}
-                className="flex items-center px-12 py-4 h-12 text-xl font-medium text-center text-white bg-red-600 rounded-md ">
+                className="flex items-center px-4 py-1 h-10 text-xl font-medium text-white bg-red-600 rounded-md">
                 <Image
                   src={emergencyLogo}
                   width={24}
@@ -35,8 +35,8 @@ const Hero = (props) => {
                 />
                 Emergency
               </button>
-              <p className="text-xl ml-24 my-4">Or</p>
-              <input className="py-3 pl-6 pr-2 rounded-md text-lg" ref={props.inputRef} />
+              <p className="text-sm ml-3 "></p>
+              <input className="py-3 pl-6 pr-2 rounded-md text-sm" ref={props.inputRef} placeholder="Enter a location" />
             </div>
           </div>
         </div>

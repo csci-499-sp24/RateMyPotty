@@ -358,7 +358,7 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
                 streetViewControl={true}
                 zoomControl={true}
                 mapTypeControl={false}
-                gestureHandling={'greedy'}
+                gestureHandling={true}
                 defaultCenter={centerPosition}
                 defaultZoom={16}
                 className={styles.map}
