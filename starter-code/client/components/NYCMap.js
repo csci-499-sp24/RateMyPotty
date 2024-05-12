@@ -305,18 +305,25 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
 
     /*displays navigation line on our map from the user's current position to any bathroom specified by the
      lat and long coordinates when user clicks on the directions button in popup window*/
+     //adds a check so that if user denies location access, they are prompted to allow it
     const showDirections = () => {
-        props.directionsService.route({
-            origin: props.userPosition, //userPosition shared via props from index.js
-            destination: { lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude }, //lat/lon coords from popup window for any bathroom marker
-            travelMode: google.maps.TravelMode.WALKING, //by default our users will most likely be walking to the nearest bathroom but we can also add other direction modes such as driving
-        })
-            .then(response => {
-                console.log('here', response)
-                props.setPopupWindow(null)//closes popup window after user clicks on the directions button so that its not in the way
-                props.directionsRenderer.setDirections(response)
-                props.setDirectionsResponse(response);
-            })
+        navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+            if (result.state === 'denied') {
+                window.alert('Please allow access to your location for this feature to work.');
+            } else {
+                props.directionsService.route({
+                    origin: props.userPosition,
+                    destination: { lat: props.popupWindow.Latitude, lng: props.popupWindow.Longitude },
+                    travelMode: google.maps.TravelMode.WALKING,
+                })
+                .then(response => {
+                    console.log('here', response)
+                    props.setPopupWindow(null)
+                    props.directionsRenderer.setDirections(response)
+                    props.setDirectionsResponse(response);
+                })
+            }
+        });
     }
     
     // State variable for toggling between showing all bathrooms and only favorites. Initially set to false, meaning all bathrooms are shown.
