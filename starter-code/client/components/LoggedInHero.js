@@ -16,7 +16,7 @@ const LoggedInHero = (props) => {
             <div className="flex justify-center items-center flex-wrap">
               <button
                 onClick={handleEmergencyButtonClick}
-                className="flex items-center px-4 py-1 h-10 text-xl font-medium text-white bg-red-600 rounded-md">
+                className="flex items-center px-4 py-1 h-10 text-xl font-medium text-white bg-red-600 rounded-md w-25">
                 <Image
                   src={emergencyLogo}
                   width={24}
@@ -26,7 +26,7 @@ const LoggedInHero = (props) => {
                 Emergency
               </button>
               <p className="text-sm ml-3 "></p>
-              <input className="py-3 pl-6 pr-2 rounded-md text-sm" ref={props.inputRef} placeholder="Enter a location" />
+              <input className="py-3 pl-6 pr2 rounded-md text-sm w-25" ref={props.inputRef} placeholder="Enter a location" />
             </div>
   
          
