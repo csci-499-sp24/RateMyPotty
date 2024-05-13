@@ -64,9 +64,6 @@ const LoggedInNavbar = ({ onLogout }) => {
                           {item.name}
                       </Link>
                     ))}
-                    <Link href="/profile" className="w-full px-6 py-2 mt-3 text-center text-white bg-indigo-600 rounded-md lg:ml-5">         
-                        Profile
-                    </Link>
                     <button onClick={onLogout} className="w-full px-6 py-2 mt-3 text-center text-white bg-red-600 rounded-md lg:ml-5">         
                          Logout
                     </button>
@@ -91,9 +88,6 @@ const LoggedInNavbar = ({ onLogout }) => {
         </div>
 
         <div className="hidden mr-3 space-x-4 lg:flex nav__item">
-          <Link href="/profile" className="px-6 py-2 text-white bg-indigo-600 rounded-md md:ml-5">
-              Profile
-          </Link>
           <button onClick={onLogout} className="px-6 py-2 text-white bg-red-600 rounded-md md:ml-5">
               Logout
           </button>
