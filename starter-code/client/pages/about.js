@@ -22,7 +22,7 @@ function About({ darkMode, toggleDarkMode, isLoggedIn }) {
           <div className="section bg-indigo-100 p-5 rounded-lg shadow-lg">
   <h2 className="text-3xl font-bold text-indigo-700">Get in Touch 🚀</h2>
      <p className="text-lg text-gray-700 mt-4">
-  Have questions, suggestions, or feedback? We&apos;d love to hear from you! Feel free to reach out to us through our GitHub profiles or send us an email at  
+  Have questions, suggestions, or feedback? We would love to hear from you! Feel free to reach out to us through our GitHub profiles or send us an email at  
      <a href="mailto:2bitcapstone@gmail.com" className="text-indigo-500 underline hover:text-indigo-800">  2bitcapstone@gmail.com</a>.
     </p>
 </div>
