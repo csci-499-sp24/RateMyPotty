@@ -170,6 +170,7 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
     const [selectedReview, setSelectedReview] = useState([]);
     const [selectedReview1, setSelectedReview1] = useState(null);
     const [selectedReview2, setSelectedReview2] = useState(null);
+    const [reviewSubmitted, setReviewSubmit] = useState(false);
     /*When pop_up name is clicked, define const of Modal, 
     remove setSelectedReview1 and 2 once able to fetch reviews*/
     const handleNameClick = (name, bathroomid) => {
@@ -267,7 +268,11 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
             });
             if (response.ok) {
                 const data = await response.json();
+                setReviewSubmit(true);
+                setTimeout(() => setReviewSubmit(false), 2000);
                 setReviewText('');
+                setShowTextbox(false);
+                setTimeout(() => setShowReviewSubmit(false), 2000);
             } else {
                 console.error('Unable to add review');
             }
@@ -489,7 +494,7 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
                                     marginTop: '10px',
                                 }}
                             >
-                                Submit</button>)}
+                                {reviewSubmitted ? 'Submitted!' : 'Submit'}</button>)}
                         </div>
                     </InfoWindow>
                 }
