@@ -344,6 +344,7 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
 
     return (
         <div>
+        {loggedInOrNot && (
             <div className="flex justify-center py-3">
                 <button 
                     onClick={() => setShowFavorites(!showFavorites)}
@@ -352,11 +353,12 @@ export default function NYCMap({ userId, loggedInOrNot, ...props }) {
                     {showFavorites ? 'Show All Bathrooms' : 'Show Only Favorites'}
                 </button>
             </div>
+        )}
         
         <div style={{ height: "70vh", width: "100vw" }}>
             <Map
-                streetViewControl={true}
-                zoomControl={true}
+                streetViewControl={false}
+                zoomControl={false}
                 mapTypeControl={false}
                 gestureHandling={'greedy'}
                 defaultCenter={centerPosition}
