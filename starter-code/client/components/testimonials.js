@@ -48,7 +48,7 @@ const Testimonials  = () => {
             <Avatar
               image={userThreeImg}
               name="Tom and Jerry"
-              title="Co-founder of Cartoon"
+              title="Co-founder of Cartoon Network"
             />
           </div>
         </div>

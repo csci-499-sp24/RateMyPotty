@@ -45,7 +45,7 @@ const faqdata = [
   {
     question: "Do I need to make an account? ",
     answer:
-      "To use the emergency button, no, for other features like favoriting and more you will need an account.",
+      "To use the emergency button or search for restrooms, no, but for other features like favoriting you will need an account.",
   },
 
 ];

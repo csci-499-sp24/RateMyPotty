@@ -210,7 +210,7 @@ function Index({ darkMode, toggleDarkMode }) {
         <div className="col-md-9">
           <div className="main-content">
             {!isLoggedIn && 
-              <Hero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} />
+              <LoggedInHero handleEmergencyButtonClick={handleEmergencyButtonClick} mapRef={mapRef} inputRef={inputRef} />
             }
             <div id="map" className="map-container" ref={mapRef}>
               <NYCMap 
