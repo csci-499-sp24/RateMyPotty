@@ -15,7 +15,7 @@ const AboutHero = (props) => {
             <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-300">
               RateMyPotty is an app made to make your commute and restroom trips as seamless as possible. 
               Developed as a capstone project by a talented team of five upcoming developers, RateMyPotty aims to make your bathroom breaks stress-free and convenient.
-               Whether you're on a road trip, exploring NYC, or simply out and about, RateMyPotty ensures that finding a restroom is just a few taps away.
+               Whether you are on a road trip, exploring NYC, or simply out and about, RateMyPotty ensures that finding a restroom is just a few taps away.
             </p>
           </div>
         </div>
