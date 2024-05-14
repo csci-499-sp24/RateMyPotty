@@ -16,6 +16,13 @@
     height: 100%vh; 
     width: 100%; 
     position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .map-div {
+    width: 100vw;
+    height: 70vh;
   }
 
   @media (max-width: 600px) {
@@ -23,6 +30,14 @@
         height: 50vh; 
     }
 }
+/* size down map to 70% of width for bigger screen sizes */
+@media (min-width: 1200px) {
+  .map-div {
+    width: 70vw;
+    margin: 0 auto;
+  }
+}
+
   .overlay {
     width: 350px;
     max-height: 400px;
@@ -35,6 +50,7 @@
     padding: 16px;
     border-radius: 6px;
   }
+
 
   .start  {
     font-size: 18px;
@@ -75,6 +91,38 @@
   height: 1px;
   background-color: white;
   margin-top: 2px;
+}
+/* size down overlay for smaller screen sizes */
+@media (max-width: 600px) {
+  .overlay {
+    width: 200px;
+    max-height: 300px;
+  }
+
+  .start  {
+    font-size: 14px;
+  }
+  .end  {
+
+    font-size: 14px;
+  
+  }
+
+  .subinfo_container {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+
+  .subinfo_container p {
+    font-size: 12px;
+  
+  }
+  .steps {
+    font-size: 12px;
+  
+  }
 }
 
   .paragraph-light {
